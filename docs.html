@@ -8210,14 +8210,9 @@ sp_mat A = sprandu&lt;sp_mat&gt;(100, 200, 0.1);
 <a name="toeplitz"></a>
 <b>toeplitz( A )</b>
 <br><b>toeplitz( A, B )</b>
-<br><b>circ_toeplitz( A )</b>
 <ul>
 <li>
-toeplitz(): generate a Toeplitz matrix, with the first column specified by <i>A</i>, and (optionally) the first row specified by <i>B</i>
-</li>
-<br>
-<li>
-circ_toeplitz(): generate a circulant Toeplitz matrix
+generate a Toeplitz matrix, with the first column specified by <i>A</i>, and (optionally) the first row specified by <i>B</i>
 </li>
 <br>
 <li>
@@ -8229,8 +8224,8 @@ Examples:
 <ul>
 <pre>
 vec A(5, fill::randu);
+
 mat X = toeplitz(A);
-mat Y = circ_toeplitz(A);
 </pre>
 </ul>
 </li>
@@ -8239,7 +8234,6 @@ mat Y = circ_toeplitz(A);
 <ul>
 <li><a href="https://mathworld.wolfram.com/ToeplitzMatrix.html">Toeplitz matrix in MathWorld</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Toeplitz_matrix">Toeplitz matrix in Wikipedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Circulant_matrix">Circulant matrix in Wikipedia</a></li>
 </ul>
 </li>
 <br>
@@ -21088,7 +21082,7 @@ the <i>uword</i> type then has a minimum width of 64 bits
 <li>Version 2.2:
 <ul>
 <li>added <a href="#svd_econ">svd_econ()</a></li>
-<li>added <a href="#toeplitz">circ_toeplitz()</a></li>
+<!-- <li>added <a href="#toeplitz">circ_toeplitz()</a></li> -->
 <li>added <a href="#is_vec">.is_colvec()</a> and <a href="#is_vec">.is_rowvec()</a></li>
 </ul>
 <br>
