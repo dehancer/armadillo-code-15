@@ -8212,11 +8212,11 @@ sp_mat A = sprandu&lt;sp_mat&gt;(100, 200, 0.1);
 <br><b>toeplitz( A, B )</b>
 <ul>
 <li>
-generate a Toeplitz matrix, with the first column specified by <i>A</i>, and (optionally) the first row specified by <i>B</i>
+Generate a Toeplitz matrix, with the first column specified by vector <i>A</i>, and (optionally) the first row specified by vector <i>B</i>
 </li>
 <br>
 <li>
-A and B must be vectors
+If argument <i>B</i> is omitted, the first row is assumed to be the same as the first column
 </li>
 <br>
 <li>
