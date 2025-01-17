@@ -367,7 +367,7 @@
 #endif
 
 // WARNING: option ARMA_IGNORE_DEPRECATED_MARKER will be removed
-// WARNING: option ARMA_CRIPPLED_LAPACK will be removed
+// WARNING: option ARMA_CRIPPLED_LAPACK          will be removed
 
 #if defined(ARMA_CRIPPLED_LAPACK)
   #if (!defined(ARMA_IGNORE_DEPRECATED_MARKER))
