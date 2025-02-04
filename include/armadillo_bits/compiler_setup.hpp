@@ -477,7 +477,7 @@
 #undef major
 
 
-// WARNING: option 'ARMA_IGNORE_DEPRECATED_MARKER' will be removed
+// WARNING: option 'ARMA_IGNORE_DEPRECATED_MARKER' will be removed;
 // WARNING: disabling deprecation messages is counter-productive
 
 #if defined(ARMA_IGNORE_DEPRECATED_MARKER)
