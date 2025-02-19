@@ -993,6 +993,8 @@ accu(const SpGlue<T1,T2,spglue_schur>& expr)
   const SpProxy<T1> px(expr.A);
   const SpProxy<T2> py(expr.B);
   
+  arma_conform_assert_same_size(px.get_n_rows(), px.get_n_cols(), py.get_n_rows(), py.get_n_cols(), "element-wise multiplication");
+  
   typename SpProxy<T1>::const_iterator_type x_it     = px.begin();
   typename SpProxy<T1>::const_iterator_type x_it_end = px.end();
   
