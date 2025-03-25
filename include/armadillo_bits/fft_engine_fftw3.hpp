@@ -55,11 +55,7 @@ class fft_engine_fftw3
     {
     arma_debug_sigprint();
     
-    if(fftw3_plan != nullptr)
-      {
-      arma_debug_print("fft_engine_fftw3::finish(): destroying plan");
-      fftw3::destroy_plan<cx_type>(fftw3_plan);
-      }
+    if(fftw3_plan != nullptr)  { fftw3::destroy_plan<cx_type>(fftw3_plan); }
     
     // fftw3::cleanup<cx_type>();  // NOTE: this also removes any wisdom acquired by FFTW3 
     }
