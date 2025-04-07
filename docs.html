@@ -2423,21 +2423,6 @@ An exception is thrown if the requested element is out of bounds.
 </tr>
 <tr>
 <td style="vertical-align: top;">
-<code>.at(i)</code>&nbsp;&nbsp;or&nbsp;&nbsp;<code>[i]</code>&nbsp;
-</td>
-<td style="vertical-align: top;"><br>
-</td>
-<td style="vertical-align: top;">
-As for <code>(i)</code>, but without a bounds check; not recommended; see the caveats below
-</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td style="vertical-align: top;">
 <code>(r,c)</code>
 </td>
 <td style="vertical-align: top;"><br>
@@ -2445,6 +2430,37 @@ As for <code>(i)</code>, but without a bounds check; not recommended; see the ca
 <td style="vertical-align: top;">
 For <i>mat</i> and <i>2D field</i> classes, access the element/object stored at row <i>r</i> and column <i>c</i>.
 An exception is thrown if the requested element is out of bounds.
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">
+<code>(r,c,s)</code>
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+<td style="vertical-align: top;">
+For <i>cube</i> and <i>3D field</i> classes, access the element/object stored at row <i>r</i>, column <i>c</i>, and slice <i>s</i>.
+An exception is thrown if the requested element is out of bounds.
+</td>
+</tr>
+<tr>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+<tr>
+<td style="vertical-align: top;">
+<code>.at(i)</code>&nbsp;&nbsp;or&nbsp;&nbsp;<code>[i]</code>&nbsp;
+</td>
+<td style="vertical-align: top;"><br>
+</td>
+<td style="vertical-align: top;">
+As for <code>(i)</code>, but without a bounds check; not recommended; see the caveats below
 </td>
 </tr>
 <tr>
@@ -2462,22 +2478,6 @@ An exception is thrown if the requested element is out of bounds.
 As for <code>(r,c)</code>, but without a bounds check; not recommended; see the caveats below
 </td>
 <td style="vertical-align: top;"><br>
-</td>
-</tr>
-<tr>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-<td>&nbsp;</td>
-</tr>
-<tr>
-<td style="vertical-align: top;">
-<code>(r,c,s)</code>
-</td>
-<td style="vertical-align: top;"><br>
-</td>
-<td style="vertical-align: top;">
-For <i>cube</i> and <i>3D field</i> classes, access the element/object stored at row <i>r</i>, column <i>c</i>, and slice <i>s</i>.
-An exception is thrown if the requested element is out of bounds.
 </td>
 </tr>
 <tr>
@@ -2550,7 +2550,6 @@ double y = v(0);
 <li><a href="#iterators_mat">iterators (dense matrices)</a></li>
 <li><a href="#iterators_cube">iterators (cubes)</a></li>
 <li><a href="#iterators_spmat">iterators (sparse matrices)</a></li>
-<li><a href="#config_hpp">config.hpp</a></li>
 </ul>
 </li>
 <br>
