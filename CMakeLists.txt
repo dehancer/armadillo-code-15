@@ -73,7 +73,7 @@ set(ARMA_USE_LAPACK  false)
 set(ARMA_USE_BLAS    false)
 set(ARMA_USE_ATLAS   false)
 set(ARMA_USE_ARPACK  false)
-set(ARMA_USE_SUPERLU false)  # Caveat: only SuperLU version 5.x can be used!
+set(ARMA_USE_SUPERLU false)
 
 
 # extract version from sources
@@ -469,7 +469,7 @@ if(ARPACK_FOUND)
   set(ARMA_LIBS ${ARMA_LIBS} ${ARPACK_LIBRARY})
 endif()
 
-include(ARMA_FindSuperLU5)
+include(ARMA_FindSuperLU)
 message(STATUS "SuperLU_FOUND = ${SuperLU_FOUND}")
 
 if(SuperLU_FOUND)
