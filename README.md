@@ -369,7 +369,7 @@ Comment out the line containing:
 
 Use of the C++11 `auto` keyword is not recommended with Armadillo objects and expressions.
 
-Armadillo has a template meta-programming framework which creates lots of short lived temporaries
+Armadillo has a template meta-programming framework which creates short-lived temporaries
 that are not properly handled by `auto`.
 
 ---
