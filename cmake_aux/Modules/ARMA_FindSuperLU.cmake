@@ -1,4 +1,4 @@
-# Try to find SuperLU 5.x
+# Try to find suitable version of SuperLU
 # Once done, this will define
 #
 #  SuperLU_FOUND        - system has SuperLU
@@ -18,13 +18,12 @@ find_library(SuperLU_LIBRARY
 set(SuperLU_FOUND NO)
 
 if(NOT SuperLU_FIND_QUIETLY)
-  message(STATUS "Looking for SuperLU version 5")
+  message(STATUS "Looking for suitable version of SuperLU")
 endif()
 
 if(SuperLU_LIBRARY AND SuperLU_INCLUDE_DIR)
   
-  # Now determine if the version is version 5.
-  # This voodoo is required as SuperLU developers like to keep things messy.
+  # determine if this is a suitable version of SuperLU
   
   if(EXISTS "${SuperLU_INCLUDE_DIR}/slu_ddefs.h")
     
@@ -32,46 +31,54 @@ if(SuperLU_LIBRARY AND SuperLU_INCLUDE_DIR)
     
     string(REGEX REPLACE ".*version ([0-9]).*" "\\1" SLU_VERSION_MAJOR "${_slu_HEADER_CONTENTS}")
     
+    if("${SLU_VERSION_MAJOR}" EQUAL "7")
+      set(SuperLU_FOUND YES)
+    endif()
+    
+    if("${SLU_VERSION_MAJOR}" EQUAL "6")
+      set(SuperLU_FOUND YES)
+    endif()
+    
     if("${SLU_VERSION_MAJOR}" EQUAL "5")
       set(SuperLU_FOUND YES)
-    else()
-      if("${SLU_VERSION_MAJOR}" EQUAL "4")
+    endif()
+    
+    if("${SLU_VERSION_MAJOR}" EQUAL "4")
+      
+      # NOTE: SLU_VERSION_MAJOR = 4 is not 100% reliable, as the version string in slu_ddefs.h wasn't updated in SuperLU 5.0, 5.1, 5.2
+      # NOTE: We need to explicitly check the prototype of dgssvx() to determine whether this is version 4 or 5.
+      
+      string(FIND "${_slu_HEADER_CONTENTS}" "dgssvx" _slu_dgssvx_start)
+      
+      if("${_slu_dgssvx_start}" GREATER 0)
         
-        # NOTE: SLU_VERSION_MAJOR = 4 is not 100% reliable, as the version string in slu_ddefs.h wasn't updated in SuperLU 5.0, 5.1, 5.2
-        # NOTE: We need to explicitly check the prototype of dgssvx() to determine whether this is version 4 or 5.
+        string(SUBSTRING "${_slu_HEADER_CONTENTS}" ${_slu_dgssvx_start} -1 _slu_dgssvx_tmp)
         
-        string(FIND "${_slu_HEADER_CONTENTS}" "dgssvx" _slu_dgssvx_start)
+        string(FIND "${_slu_dgssvx_tmp}" ";" _slu_dgssvx_len)
         
-        if("${_slu_dgssvx_start}" GREATER 0)
-          
-          string(SUBSTRING "${_slu_HEADER_CONTENTS}" ${_slu_dgssvx_start} -1 _slu_dgssvx_tmp)
-          
-          string(FIND "${_slu_dgssvx_tmp}" ";" _slu_dgssvx_len)
-          
-          string(SUBSTRING "${_slu_HEADER_CONTENTS}" ${_slu_dgssvx_start} ${_slu_dgssvx_len} _slu_dgssvx_proto)
-          
-          string(FIND "${_slu_dgssvx_proto}" "GlobalLU_t" _slu_dgssvx_check)
-          
-          if("${_slu_dgssvx_check}" EQUAL -1)
-            # in version 4, dgssvx() doesn't have a GlobalLU_t argument
-            if(NOT SuperLU_FIND_QUIETLY)
-              message(STATUS "Found SuperLU, but it doesn't appear to be version 5")
-            endif()
-          else()
-            set(SuperLU_FOUND YES)
+        string(SUBSTRING "${_slu_HEADER_CONTENTS}" ${_slu_dgssvx_start} ${_slu_dgssvx_len} _slu_dgssvx_proto)
+        
+        string(FIND "${_slu_dgssvx_proto}" "GlobalLU_t" _slu_dgssvx_check)
+        
+        if("${_slu_dgssvx_check}" EQUAL -1)
+          # in version 4, dgssvx() doesn't have a GlobalLU_t argument
+          if(NOT SuperLU_FIND_QUIETLY)
+            message(STATUS "Found SuperLU 4, which is insufficient")
           endif()
+        else()
+          set(SuperLU_FOUND YES)
         endif()
-      else()
-        if(NOT SuperLU_FIND_QUIETLY)
-          message(STATUS "Found SuperLU version ${SLU_VERSION_MAJOR}, but version 5 is required")
-        endif()
+      
       endif()
+    
     endif()
+  
   else()
-    if(NOT SuperLU_FIND_QUIETLY)
-      message(STATUS "Found SuperLU and headers, but could not verify version 5")
-    endif()
+  
+    message(STATUS "Could not read ${SuperLU_INCLUDE_DIR}/slu_ddefs.h to verify suitable version")
+  
   endif()
+  
 endif()
 
 if(SuperLU_LIBRARY AND NOT SuperLU_INCLUDE_DIR)
@@ -82,9 +89,9 @@ endif()
   
 if(NOT SuperLU_FOUND) 
   if(NOT SuperLU_FIND_QUIETLY)
-    message(STATUS "Could not find SuperLU")
+    message(STATUS "Could not find suitable version of SuperLU")
   endif()
 else()
-  message(STATUS "Found SuperLU: ${SuperLU_LIBRARY}")
+  message(STATUS "Found SuperLU library: ${SuperLU_LIBRARY}")
 endif()
 

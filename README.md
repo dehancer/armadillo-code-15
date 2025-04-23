@@ -129,8 +129,8 @@ On Windows systems, the MinGW toolset or Visual Studio C++ 2019 (MSVC) can be us
 
 Caveats on the use of SuperLU:
 - SuperLU must be available as a shared library
-- Only the following SuperLU versions are supported: 5.2.x, 5.3.x, 6.0.x
-- SuperLU 6.0.x must be compiled with default integer size (32 bits)
+- Only the following SuperLU versions are supported: 5.2.x, 5.3.x, 6.0.x, 7.0.x
+- SuperLU 6.0.x and 7.0.x must be compiled with default integer size (32 bits)
 
 ---
 
