@@ -151,14 +151,14 @@ TEST_CASE("fn_trans_1")
   REQUIRE( accu(abs( (A.row(1).t() + A_row1_t) - 2*A_row1_t)) == Approx(0.0).margin(0.001) );
 
 
-  REQUIRE( abs( accu(A.col(1).t()) - accu_A_col1_t ) == Approx(0.0).margin(0.001) );
-  REQUIRE( abs( accu(A.row(1).t()) - accu_A_row1_t ) == Approx(0.0).margin(0.001) );
+  REQUIRE( std::abs( accu(A.col(1).t()) - accu_A_col1_t ) == Approx(0.0).margin(0.001) );
+  REQUIRE( std::abs( accu(A.row(1).t()) - accu_A_row1_t ) == Approx(0.0).margin(0.001) );
 
-  REQUIRE( abs( accu(A.col(1).t()) - accu(A.col(1)) ) == Approx(0.0).margin(0.001) );
-  REQUIRE( abs( accu(A.row(1).t()) - accu(A.row(1)) ) == Approx(0.0).margin(0.001) );
+  REQUIRE( std::abs( accu(A.col(1).t()) - accu(A.col(1)) ) == Approx(0.0).margin(0.001) );
+  REQUIRE( std::abs( accu(A.row(1).t()) - accu(A.row(1)) ) == Approx(0.0).margin(0.001) );
 
-  REQUIRE( abs( sum(A.col(1).t()) - accu_A_col1_t ) == Approx(0.0).margin(0.001) );
-  REQUIRE( abs( sum(A.row(1).t()) - accu_A_row1_t ) == Approx(0.0).margin(0.001) );
+  REQUIRE( std::abs( sum(A.col(1).t()) - accu_A_col1_t ) == Approx(0.0).margin(0.001) );
+  REQUIRE( std::abs( sum(A.row(1).t()) - accu_A_row1_t ) == Approx(0.0).margin(0.001) );
   
   mat B; 
   REQUIRE_THROWS( B = A + A.t() );
