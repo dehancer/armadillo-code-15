@@ -41,5 +41,5 @@ TEST_CASE("fn_cond_2")
   {
   mat A = zeros<mat>(5,6);
   
-  REQUIRE( is_finite(cond(A)) == false );
+  REQUIRE( std::isfinite(cond(A)) == false );
   }

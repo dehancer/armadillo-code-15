@@ -37,17 +37,17 @@ TEST_CASE("fn_is_finite_1")
   
   mat C = A;  C(2,4) = datum::nan;
   
-  REQUIRE( is_finite(A) == true  );
-  REQUIRE( is_finite(B) == false );
-  REQUIRE( is_finite(C) == false );
+  REQUIRE( (A).is_finite() == true  );
+  REQUIRE( (B).is_finite() == false );
+  REQUIRE( (C).is_finite() == false );
   
-  REQUIRE( is_finite(A+A) == true  );
-  REQUIRE( is_finite(B+B) == false );
-  REQUIRE( is_finite(C+C) == false );
+  REQUIRE( (A+A).is_finite() == true  );
+  REQUIRE( (B+B).is_finite() == false );
+  REQUIRE( (C+C).is_finite() == false );
   
-  REQUIRE( is_finite(2*A) == true  );
-  REQUIRE( is_finite(2*B) == false );
-  REQUIRE( is_finite(2*C) == false );
+  REQUIRE( (2*A).is_finite() == true  );
+  REQUIRE( (2*B).is_finite() == false );
+  REQUIRE( (2*C).is_finite() == false );
   
   // REQUIRE_THROWS(  );
   }
