@@ -181,7 +181,7 @@ SpValProxy<T1>::operator/=(const eT rhs)
     {
     const eT val = eT(0) / rhs;  // in case rhs is zero or nan
     
-    if(val != eT(0)) { val_ptr = &parent.insert_element(row, col, val); }
+    if(val != eT(0))  { val_ptr = &parent.insert_element(row, col, val); }
     }
   
   return *this;
