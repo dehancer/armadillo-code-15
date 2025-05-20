@@ -60,6 +60,12 @@ spglue_schur::apply_noalias(SpMat<eT>& out, const SpProxy<T1>& pa, const SpProxy
   
   arma_conform_assert_same_size(pa.get_n_rows(), pa.get_n_cols(), pb.get_n_rows(), pb.get_n_cols(), "element-wise multiplication");
   
+  if( (pa.get_n_nonzero() == 0) && (pb.get_n_nonzero() == 0) )
+    {
+    out.zeros(pa.get_n_rows(), pa.get_n_cols());
+    return;
+    }
+  
   const uword max_n_nonzero = pa.get_n_nonzero() + pb.get_n_nonzero();
   
   // Resize memory to upper bound
