@@ -109,7 +109,7 @@ spglue_schur::apply_noalias(SpMat<eT>& out, const SpProxy<T1>& pa, const SpProxy
         }
       else
         {
-        out_val = eT(0) * (*y_it);  // in case (*x_it) is inf or nan
+        out_val = eT(0) * (*y_it);  // in case (*y_it) is inf or nan
         
         ++y_it;
         
