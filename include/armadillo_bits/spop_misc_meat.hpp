@@ -74,8 +74,7 @@ spop_cx_scalar_times::apply(SpMat< std::complex<typename T1::pod_type> >& out, c
   {
   arma_debug_sigprint();
   
-  typedef typename T1::pod_type         T;
-  typedef typename std::complex<T> out_eT;
+  typedef typename T1::pod_type T;
   
   out.init_xform_mt(in.m, priv::functor_cx_scalar_times<T>(in.aux_out_eT));
   }
