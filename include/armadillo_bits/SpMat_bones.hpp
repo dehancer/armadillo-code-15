@@ -423,12 +423,12 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     inline iterator_base(const SpMat& in_M);
     inline iterator_base(const SpMat& in_M, const uword col, const uword pos);
     
-    arma_warn_unused inline eT operator*() const;
+    arma_inline eT operator*() const;
     
     // don't hold location internally; call "dummy" methods to get that information
-    arma_warn_unused inline uword row() const { return M->row_indices[internal_pos]; }
-    arma_warn_unused inline uword col() const { return internal_col;                 }
-    arma_warn_unused inline uword pos() const { return internal_pos;                 }
+    arma_inline uword row() const { return M->row_indices[internal_pos]; }
+    arma_inline uword col() const { return internal_col;                 }
+    arma_inline uword pos() const { return internal_pos;                 }
     
     arma_aligned const SpMat* M;
     arma_aligned       uword  internal_col;
@@ -491,7 +491,7 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     inline           iterator (const iterator& other) : const_iterator(other) { }
     inline iterator& operator=(const iterator& other) = default;
     
-    arma_warn_unused inline SpValProxy< SpMat<eT> > operator*();
+    arma_hot inline SpValProxy< SpMat<eT> > operator*();
     
     // overloads needed for return type correctness
     arma_hot         inline iterator& operator++();
@@ -526,9 +526,9 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     uword internal_row; // hold row internally
     uword actual_pos;   // hold the true position we are at in the matrix, as column-major indexing
     
-    arma_warn_unused inline eT operator*() const { return iterator_base::M->values[actual_pos]; }
+    arma_inline eT operator*() const { return iterator_base::M->values[actual_pos]; }
     
-    arma_warn_unused inline uword row() const { return internal_row; }
+    arma_inline uword row() const { return internal_row; }
     
     arma_hot inline bool operator==(const const_iterator& rhs) const;
     arma_hot inline bool operator!=(const const_iterator& rhs) const;
@@ -555,7 +555,7 @@ class SpMat : public SpBase< eT, SpMat<eT> >
     inline               row_iterator(const row_iterator& other) : const_row_iterator(other) { }
     inline row_iterator& operator=   (const row_iterator& other) = default;
     
-    arma_warn_unused inline SpValProxy< SpMat<eT> > operator*();
+    arma_hot inline SpValProxy< SpMat<eT> > operator*();
     
     // overloads required for return type correctness
     arma_hot         inline row_iterator& operator++();

@@ -269,7 +269,7 @@ SpSubview<eT>::const_iterator::const_iterator(const const_iterator& other)
 
 
 template<typename eT>
-inline
+arma_inline
 eT
 SpSubview<eT>::const_iterator::operator*() const
   {
