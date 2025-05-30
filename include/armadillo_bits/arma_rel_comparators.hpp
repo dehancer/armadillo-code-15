@@ -58,17 +58,17 @@ struct arma_lt_comparator< std::complex<T> >
   {
   typedef typename std::complex<T> eT;
   
-  inline bool operator() (const eT& a, const eT& b) const { return (std::abs(a) < std::abs(b)); }
+  // inline bool operator() (const eT& a, const eT& b) const { return (std::abs(a) < std::abs(b)); }
   
-  // inline
-  // bool
-  // operator() (const eT& a, const eT& b) const
-  //   {
-  //   const T abs_a = std::abs(a);
-  //   const T abs_b = std::abs(b);
-  //   
-  //   return ( (abs_a != abs_b) ? (abs_a < abs_b) : (std::arg(a) < std::arg(b)) );
-  //   }
+  inline
+  bool
+  operator() (const eT& a, const eT& b) const
+    {
+    const T abs_a = std::abs(a);
+    const T abs_b = std::abs(b);
+    
+    return ( (abs_a != abs_b) ? (abs_a < abs_b) : (std::arg(a) < std::arg(b)) );
+    }
   
   // inline
   // bool
@@ -105,17 +105,17 @@ struct arma_gt_comparator< std::complex<T> >
   {
   typedef typename std::complex<T> eT;
   
-  inline bool operator() (const eT& a, const eT& b) const { return (std::abs(a) > std::abs(b)); }
+  // inline bool operator() (const eT& a, const eT& b) const { return (std::abs(a) > std::abs(b)); }
   
-  // inline
-  // bool
-  // operator() (const eT& a, const eT& b) const
-  //   {
-  //   const T abs_a = std::abs(a);
-  //   const T abs_b = std::abs(b);
-  //   
-  //   return ( (abs_a != abs_b) ? (abs_a > abs_b) : (std::arg(a) > std::arg(b)) );
-  //   }
+  inline
+  bool
+  operator() (const eT& a, const eT& b) const
+    {
+    const T abs_a = std::abs(a);
+    const T abs_b = std::abs(b);
+    
+    return ( (abs_a != abs_b) ? (abs_a > abs_b) : (std::arg(a) > std::arg(b)) );
+    }
   
   // inline
   // bool
@@ -152,7 +152,12 @@ struct arma_leq_comparator< std::complex<T> >
   {
   typedef typename std::complex<T> eT;
   
-  inline bool operator() (const eT& a, const eT& b) const { return (std::abs(a) <= std::abs(b)); }
+  inline bool operator() (const eT& a, const eT& b) const
+    {
+    const arma_lt_comparator< std::complex<T> > comparator;
+    
+    return (a == b) ? true : comparator(a,b);
+    }
   };
 
 
@@ -162,7 +167,12 @@ struct arma_geq_comparator< std::complex<T> >
   {
   typedef typename std::complex<T> eT;
   
-  inline bool operator() (const eT& a, const eT& b) const { return (std::abs(a) >= std::abs(b)); }
+  inline bool operator() (const eT& a, const eT& b) const
+    {
+    const arma_gt_comparator< std::complex<T> > comparator;
+    
+    return (a == b) ? true : comparator(a,b);
+    }
   };
 
 
