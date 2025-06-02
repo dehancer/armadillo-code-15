@@ -830,21 +830,47 @@ op_max::direct_max(const std::complex<T>* const X, const uword n_elem)
   {
   arma_debug_sigprint();
   
-  uword index   = 0;
-  T     max_val = priv::most_neg<T>();
+  typedef typename std::complex<T> eT;
   
-  for(uword i=0; i<n_elem; ++i)
+  uword best_i   = 0;
+  T     best_abs = priv::most_neg<T>();
+  T     best_arg = priv::most_neg<T>();
+  
+  bool best_arg_valid = false;  // delay calling std::arg() until necessary
+  
+  for(uword i=0; i < n_elem; ++i)
     {
-    const T tmp_val = std::abs(X[i]);
+    const eT& X_i     = X[i];
+    const  T  X_i_abs = std::abs(X_i);
     
-    if(tmp_val > max_val)
+    if(X_i_abs > best_abs)
       {
-      max_val = tmp_val;
-      index   = i;
+      best_i   = i;
+      best_abs = X_i_abs;
+      
+      best_arg_valid = false;
+      }
+    else
+    if(X_i_abs == best_abs)
+      {
+      const T X_i_arg = std::arg(X_i);
+      
+      if(best_arg_valid == false)
+        {
+        best_arg       = std::arg(X[best_i]);
+        best_arg_valid = true;
+        }
+      
+      if(X_i_arg > best_arg)
+        {
+        best_i   = i;
+        best_abs = X_i_abs;
+        best_arg = X_i_arg;
+        }
       }
     }
   
-  return X[index];
+  return X[best_i];
   }
 
 
@@ -856,23 +882,49 @@ op_max::direct_max(const std::complex<T>* const X, const uword n_elem, uword& in
   {
   arma_debug_sigprint();
   
-  uword index   = 0;
-  T     max_val = priv::most_neg<T>();
+  typedef typename std::complex<T> eT;
   
-  for(uword i=0; i<n_elem; ++i)
+  uword best_i   = 0;
+  T     best_abs = priv::most_neg<T>();
+  T     best_arg = priv::most_neg<T>();
+  
+  bool best_arg_valid = false;  // delay calling std::arg() until necessary
+  
+  for(uword i=0; i < n_elem; ++i)
     {
-    const T tmp_val = std::abs(X[i]);
+    const eT& X_i     = X[i];
+    const  T  X_i_abs = std::abs(X_i);
     
-    if(tmp_val > max_val)
+    if(X_i_abs > best_abs)
       {
-      max_val = tmp_val;
-      index   = i;
+      best_i   = i;
+      best_abs = X_i_abs;
+      
+      best_arg_valid = false;
+      }
+    else
+    if(X_i_abs == best_abs)
+      {
+      const T X_i_arg = std::arg(X_i);
+      
+      if(best_arg_valid == false)
+        {
+        best_arg       = std::arg(X[best_i]);
+        best_arg_valid = true;
+        }
+      
+      if(X_i_arg > best_arg)
+        {
+        best_i   = i;
+        best_abs = X_i_abs;
+        best_arg = X_i_arg;
+        }
       }
     }
   
-  index_of_max_val = index;
+  index_of_max_val = best_i;
   
-  return X[index];
+  return X[best_i];
   }
 
 
@@ -984,6 +1036,20 @@ op_max::max(const Base<typename T1::elem_type,T1>& X)
   
   typedef typename T1::elem_type            eT;
   typedef typename get_pod_type<eT>::result T;
+  
+  if(is_Mat<typename Proxy<T1>::stored_type>::value)
+    {
+    const quasi_unwrap<T1> U(X.get_ref());
+    
+    if(U.M.n_elem == 0)
+      {
+      arma_conform_check(true, "max(): object has no elements");
+      
+      return Datum<eT>::nan;
+      }
+    
+    return op_max::direct_max(U.M.memptr(), U.M.n_elem);
+    }
   
   const Proxy<T1> P(X.get_ref());
   

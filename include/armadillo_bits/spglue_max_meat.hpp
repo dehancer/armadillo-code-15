@@ -197,24 +197,14 @@ spglue_max::dense_sparse_max(Mat<eT>& out, const Base<eT,T1>& X, const SpBase<eT
 
 
 
-//! max of non-complex elements
 template<typename eT>
 inline
-typename enable_if2<is_cx<eT>::no, eT>::result
+eT
 spglue_max::elem_max(const eT& a, const eT& b)
   {
-  return (std::max)(a, b);
-  }
-
-
-
-//! max of complex elements
-template<typename eT>
-inline
-typename enable_if2<is_cx<eT>::yes, eT>::result
-spglue_max::elem_max(const eT& a, const eT& b)
-  {
-  return (std::abs(a) > std::abs(b)) ? a : b;
+  const arma_gt_comparator<eT> comparator;
+  
+  return comparator(a,b) ? a : b;
   }
 
 

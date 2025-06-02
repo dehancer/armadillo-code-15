@@ -197,24 +197,14 @@ spglue_min::dense_sparse_min(Mat<eT>& out, const Base<eT,T1>& X, const SpBase<eT
 
 
 
-// min of non-complex elements
 template<typename eT>
 inline
-typename enable_if2<is_cx<eT>::no, eT>::result
+eT
 spglue_min::elem_min(const eT& a, const eT& b)
   {
-  return (std::min)(a, b);
-  }
-
-
-
-// min of complex elements
-template<typename eT>
-inline
-typename enable_if2<is_cx<eT>::yes, eT>::result
-spglue_min::elem_min(const eT& a, const eT& b)
-  {
-  return (std::abs(a) < std::abs(b)) ? a : b;
+  const arma_lt_comparator<eT> comparator;
+  
+  return comparator(a,b) ? a : b;
   }
 
 

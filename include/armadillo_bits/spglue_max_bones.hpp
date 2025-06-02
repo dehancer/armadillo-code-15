@@ -39,15 +39,9 @@ class spglue_max
   inline static void dense_sparse_max(Mat<eT>& out, const Base<eT,T1>& X, const SpBase<eT,T2>& Y);
   
   template<typename eT>
-  inline
+  arma_inline
   static
-  typename enable_if2<is_cx<eT>::no, eT>::result
-  elem_max(const eT& a, const eT& b);
-  
-  template<typename eT>
-  inline
-  static
-  typename enable_if2<is_cx<eT>::yes, eT>::result
+  eT
   elem_max(const eT& a, const eT& b);
   };
 
