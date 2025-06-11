@@ -133,6 +133,155 @@ typedef void* void_ptr;
 //
 
 
+// Attempt to capture all supported float16 types.
+// If C++23 or newer is used, we have a native type;
+// otherwise, there are a few possibilities.
+#if defined(ARMA_HAVE_CXX23)
+  #if defined(__STDCPP_FLOAT16_T__) && (__STDCPP_FLOAT16_T__ == 1)
+    #define ARMA_HAVE_FP16
+    typedef std::float16_t fp16;
+  #endif
+
+  #if defined(__STDCPP_BFLOAT16_T__) && (__STDCPP_BFLOAT16_T__ == 1)
+    #define ARMA_HAVE_BF16
+    typedef std::bfloat16_t bf16;
+  #endif
+#elif defined(__GNUG__) && !defined(__clang__) && defined(ARMA_FORCE_USE_FP16)
+  // All Armadillo-supported GCC versions support FP16.
+  #if defined(__FLT16_MAX__) && defined(__ARM_FP16_FORMAT_IEEE)
+    #define ARMA_HAVE_FP16
+    typedef __fp16 fp16;
+  #elif defined(__FLT16_MAX__) && defined(__SSE2__)
+    // See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=116122 for why __SSE2__ is needed.
+    #define ARMA_HAVE_FP16
+    typedef _Float16 fp16;
+  #endif
+
+  #if defined(__ARM_FEATURE_BF16_SCALAR_ARITHMETIC) || defined(__ARM_FEATURE_BF16_VECTOR_ARITHMETIC)
+    #define ARMA_HAVE_BF16
+    typedef __bf16 bf16;
+  #elif defined(__BFLT16_MAX__) && defined(__SSE2__)
+    #define ARMA_HAVE_BF16
+    typedef __bf16 bf16;
+  #endif
+
+#elif defined(__clang__) && defined(__is_identifier) && defined(ARMA_FORCE_USE_FP16)
+  // NOTE: clang is_identifier behavior returns 0 if the symbol is an identifier.
+  #if !(__is_identifier(_Float16))
+    #define ARMA_HAVE_FP16
+    typedef _Float16 fp16;
+  #endif
+
+  // We don't use clang's __fp16 type, as that is defined to up-cast to float for
+  // all arithemtic operations (e.g. it is emulated, not native).
+
+  #if defined(__ARM_FEATURE_BF16)
+    #define ARMA_HAVE_BF16
+    typedef __bf16 bf16;
+  #endif
+#endif
+
+
+//
+
+
+// If we can detect that the implementation of FP16 is going to be software emulated,
+// then it's going to be really slow.  Disable it and tell the user---unless they
+// force the issue.
+#if defined(ARMA_HAVE_FP16)
+  #if defined(__aarch64__)
+    #if !defined(__ARM_FEATURE_FP16_SCALAR_ARITHMETIC)
+      // We have to have the scalar intrinsics for native FP16 support.
+      #define ARMA_BAD_FP16
+    #endif
+  #elif defined(__x86_64__) || defined(__i386__)
+    #if !defined(__AVX512FP16__)
+      // Without the AVX512-FP16 extensions, FP16 support is non-native (emulated).
+      #define ARMA_BAD_FP16
+    #endif
+  #else
+    // We have an architecture that does not define any macros that we can use.
+    #define ARMA_BAD_FP16
+  #endif
+
+  #if defined(ARMA_BAD_FP16)
+    #if defined(ARMA_FORCE_USE_FP16)
+      #pragma message ("WARNING: 16-bit floating point support enabled (via ARMA_FORCE_USE_FP16), but native hardware support not detected---use of fp16 could be very slow!")
+
+      // An additional warning: if C++23 is not enabled, many function definitions might not exist.
+      // Whether this is a problem depends on what the user is doing.
+      #if !defined(ARMA_HAVE_CXX23)
+        #pragma message("WARNING: C++23 mode not enabled but 16-bit floating point support is forced (via ARMA_FORCE_USE_FP16); compilation may fail as some std:: functions may not work on fp16s!");
+      #endif
+    #else
+      #undef ARMA_HAVE_FP16
+    #endif
+  #endif
+
+  #undef ARMA_BAD_FP16
+#elif defined(ARMA_FORCE_USE_FP16) && !defined(ARMA_HAVE_FP16)
+  #pragma message("WARNING: 16-bit floating point support is forced (via ARMA_FORCE_USE_FP16), but no usable fp16 type could be detected!   Disabled.");
+#endif
+
+#if defined(ARMA_HAVE_BF16)
+  #if defined(__aarch64__)
+    #if !defined(__ARM_FEATURE_BF16_SCALAR_ARITHMETIC)
+      // We have to have the scalar intrinsics for native BF16 support.
+      #define ARMA_BAD_BF16
+    #endif
+  #elif defined(__x86_64__) || defined(__i386__)
+    #if !defined(__AVX512BF16__)
+      // Without the AVX512-BF16 extensions, BF16 support is non-native (emulated).
+      #define ARMA_BAD_BF16
+    #endif
+  #else
+    // We have an architecture that does not define any macros that we can use.
+    #define ARMA_BAD_BF16
+  #endif
+
+  #if defined(ARMA_BAD_BF16)
+    #if defined(ARMA_FORCE_USE_BF16)
+      #pragma message ("WARNING: 16-bit brain floating point support enabled (via ARMA_FORCE_USE_BF16), but native hardware support not detected---use of bf16 could be very slow!")
+
+      #if !defined(ARMA_HAVE_CXX23)
+        #pragma message("WARNING: C++23 mode not enabled but 16-bit brain floating point support is forced (via ARMA_FORCE_USE_BF16); compilation may fail as some std:: functions may not work on bf16s!");
+      #endif
+    #else
+      #undef ARMA_HAVE_BF16
+    #endif
+  #endif
+
+  #undef ARMA_BAD_BF16
+#elif defined(ARMA_FORCE_USE_BF16) && !defined(ARMA_HAVE_BF16)
+  #pragma message("WARNING: 16-bit brain floating point support is forced (via ARMA_FORCE_USE_BF16), but no usable bf16 type could be detected!  Disabled.");
+#endif
+
+
+
+#if defined(ARMA_HAVE_CX_FP16)
+  #undef ARMA_HAVE_CX_FP16
+#endif
+
+#if defined(ARMA_HAVE_CX_BF16)
+  #undef ARMA_HAVE_CX_BF16
+#endif
+
+// Support for std::complex<T> for any floating-point T is guaranteed by only C++23 and newer.
+#if defined(ARMA_HAVE_CXX23)
+  #if defined(ARMA_HAVE_FP16)
+    #define ARMA_HAVE_CX_FP16
+    typedef std::complex<fp16> cx_fp16;
+  #endif
+  #if defined(ARMA_HAVE_BF16)
+    #define ARMA_HAVE_CX_BF16
+    typedef std::complex<bf16> cx_bf16;
+  #endif
+#endif
+
+
+//
+
+
 // NOTE: blas_len is the fortran type for "hidden" arguments that specify the length of character arguments;
 // NOTE: it varies across compilers, compiler versions and systems (eg. 32 bit vs 64 bit);
 // NOTE: the default setting of "size_t" is an educated guess.
