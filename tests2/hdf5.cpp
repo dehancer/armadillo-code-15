@@ -846,4 +846,48 @@ TEST_CASE("hdf5_dataset_same_dataset_twice_test", "[hdf5]")
   std::remove("file.h5");
   }
 
+
+
+
+#if defined(ARMA_HAVE_FP16)
+#if defined(H5_HAVE__FLOAT16)
+TEST_CASE("hdf5_load_fp16", "[hdf5]")
+  {
+  arma::Mat<fp16> a;
+  a.randu(20, 20);
+
+  a.save(hdf5_name("file.h5", "dataset1"), hdf5_binary);
+
+  arma::Mat<fp16> b;
+  b.randu(10, 10);
+
+  b.load(hdf5_name("file.h5", "dataset1"), hdf5_binary);
+
+  REQUIRE( approx_equal(a, b, "absdiff", fp16(1e-5), fp16(1e-5)) );
+
+  std::remove("file.h5");
+  }
+#else
+TEST_CASE("hdf5_fail_to_load_fp16", "[hdf5]")
+  {
+  arma::Mat<fp16> a;
+  a.randu(20, 20);
+
+  REQUIRE_FALSE( a.save(hdf5_name("file.h5", "dataset1"), hdf5_binary) );
+  }
+#endif
+#endif
+
+
+
+#if defined(ARMA_HAVE_BF16)
+TEST_CASE("hdf5_fail_to_load_bf16", "[hdf5]")
+  {
+  arma::Mat<bf16> a;
+  a.randu(20, 20);
+
+  REQUIRE_FALSE( a.save(hdf5_name("file.h5", "dataset1"), hdf5_binary) );
+  }
+#endif
+
 #endif
