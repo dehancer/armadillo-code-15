@@ -23,7 +23,7 @@ using namespace arma;
 
 #if defined(ARMA_USE_SUPERLU)
 
-TEST_CASE("fn_spsolve_sparse_test")
+TEST_CASE("fn_spsolve_sparse_test", "[spsolve]")
   {
   // We want to spsolve a system of equations, AX = B, where we want to recover
   // X and we have A and B, and A is sparse.
@@ -64,7 +64,7 @@ TEST_CASE("fn_spsolve_sparse_test")
 
 
 
-TEST_CASE("fn_spsolve_sparse_nonsymmetric_test")
+TEST_CASE("fn_spsolve_sparse_nonsymmetric_test", "[spsolve]")
   {
   for (size_t t = 0; t < 10; ++t)
     {
@@ -104,7 +104,7 @@ TEST_CASE("fn_spsolve_sparse_nonsymmetric_test")
 
 
 
-TEST_CASE("fn_spsolve_sparse_float_test")
+TEST_CASE("fn_spsolve_sparse_float_test", "[spsolve]")
   {
   // We want to spsolve a system of equations, AX = B, where we want to recover
   // X and we have A and B, and A is sparse.
@@ -156,7 +156,7 @@ TEST_CASE("fn_spsolve_sparse_float_test")
 
 
 
-TEST_CASE("fn_spsolve_sparse_nonsymmetric_float_test")
+TEST_CASE("fn_spsolve_sparse_nonsymmetric_float_test", "[spsolve]")
   {
   for (size_t t = 0; t < 10; ++t)
     {
@@ -196,7 +196,7 @@ TEST_CASE("fn_spsolve_sparse_nonsymmetric_float_test")
 
 
 
-TEST_CASE("fn_spsolve_sparse_complex_float_test")
+TEST_CASE("fn_spsolve_sparse_complex_float_test", "[spsolve]")
   {
   // We want to spsolve a system of equations, AX = B, where we want to recover
   // X and we have A and B, and A is sparse.
@@ -238,7 +238,7 @@ TEST_CASE("fn_spsolve_sparse_complex_float_test")
 
 
 
-TEST_CASE("fn_spsolve_sparse_nonsymmetric_complex_float_test")
+TEST_CASE("fn_spsolve_sparse_nonsymmetric_complex_float_test", "[spsolve]")
   {
   for (size_t t = 0; t < 10; ++t)
     {
@@ -279,7 +279,7 @@ TEST_CASE("fn_spsolve_sparse_nonsymmetric_complex_float_test")
 
 
 
-TEST_CASE("fn_spsolve_sparse_complex_test")
+TEST_CASE("fn_spsolve_sparse_complex_test", "[spsolve]")
   {
   // We want to spsolve a system of equations, AX = B, where we want to recover
   // X and we have A and B, and A is sparse.
@@ -321,7 +321,7 @@ TEST_CASE("fn_spsolve_sparse_complex_test")
 
 
 
-TEST_CASE("fn_spsolve_sparse_nonsymmetric_complex_test")
+TEST_CASE("fn_spsolve_sparse_nonsymmetric_complex_test", "[spsolve]")
   {
   for (size_t t = 0; t < 10; ++t)
     {
@@ -362,7 +362,7 @@ TEST_CASE("fn_spsolve_sparse_nonsymmetric_complex_test")
 
 
 
-TEST_CASE("fn_spsolve_delayed_sparse_test")
+TEST_CASE("fn_spsolve_delayed_sparse_test", "[spsolve]")
   {
   const uword size = 10;
 
@@ -396,7 +396,7 @@ TEST_CASE("fn_spsolve_delayed_sparse_test")
 
 
 
-TEST_CASE("fn_spsolve_superlu_solve_test")
+TEST_CASE("fn_spsolve_superlu_solve_test", "[spsolve]")
   {
   // Solve this matrix, as in the examples:
   // [[19  0  21 21  0]
@@ -440,7 +440,7 @@ TEST_CASE("fn_spsolve_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_random_superlu_solve_test")
+TEST_CASE("fn_spsolve_random_superlu_solve_test", "[spsolve]")
   {
   // Try to solve some random systems.
   const size_t iterations = 10;
@@ -472,7 +472,7 @@ TEST_CASE("fn_spsolve_random_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_float_superlu_solve_test")
+TEST_CASE("fn_spsolve_float_superlu_solve_test", "[spsolve]")
   {
   // Solve this matrix, as in the examples:
   // [[19  0  21 21  0]
@@ -516,7 +516,7 @@ TEST_CASE("fn_spsolve_float_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_float_random_superlu_solve_test")
+TEST_CASE("fn_spsolve_float_random_superlu_solve_test", "[spsolve]")
   {
   // Try to solve some random systems.
   const size_t iterations = 10;
@@ -562,7 +562,7 @@ TEST_CASE("fn_spsolve_float_random_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_cx_float_superlu_solve_test")
+TEST_CASE("fn_spsolve_cx_float_superlu_solve_test", "[spsolve]")
   {
   // Solve this matrix, as in the examples:
   // [[19  0  21 21  0]
@@ -616,7 +616,7 @@ TEST_CASE("fn_spsolve_cx_float_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_cx_float_random_superlu_solve_test")
+TEST_CASE("fn_spsolve_cx_float_random_superlu_solve_test", "[spsolve]")
   {
   // Try to solve some random systems.
   const size_t iterations = 10;
@@ -658,7 +658,7 @@ TEST_CASE("fn_spsolve_cx_float_random_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_cx_superlu_solve_test")
+TEST_CASE("fn_spsolve_cx_superlu_solve_test", "[spsolve]")
   {
   // Solve this matrix, as in the examples:
   // [[19  0  21 21  0]
@@ -712,7 +712,7 @@ TEST_CASE("fn_spsolve_cx_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_cx_random_superlu_solve_test")
+TEST_CASE("fn_spsolve_cx_random_superlu_solve_test", "[spsolve]")
   {
   // Try to solve some random systems.
   const size_t iterations = 10;
@@ -754,7 +754,7 @@ TEST_CASE("fn_spsolve_cx_random_superlu_solve_test")
 
 
 
-TEST_CASE("fn_spsolve_function_test")
+TEST_CASE("fn_spsolve_function_test", "[spsolve]")
   {
   sp_mat a;
   a.sprandu(50, 50, 0.3);
@@ -785,7 +785,7 @@ TEST_CASE("fn_spsolve_function_test")
 
 
 
-TEST_CASE("fn_spsolve_float_function_test")
+TEST_CASE("fn_spsolve_float_function_test", "[spsolve]")
   {
   sp_fmat a;
   a.sprandu(50, 50, 0.3);
@@ -823,7 +823,7 @@ TEST_CASE("fn_spsolve_float_function_test")
 
 
 
-TEST_CASE("fn_spsolve_cx_function_test")
+TEST_CASE("fn_spsolve_cx_function_test", "[spsolve]")
   {
   sp_cx_mat a;
   a.sprandu(50, 50, 0.3);
@@ -864,7 +864,7 @@ TEST_CASE("fn_spsolve_cx_function_test")
 
 
 
-TEST_CASE("fn_spsolve_cx_float_function_test")
+TEST_CASE("fn_spsolve_cx_float_function_test", "[spsolve]")
   {
   sp_cx_fmat a;
   a.sprandu(50, 50, 0.3);
@@ -905,7 +905,7 @@ TEST_CASE("fn_spsolve_cx_float_function_test")
 
 
 
-TEST_CASE("spsolve_factoriser_test")
+TEST_CASE("spsolve_factoriser_test", "[spsolve]")
   {
   sp_mat A;
   A.sprandu(100, 100, 0.2);

@@ -50,7 +50,7 @@ TEST_CASE("fn_diff_1")
 
 
 
-TEST_CASE("fn_diff_2")
+TEST_CASE("fn_diff_2", "[diff]")
   {
   mat A = 
     "\

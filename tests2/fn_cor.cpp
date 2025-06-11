@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_cor_1")
+TEST_CASE("fn_cor_1", "[cor]")
   {
   vec a =     linspace<vec>(1,5,6);
   vec b = 0.5*linspace<vec>(1,5,6);
@@ -34,7 +34,7 @@ TEST_CASE("fn_cor_1")
 
 
 
-TEST_CASE("fn_cor_2")
+TEST_CASE("fn_cor_2", "[cor]")
   {
   mat A =
     {

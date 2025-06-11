@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_det_1")
+TEST_CASE("fn_det_1", "[det]")
   {
   mat A = 
     "\
@@ -45,7 +45,7 @@ TEST_CASE("fn_det_1")
 
 
 
-TEST_CASE("fn_det_2")
+TEST_CASE("fn_det_2", "[det]")
   {
   mat A = toeplitz(linspace(1,5,6));
   
@@ -67,7 +67,7 @@ TEST_CASE("fn_det_2")
   }
 
 
-TEST_CASE("fn_det_3")
+TEST_CASE("fn_det_3", "[det]")
   {
   mat A = toeplitz(linspace(1,5,6));
   

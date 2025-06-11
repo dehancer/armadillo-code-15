@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("bounds_1")
+TEST_CASE("bounds_1", "[bounds]")
   {
   const uword n_rows = 5;
   const uword n_cols = 6;

@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_conv_1")
+TEST_CASE("fn_conv_1", "[conv]")
   {
   vec a =   linspace<vec>(1,5,6);
   vec b = 2*linspace<vec>(1,6,7);

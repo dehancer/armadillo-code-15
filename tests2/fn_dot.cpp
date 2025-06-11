@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_dot_1")
+TEST_CASE("fn_dot_1", "[dot]")
   {
   mat A =
     "\
@@ -51,7 +51,7 @@ TEST_CASE("fn_dot_1")
 
 
 
-TEST_CASE("fn_dot_2")
+TEST_CASE("fn_dot_2", "[dot]")
   {
   mat A =
     "\
@@ -77,7 +77,7 @@ TEST_CASE("fn_dot_2")
 
 
 
-TEST_CASE("fn_dot_sp_mat_mat")
+TEST_CASE("fn_dot_sp_mat_mat", "[dot]")
   {
   // Make matrices.
   SpMat<double> a("3.0 0.0 0.0; 1.0 2.0 2.0; 0.0 0.0 1.0");
@@ -89,7 +89,7 @@ TEST_CASE("fn_dot_sp_mat_mat")
 
 
 
-TEST_CASE("fn_dot_sp_col_col")
+TEST_CASE("fn_dot_sp_col_col", "[dot]")
   {
   SpCol<unsigned int> a("3; 4; 0; 0; 0; 2; 0; 0");
   Col<unsigned int> b("1 6 1 2 3 7 1 2");
@@ -100,7 +100,7 @@ TEST_CASE("fn_dot_sp_col_col")
 
 
 
-TEST_CASE("fn_dot_sp_mat_sp_mat")
+TEST_CASE("fn_dot_sp_mat_sp_mat", "[dot]")
   {
   SpMat<double> a("3.0 0.0 0.0; 1.0 2.0 2.0; 0.0 0.0 1.0");
   SpMat<double> b("3.0 0.0 0.0; 1.0 2.0 2.0; 0.0 0.0 1.0");
@@ -111,7 +111,7 @@ TEST_CASE("fn_dot_sp_mat_sp_mat")
 
 
 
-TEST_CASE("fn_dot_sp_col_sp_col")
+TEST_CASE("fn_dot_sp_col_sp_col", "[dot]")
   {
   SpCol<unsigned int> a("3; 4; 0; 0; 0; 2; 0; 0");
   SpCol<unsigned int> b("0; 8; 0; 1; 1; 0; 0; 0");

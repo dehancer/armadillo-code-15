@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_vectorise_1")
+TEST_CASE("fn_vectorise_1", "[vectorise]")
   {
   mat A = 
     "\

@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_as_scalar_1")
+TEST_CASE("fn_as_scalar_1", "[as_scalar]")
   {
   mat A(1,1); A.fill(2.0);
   mat B(2,2); B.fill(2.0);
@@ -38,7 +38,7 @@ TEST_CASE("fn_as_scalar_1")
 
 
 
-TEST_CASE("fn_as_scalar_2")
+TEST_CASE("fn_as_scalar_2", "[as_scalar]")
   {
   rowvec r = linspace<rowvec>(1,5,6);
   colvec q = linspace<colvec>(1,5,6);
@@ -54,7 +54,7 @@ TEST_CASE("fn_as_scalar_2")
 
 
 
-TEST_CASE("fn_as_scalar_3")
+TEST_CASE("fn_as_scalar_3", "[as_scalar]")
   {
   cube A(1,1,1); A.fill(2.0);
   cube B(2,2,2); B.fill(2.0);

@@ -21,8 +21,7 @@
 
 using namespace arma;
 
-
-TEST_CASE("mat_plus_1")
+TEST_CASE("mat_plus_1", "[plus]")
   {
   mat A = 
     "\
@@ -96,7 +95,7 @@ TEST_CASE("mat_plus_1")
 
 
 
-TEST_CASE("mat_plus_2")
+TEST_CASE("mat_plus_2", "[plus]")
   {
   mat A(5,6); A.fill(1.0);
   mat B(5,6); B.fill(2.0);

@@ -37,7 +37,7 @@ TEST_CASE("fn_cumsum_1")
 
 
 
-TEST_CASE("fn_cumsum_2")
+TEST_CASE("fn_cumsum_2", "[cumsum]")
   {
   mat A =
     {

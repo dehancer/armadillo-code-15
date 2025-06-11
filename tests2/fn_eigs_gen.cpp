@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("fn_eigs_gen_odd_test")
+TEST_CASE("fn_eigs_gen_odd_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -83,7 +83,7 @@ TEST_CASE("fn_eigs_gen_odd_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_test")
+TEST_CASE("fn_eigs_gen_even_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 4;
@@ -148,7 +148,7 @@ TEST_CASE("fn_eigs_gen_even_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_opts_test")
+TEST_CASE("fn_eigs_gen_even_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 4;
@@ -214,7 +214,7 @@ TEST_CASE("fn_eigs_gen_even_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_sigma_test")
+TEST_CASE("fn_eigs_gen_odd_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -281,7 +281,7 @@ TEST_CASE("fn_eigs_gen_odd_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_sigma_test")
+TEST_CASE("fn_eigs_gen_even_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 4;
@@ -348,7 +348,7 @@ TEST_CASE("fn_eigs_gen_even_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_sigma_opts_test")
+TEST_CASE("fn_eigs_gen_even_sigma_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 4;
@@ -416,7 +416,7 @@ TEST_CASE("fn_eigs_gen_even_sigma_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_sm_test")
+TEST_CASE("fn_eigs_gen_odd_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -482,7 +482,7 @@ TEST_CASE("fn_eigs_gen_odd_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_sm_test")
+TEST_CASE("fn_eigs_gen_even_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 4;
@@ -548,7 +548,7 @@ TEST_CASE("fn_eigs_gen_even_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_sm_opts_test")
+TEST_CASE("fn_eigs_gen_even_sm_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 4;
@@ -615,7 +615,7 @@ TEST_CASE("fn_eigs_gen_even_sm_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_float_test")
+TEST_CASE("fn_eigs_gen_odd_float_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -681,7 +681,7 @@ TEST_CASE("fn_eigs_gen_odd_float_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_float_test")
+TEST_CASE("fn_eigs_gen_even_float_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -747,7 +747,7 @@ TEST_CASE("fn_eigs_gen_even_float_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_float_opts_test")
+TEST_CASE("fn_eigs_gen_even_float_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -814,7 +814,7 @@ TEST_CASE("fn_eigs_gen_even_float_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_float_sigma_test")
+TEST_CASE("fn_eigs_gen_odd_float_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -882,7 +882,7 @@ TEST_CASE("fn_eigs_gen_odd_float_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_float_sigma_test")
+TEST_CASE("fn_eigs_gen_even_float_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -952,7 +952,7 @@ TEST_CASE("fn_eigs_gen_even_float_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_float_sigma_opts_test")
+TEST_CASE("fn_eigs_gen_even_float_sigma_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1021,7 +1021,7 @@ TEST_CASE("fn_eigs_gen_even_float_sigma_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_float_sm_test")
+TEST_CASE("fn_eigs_gen_odd_float_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -1088,7 +1088,7 @@ TEST_CASE("fn_eigs_gen_odd_float_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_float_sm_test")
+TEST_CASE("fn_eigs_gen_even_float_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1155,7 +1155,7 @@ TEST_CASE("fn_eigs_gen_even_float_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_float_sm_opts_test")
+TEST_CASE("fn_eigs_gen_even_float_sm_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1223,7 +1223,7 @@ TEST_CASE("fn_eigs_gen_even_float_sm_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_complex_float_test")
+TEST_CASE("fn_eigs_gen_odd_complex_float_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -1285,7 +1285,7 @@ TEST_CASE("fn_eigs_gen_odd_complex_float_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_float_test")
+TEST_CASE("fn_eigs_gen_even_complex_float_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1347,7 +1347,7 @@ TEST_CASE("fn_eigs_gen_even_complex_float_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_float_opts_test")
+TEST_CASE("fn_eigs_gen_even_complex_float_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1410,7 +1410,7 @@ TEST_CASE("fn_eigs_gen_even_complex_float_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_complex_float_sigma_test")
+TEST_CASE("fn_eigs_gen_odd_complex_float_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -1477,7 +1477,7 @@ TEST_CASE("fn_eigs_gen_odd_complex_float_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_float_sigma_test")
+TEST_CASE("fn_eigs_gen_even_complex_float_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1544,7 +1544,7 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_float_sigma_opts_test")
+TEST_CASE("fn_eigs_gen_even_complex_float_sigma_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1612,7 +1612,7 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sigma_opts_test")
 
 
 
-TEST_CASE("fn_eigs_gen_odd_complex_float_sm_test")
+TEST_CASE("fn_eigs_gen_odd_complex_float_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -1678,7 +1678,7 @@ TEST_CASE("fn_eigs_gen_odd_complex_float_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_float_sm_test")
+TEST_CASE("fn_eigs_gen_even_complex_float_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1744,7 +1744,7 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_float_sm_opts_test")
+TEST_CASE("fn_eigs_gen_even_complex_float_sm_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 12;
   const uword n_eigval = 8;
@@ -1811,7 +1811,7 @@ TEST_CASE("fn_eigs_gen_even_complex_float_sm_opts_test")
 
 
 
-TEST_CASE("eigs_gen_odd_complex_test")
+TEST_CASE("eigs_gen_odd_complex_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -1873,7 +1873,7 @@ TEST_CASE("eigs_gen_odd_complex_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_test")
+TEST_CASE("fn_eigs_gen_even_complex_test", "[eigs_gen]")
   {
   const uword n_rows = 15;
   const uword n_eigval = 6;
@@ -1935,7 +1935,7 @@ TEST_CASE("fn_eigs_gen_even_complex_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_opts_test")
+TEST_CASE("fn_eigs_gen_even_complex_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 15;
   const uword n_eigval = 6;
@@ -1998,7 +1998,7 @@ TEST_CASE("fn_eigs_gen_even_complex_opts_test")
 
 
 
-TEST_CASE("eigs_gen_odd_complex_sigma_test")
+TEST_CASE("eigs_gen_odd_complex_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -2065,7 +2065,7 @@ TEST_CASE("eigs_gen_odd_complex_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_sigma_test")
+TEST_CASE("fn_eigs_gen_even_complex_sigma_test", "[eigs_gen]")
   {
   const uword n_rows = 15;
   const uword n_eigval = 6;
@@ -2132,7 +2132,7 @@ TEST_CASE("fn_eigs_gen_even_complex_sigma_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_sigma_opts_test")
+TEST_CASE("fn_eigs_gen_even_complex_sigma_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 15;
   const uword n_eigval = 6;
@@ -2200,7 +2200,7 @@ TEST_CASE("fn_eigs_gen_even_complex_sigma_opts_test")
 
 
 
-TEST_CASE("eigs_gen_odd_complex_sm_test")
+TEST_CASE("eigs_gen_odd_complex_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 10;
   const uword n_eigval = 5;
@@ -2263,7 +2263,7 @@ TEST_CASE("eigs_gen_odd_complex_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_sm_test")
+TEST_CASE("fn_eigs_gen_even_complex_sm_test", "[eigs_gen]")
   {
   const uword n_rows = 15;
   const uword n_eigval = 6;
@@ -2326,7 +2326,7 @@ TEST_CASE("fn_eigs_gen_even_complex_sm_test")
 
 
 
-TEST_CASE("fn_eigs_gen_even_complex_sm_opts_test")
+TEST_CASE("fn_eigs_gen_even_complex_sm_opts_test", "[eigs_gen]")
   {
   const uword n_rows = 15;
   const uword n_eigval = 6;

@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_sum_1")
+TEST_CASE("fn_sum_1", "[sum]")
   {
   vec a = linspace<vec>(1,5,5);
   vec b = linspace<vec>(1,5,6);
@@ -33,7 +33,7 @@ TEST_CASE("fn_sum_1")
 
 
 
-TEST_CASE("sum2")
+TEST_CASE("fn_sum_2", "[sum]")
   {
   mat A =
     {
@@ -57,7 +57,7 @@ TEST_CASE("sum2")
   }
 
 
-TEST_CASE("sum3")
+TEST_CASE("fn_sum_3", "[sum]")
   {
   mat AA =
     {
@@ -87,9 +87,9 @@ TEST_CASE("sum3")
   }
 
 
-TEST_CASE("sum4")
+TEST_CASE("fn_sum_4", "[sum]")
   {
-  mat X(100,101, fill::randu);
+  mat X(100, 101, fill::randu);
 
   REQUIRE( (sum(sum(X))/X.n_elem)                      == Approx(0.5).margin(0.02) );
   REQUIRE( (sum(sum(X(span::all,span::all)))/X.n_elem) == Approx(0.5).margin(0.02) );
@@ -97,7 +97,7 @@ TEST_CASE("sum4")
 
 
 
-TEST_CASE("sum_spmat")
+TEST_CASE("fn_sum_spmat", "[sum]")
   {
   SpCol<double> a(5);
   a(0) = 3.0;

@@ -25,7 +25,7 @@ using namespace arma;
 /**
  * Make sure that gmm_full can fit manually constructed Gaussians.
  */
-TEST_CASE("gmm_full_1")
+TEST_CASE("gmm_full_1", "[gmm]")
   {
   // Higher dimensionality gives us a greater chance of having separated Gaussians.
   const uword dims      = 8;
@@ -127,7 +127,7 @@ TEST_CASE("gmm_full_1")
 
 
 
-TEST_CASE("gmm_diag_1")
+TEST_CASE("gmm_diag_1", "[gmm]")
   {
   // Higher dimensionality gives us a greater chance of having separated Gaussians.
   const uword dims      = 4;

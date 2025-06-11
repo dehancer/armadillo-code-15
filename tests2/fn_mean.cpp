@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("fn_mean_spmat_empty_test")
+TEST_CASE("fn_mean_spmat_empty_test", "[mean]")
   {
   SpMat<double> m(20, 25);
 
@@ -69,7 +69,7 @@ TEST_CASE("fn_mean_spmat_empty_test")
 
 
 
-TEST_CASE("fn_mean_spcxmat_empty_test")
+TEST_CASE("fn_mean_spcxmat_empty_test", "[mean]")
   {
   // Now with complex numbers.
   SpMat<std::complex<double> > m(20, 25);
@@ -123,7 +123,7 @@ TEST_CASE("fn_mean_spcxmat_empty_test")
 
 
 
-TEST_CASE("fn_mean_spmat_test")
+TEST_CASE("fn_mean_spmat_test", "[mean]")
   {
   // Create a random matrix and do mean testing on it, with varying levels of
   // nonzero (eventually this becomes a fully dense matrix).
@@ -228,7 +228,7 @@ TEST_CASE("fn_mean_spmat_test")
 
 
 
-TEST_CASE("fn_mean_spcxmat_test")
+TEST_CASE("fn_mean_spcxmat_test", "[mean]")
   {
   // Create a random matrix and do mean testing on it, with varying levels of
   // nonzero (eventually this becomes a fully dense matrix).
@@ -360,7 +360,7 @@ TEST_CASE("fn_mean_spcxmat_test")
   }
 
 
-TEST_CASE("fn_mean_sp_vector_test")
+TEST_CASE("fn_mean_sp_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<double> c(1000);
@@ -435,7 +435,7 @@ TEST_CASE("fn_mean_sp_vector_test")
 
 
 
-TEST_CASE("fn_mean_sp_cx_vector_test")
+TEST_CASE("fn_mean_sp_cx_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<std::complex<double> > c(1000);
@@ -519,7 +519,7 @@ TEST_CASE("fn_mean_sp_cx_vector_test")
 
 
 
-TEST_CASE("fn_mean_robust_sparse_test")
+TEST_CASE("fn_mean_robust_sparse_test", "[mean]")
   {
   // Create a sparse matrix with values that will overflow.
   SpMat<double> x;
@@ -644,7 +644,7 @@ TEST_CASE("fn_mean_robust_sparse_test")
 
 
 
-TEST_CASE("fn_mean_robust_cx_sparse_test")
+TEST_CASE("fn_mean_robust_cx_sparse_test", "[mean]")
   {
   SpMat<std::complex<double> > x;
   x.sprandu(50, 75, 0.3);
@@ -780,7 +780,7 @@ TEST_CASE("fn_mean_robust_cx_sparse_test")
 
 
 
-TEST_CASE("fn_mean_robust_sparse_vector_test")
+TEST_CASE("fn_mean_robust_sparse_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<double> c(1000);
@@ -850,7 +850,7 @@ TEST_CASE("fn_mean_robust_sparse_vector_test")
 
 
 
-TEST_CASE("fn_mean_robust_cx_sparse_vector_test")
+TEST_CASE("fn_mean_robust_cx_sparse_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<std::complex<double> > c(1000);
@@ -922,7 +922,7 @@ TEST_CASE("fn_mean_robust_cx_sparse_vector_test")
 
 
 
-TEST_CASE("fn_mean_sparse_alias_test")
+TEST_CASE("fn_mean_sparse_alias_test", "[mean]")
   {
   sp_mat s;
   s.sprandu(70, 70, 0.3);

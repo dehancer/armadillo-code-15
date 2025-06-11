@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_any_1")
+TEST_CASE("fn_any_1", "[any]")
   {
   vec a(5, fill::zeros);
   vec b(5, fill::zeros);  b(0) = 1.0;
@@ -45,7 +45,7 @@ TEST_CASE("fn_any_1")
 
 
 
-TEST_CASE("fn_any_2")
+TEST_CASE("fn_any_2", "[any]")
   {
   mat A(5, 6, fill::zeros);
   mat B(5, 6, fill::zeros);  B(0,0) = 1.0;
@@ -69,7 +69,7 @@ TEST_CASE("fn_any_2")
 
 
 
-TEST_CASE("fn_any_3")
+TEST_CASE("fn_any_3", "[any]")
   {
   mat A(5, 6, fill::zeros);
   mat B(5, 6, fill::zeros);  B(0,0) = 1.0;

@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("fn_var_empty_sparse_test")
+TEST_CASE("fn_var_empty_sparse_test", "[var]")
   {
   SpMat<double> m(100, 100);
 
@@ -82,7 +82,7 @@ TEST_CASE("fn_var_empty_sparse_test")
 
 
 
-TEST_CASE("fn_var_empty_cx_sparse_test")
+TEST_CASE("fn_var_empty_cx_sparse_test", "[var]")
   {
   SpMat<std::complex<double> > m(100, 100);
 
@@ -143,7 +143,7 @@ TEST_CASE("fn_var_empty_cx_sparse_test")
 
 
 
-TEST_CASE("fn_var_sparse_test")
+TEST_CASE("fn_var_sparse_test", "[var]")
   {
   // Create a random matrix and do variance testing on it, with varying levels
   // of nonzero (eventually this becomes a fully dense matrix).
@@ -333,7 +333,7 @@ TEST_CASE("fn_var_sparse_test")
 
 
 
-TEST_CASE("fn_var_sparse_cx_test")
+TEST_CASE("fn_var_sparse_cx_test", "[var]")
   {
   // Create a random matrix and do variance testing on it, with varying levels
   // of nonzero (eventually this becomes a fully dense matrix).
@@ -523,7 +523,7 @@ TEST_CASE("fn_var_sparse_cx_test")
 
 
 
-TEST_CASE("fn_var_sparse_alias_test")
+TEST_CASE("fn_var_sparse_alias_test", "[var]")
   {
   sp_mat s;
   s.sprandu(70, 70, 0.3);

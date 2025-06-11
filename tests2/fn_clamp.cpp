@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_clamp_1")
+TEST_CASE("fn_clamp_1", "[clamp]")
   {
   mat A = randu<mat>(100,123);
   

@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("fn_max_subview_test")
+TEST_CASE("fn_max_subview_test", "[max]")
   {
   // We will assume subview.at() works and returns points within the bounds of
   // the matrix, so we just have to ensure the results are the same as
@@ -54,7 +54,7 @@ TEST_CASE("fn_max_subview_test")
 
 
 
-TEST_CASE("fn_max_subview_col_test")
+TEST_CASE("fn_max_subview_col_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -80,7 +80,7 @@ TEST_CASE("fn_max_subview_col_test")
 
 
 
-TEST_CASE("fn_max_subview_row_test")
+TEST_CASE("fn_max_subview_row_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -106,7 +106,7 @@ TEST_CASE("fn_max_subview_row_test")
 
 
 
-// TEST_CASE("fn_max_incomplete_subview_test")
+// TEST_CASE("fn_max_incomplete_subview_test", "[max]")
 //   {
 //   for (size_t r = 50; r < 150; ++r)
 //     {
@@ -147,7 +147,7 @@ TEST_CASE("fn_max_subview_row_test")
 
 
 
-TEST_CASE("fn_max_incomplete_subview_col_test")
+TEST_CASE("fn_max_incomplete_subview_col_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -176,7 +176,7 @@ TEST_CASE("fn_max_incomplete_subview_col_test")
 
 
 
-TEST_CASE("fn_max_cx_subview_row_test")
+TEST_CASE("fn_max_cx_subview_row_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -205,7 +205,7 @@ TEST_CASE("fn_max_cx_subview_row_test")
 
 
 
-// TEST_CASE("fn_max_cx_incomplete_subview_test")
+// TEST_CASE("fn_max_cx_incomplete_subview_test", "[max]")
 //   {
 //   for (size_t r = 50; r < 150; ++r)
 //     {
@@ -249,7 +249,7 @@ TEST_CASE("fn_max_cx_subview_row_test")
 
 
 
-TEST_CASE("fn_max_cx_incomplete_subview_col_test")
+TEST_CASE("fn_max_cx_incomplete_subview_col_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -281,7 +281,7 @@ TEST_CASE("fn_max_cx_incomplete_subview_col_test")
 
 
 
-TEST_CASE("fn_max_cx_incomplete_subview_row_test")
+TEST_CASE("fn_max_cx_incomplete_subview_row_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -313,7 +313,7 @@ TEST_CASE("fn_max_cx_incomplete_subview_row_test")
 
 
 
-TEST_CASE("fn_max_weird_operation")
+TEST_CASE("fn_max_weird_operation", "[max]")
   {
   mat a(10, 10, fill::randn);
   mat b(25, 10, fill::randn);
@@ -333,7 +333,7 @@ TEST_CASE("fn_max_weird_operation")
 
 
 
-TEST_CASE("fn_max_weird_sparse_operation")
+TEST_CASE("fn_max_weird_sparse_operation", "[max]")
   {
   sp_mat a; a.sprandn(10, 10, 0.3);
   sp_mat b; b.sprandn(25, 10, 0.3);
@@ -353,7 +353,7 @@ TEST_CASE("fn_max_weird_sparse_operation")
 
 
 
-TEST_CASE("fn_max_sp_subview_test")
+TEST_CASE("fn_max_sp_subview_test", "[max]")
   {
   // We will assume subview.at() works and returns points within the bounds of
   // the matrix, so we just have to ensure the results are the same as
@@ -389,7 +389,7 @@ TEST_CASE("fn_max_sp_subview_test")
 
 
 
-TEST_CASE("fn_max_spsubview_col_test")
+TEST_CASE("fn_max_spsubview_col_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -418,7 +418,7 @@ TEST_CASE("fn_max_spsubview_col_test")
 
 
 
-TEST_CASE("fn_max_spsubview_row_max_test")
+TEST_CASE("fn_max_spsubview_row_max_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -447,7 +447,7 @@ TEST_CASE("fn_max_spsubview_row_max_test")
 
 
 
-// TEST_CASE("fn_max_spincompletesubview_max_test")
+// TEST_CASE("fn_max_spincompletesubview_max_test", "[max]")
 //   {
 //   for (size_t r = 50; r < 150; ++r)
 //     {
@@ -489,7 +489,7 @@ TEST_CASE("fn_max_spsubview_row_max_test")
 
 
 
-TEST_CASE("fn_max_spincompletesubview_col_max_test")
+TEST_CASE("fn_max_spincompletesubview_col_max_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -518,7 +518,7 @@ TEST_CASE("fn_max_spincompletesubview_col_max_test")
 
 
 
-TEST_CASE("fn_max_spincompletesubview_row_max_test")
+TEST_CASE("fn_max_spincompletesubview_row_max_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -547,7 +547,7 @@ TEST_CASE("fn_max_spincompletesubview_row_max_test")
 
 
 
-TEST_CASE("fn_max_sp_cx_subview_max_test")
+TEST_CASE("fn_max_sp_cx_subview_max_test", "[max]")
   {
   // We will assume subview.at() works and returns points within the bounds of
   // the matrix, so we just have to ensure the results are the same as
@@ -587,7 +587,7 @@ TEST_CASE("fn_max_sp_cx_subview_max_test")
 
 
 
-TEST_CASE("fn_max_sp_cx_subview_col_max_test")
+TEST_CASE("fn_max_sp_cx_subview_col_max_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -619,7 +619,7 @@ TEST_CASE("fn_max_sp_cx_subview_col_max_test")
 
 
 
-TEST_CASE("fn_max_sp_cx_subview_row_max_test")
+TEST_CASE("fn_max_sp_cx_subview_row_max_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -651,7 +651,7 @@ TEST_CASE("fn_max_sp_cx_subview_row_max_test")
 
 
 
-// TEST_CASE("fn_max_sp_cx_incomplete_subview_max_test")
+// TEST_CASE("fn_max_sp_cx_incomplete_subview_max_test", "[max]")
 //   {
 //   for (size_t r = 50; r < 150; ++r)
 //     {
@@ -696,7 +696,7 @@ TEST_CASE("fn_max_sp_cx_subview_row_max_test")
 
 
 
-TEST_CASE("fn_max_sp_cx_incomplete_subview_col_max_test")
+TEST_CASE("fn_max_sp_cx_incomplete_subview_col_max_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {
@@ -728,7 +728,7 @@ TEST_CASE("fn_max_sp_cx_incomplete_subview_col_max_test")
 
 
 
-TEST_CASE("fn_max_sp_cx_incomplete_subview_row_max_test")
+TEST_CASE("fn_max_sp_cx_incomplete_subview_row_max_test", "[max]")
   {
   for (size_t r = 10; r < 50; ++r)
     {

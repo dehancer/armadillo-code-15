@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_interp1_1")
+TEST_CASE("fn_interp1_1", "[interp1]")
   {
   mat A = 
     "\

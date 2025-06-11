@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("spcol_insert_test")
+TEST_CASE("spcol_insert_test", "[spcol]")
   {
   SpCol<double> sp;
   sp.set_size(10, 1);
@@ -39,7 +39,7 @@ TEST_CASE("spcol_insert_test")
   REQUIRE( sp.n_nonzero == 0 );
   }
 
-TEST_CASE("col_iterator_test")
+TEST_CASE("col_iterator_test", "[spcol]")
   {
   SpCol<double> x(5, 1);
   x(3) = 3.1;
@@ -112,7 +112,7 @@ TEST_CASE("col_iterator_test")
   REQUIRE( x.n_nonzero == 4 );
   }
 
-TEST_CASE("basic_sp_col_operator_test")
+TEST_CASE("basic_sp_col_operator_test", "[spcol]")
   {
   // +=, -=, *=, /=, %=
   SpCol<double> a(6, 1);
@@ -170,7 +170,7 @@ BOOST_AUTO_TEST_CASE(SparseSparseColMultiplicationTest) {
 }
 */
 
-TEST_CASE("spcol_shed_row_test")
+TEST_CASE("spcol_shed_row_test", "[spcol]")
   {
   // On an SpCol
   SpCol<int> e(10);
@@ -195,7 +195,7 @@ TEST_CASE("spcol_shed_row_test")
 
 
 
-TEST_CASE("spcol_col_constructor")
+TEST_CASE("spcol_col_constructor", "[spcol]")
   {
   SpMat<double> m(100, 100);
   m.sprandu(100, 100, 0.3);

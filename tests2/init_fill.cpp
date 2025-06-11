@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("init_fill_1")
+TEST_CASE("init_fill_1", "[init]")
   {
   mat Z( 5,  6, fill::zeros);
   mat O( 5,  6, fill::ones);
@@ -46,7 +46,7 @@ TEST_CASE("init_fill_1")
 
 
 
-TEST_CASE("init_fill_2")
+TEST_CASE("init_fill_2", "[init]")
   {
   cube Z( 5,  6, 2, fill::zeros);
   cube O( 5,  6, 2, fill::ones);

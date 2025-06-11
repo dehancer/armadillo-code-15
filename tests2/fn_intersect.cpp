@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_intersect_1")
+TEST_CASE("fn_intersect_1", "[intersect]")
   {
   ivec A = regspace<ivec>(5, 1);  // 5, 4, 3, 2, 1
   ivec B = regspace<ivec>(3, 7);  // 3, 4, 5, 6, 7
@@ -57,7 +57,7 @@ TEST_CASE("fn_intersect_1")
   }
 
 
-TEST_CASE("fn_intersect_2")
+TEST_CASE("fn_intersect_2", "[intersect]")
   {
   irowvec A = regspace<irowvec>(5, 1);  // 5, 4, 3, 2, 1
   irowvec B = regspace<irowvec>(3, 7);  // 3, 4, 5, 6, 7
@@ -92,7 +92,7 @@ TEST_CASE("fn_intersect_2")
   }
 
 
-TEST_CASE("fn_intersect_3")
+TEST_CASE("fn_intersect_3", "[intersect]")
   {
   irowvec A = regspace<irowvec>(5, 1);
   irowvec B = regspace<irowvec>(3, 7);

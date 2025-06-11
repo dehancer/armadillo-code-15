@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_accu_1")
+TEST_CASE("fn_accu_1", "[accu]")
   {
   mat A =
     "\
@@ -61,7 +61,7 @@ TEST_CASE("fn_accu_1")
 
 
 
-TEST_CASE("fn_accu_2")
+TEST_CASE("fn_accu_2", "[accu]")
   {
   mat A =
     "\
@@ -88,7 +88,7 @@ TEST_CASE("fn_accu_2")
 
 
 
-TEST_CASE("fn_accu_3")
+TEST_CASE("fn_accu_3", "[accu]")
   {
   vec a =  linspace<vec>(1,5,5);
   vec b =  linspace<vec>(1,5,6);
@@ -101,7 +101,7 @@ TEST_CASE("fn_accu_3")
 
 
 
-TEST_CASE("fn_accu_4")
+TEST_CASE("fn_accu_4", "[accu]")
   {
   mat A(5,6);  A.fill(2.0);
   mat B(5,6);  B.fill(4.0);
@@ -120,7 +120,7 @@ TEST_CASE("fn_accu_4")
 
 
 
-TEST_CASE("fn_accu_spmat")
+TEST_CASE("fn_accu_spmat", "[accu]")
   {
   SpMat<unsigned int> b(4, 4);
   b(0, 1) = 6;

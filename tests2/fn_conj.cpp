@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_conj_1")
+TEST_CASE("fn_conj_1", "[conj]")
   {
   vec re =   linspace<vec>(1,5,6);
   vec im = 2*linspace<vec>(1,5,6);
@@ -36,7 +36,7 @@ TEST_CASE("fn_conj_1")
 
 
 
-TEST_CASE("fn_conj2")
+TEST_CASE("fn_conj2", "[conj]")
   {
   cx_mat A = randu<cx_mat>(5,6);
   

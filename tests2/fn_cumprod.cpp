@@ -22,13 +22,13 @@
 using namespace arma;
 
 
-TEST_CASE("fn_cumprod_1")
+TEST_CASE("fn_cumprod_1", "[cumprod]")
   {
   colvec a = linspace<colvec>(1,5,6);
   rowvec b = linspace<rowvec>(1,5,6);
   
   colvec c = { 1.0000, 1.8000, 4.6800, 15.9120, 66.8304, 334.1520 };
-  
+
   REQUIRE( accu(abs(cumprod(a) - c    )) == Approx(0.0).margin(0.001) );
   REQUIRE( accu(abs(cumprod(b) - c.t())) == Approx(0.0).margin(0.001) );
   
@@ -37,7 +37,7 @@ TEST_CASE("fn_cumprod_1")
 
 
 
-TEST_CASE("fn_cumprod_2")
+TEST_CASE("fn_cumprod_2", "[cumprod]")
   {
   mat A =
     {

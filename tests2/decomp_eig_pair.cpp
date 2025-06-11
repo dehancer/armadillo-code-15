@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("decomp_eig_pair_1")
+TEST_CASE("decomp_eig_pair_1", "[eig_pair]")
   {
   mat A1 =
     "\
@@ -82,7 +82,7 @@ TEST_CASE("decomp_eig_pair_1")
 
 
 
-TEST_CASE("decomp_eig_pair_2")
+TEST_CASE("decomp_eig_pair_2", "[eig_pair]")
   {
   cx_mat A1 =
     {

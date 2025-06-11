@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_symmat_1")
+TEST_CASE("fn_symmat_1", "[symmat]")
   {
   mat A = 
     "\
@@ -63,7 +63,7 @@ TEST_CASE("fn_symmat_1")
 
 
 
-TEST_CASE("fn_symmat_2")
+TEST_CASE("fn_symmat_2", "[symmat]")
   {
   mat A = 
     "\

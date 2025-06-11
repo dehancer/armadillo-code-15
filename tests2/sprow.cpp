@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("sprow_shed_col_test")
+TEST_CASE("sprow_shed_col_test", "[sprow]")
   {
 
   SpRow<int> d(10);
@@ -47,7 +47,7 @@ TEST_CASE("sprow_shed_col_test")
 
 
 
-TEST_CASE("sprow_row_constructor_test")
+TEST_CASE("sprow_row_constructor_test", "[sprow]")
   {
   SpMat<double> m(100, 100);
   m.sprandu(100, 100, 0.3);

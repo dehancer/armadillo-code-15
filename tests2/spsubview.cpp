@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("sp_subview_tests")
+TEST_CASE("sp_subview_tests", "[spsubview]")
   {
   Mat<double> ref(4,4);
   ref.eye(4,4);
@@ -78,7 +78,7 @@ TEST_CASE("sp_subview_tests")
 
 
 
-TEST_CASE("sp_subview_const_test")
+TEST_CASE("sp_subview_const_test", "[spsubview]")
   {
   Mat<double> ref(4, 4);
   ref.eye(4, 4);
@@ -102,7 +102,7 @@ TEST_CASE("sp_subview_const_test")
 
 
 
-TEST_CASE("sp_subview_multiplication_test")
+TEST_CASE("sp_subview_multiplication_test", "[spsubview]")
   {
   // Ensure matrix multiplication with subviews works correctly.
   SpMat<double> a(2, 5);
@@ -153,7 +153,7 @@ TEST_CASE("sp_subview_multiplication_test")
 
 
 
-TEST_CASE("sp_subview_multiplication_test_2")
+TEST_CASE("sp_subview_multiplication_test_2", "[spsubview]")
   {
   // Ensure matrix multiplication with subviews works correctly.
   SpMat<double> a(4, 5);
@@ -206,7 +206,7 @@ TEST_CASE("sp_subview_multiplication_test_2")
 
 
 
-TEST_CASE("sp_subview_unary_operators_test")
+TEST_CASE("sp_subview_unary_operators_test", "[spsubview]")
   {
   SpMat<int> a(3, 3);
   SpMat<int> b(5, 5);
@@ -282,7 +282,7 @@ TEST_CASE("sp_subview_unary_operators_test")
   }
 
 
-TEST_CASE("sp_subview_mat_operator_tests")
+TEST_CASE("sp_subview_mat_operator_tests", "[spsubview]")
   {
   SpMat<double> a(6, 10);
   a(2, 2) = 2.0;
@@ -410,7 +410,7 @@ TEST_CASE("sp_subview_mat_operator_tests")
 
 
 
-TEST_CASE("sp_subview_base_test")
+TEST_CASE("sp_subview_base_test", "[spsubview]")
   {
   SpMat<double> a(6, 10);
   a(2, 2) = 2.0;
@@ -558,7 +558,7 @@ TEST_CASE("sp_subview_base_test")
 
 
 
-TEST_CASE("sp_subview_sp_mat_test")
+TEST_CASE("sp_subview_sp_mat_test", "[spsubview]")
   {
   SpMat<double> a(6, 10);
   a(2, 2) = 2.0;
@@ -682,7 +682,7 @@ TEST_CASE("sp_subview_sp_mat_test")
 
 
 
-TEST_CASE("sp_subview_sp_subview_tests")
+TEST_CASE("sp_subview_sp_subview_tests", "[spsubview]")
   {
   SpMat<double> a(6, 10);
   a(2, 2) = 2.0;
@@ -822,7 +822,7 @@ TEST_CASE("sp_subview_sp_subview_tests")
 
 
 
-TEST_CASE("sp_subview_iterators_test")
+TEST_CASE("sp_subview_iterators_test", "[spsubview]")
   {
   SpMat<double> b(5, 5);
   b(0, 0) = 1.0;
@@ -973,7 +973,7 @@ TEST_CASE("sp_subview_iterators_test")
   }
 
 
-TEST_CASE("sp_subview_row_iterators_test")
+TEST_CASE("sp_subview_row_iterators_test", "[spsubview]")
   {
   SpMat<double> b(5, 5);
   b(0, 0) = 1.0;
@@ -1119,7 +1119,7 @@ TEST_CASE("sp_subview_row_iterators_test")
   }
 
 
-TEST_CASE("sp_subview_sp_base_add_subtract_modulo")
+TEST_CASE("sp_subview_sp_base_add_subtract_modulo", "[spsubview]")
   {
   SpMat<double> m;
   m.sprandu(100, 100, 0.1);
@@ -1176,7 +1176,7 @@ TEST_CASE("sp_subview_sp_base_add_subtract_modulo")
     }
   }
 
-TEST_CASE("sp_subview_hadamard")
+TEST_CASE("sp_subview_hadamard", "[spsubview]")
   {
   SpMat<double> x;
   x.sprandu(100, 100, 0.1);
@@ -1199,7 +1199,7 @@ TEST_CASE("sp_subview_hadamard")
   }
 
 
-TEST_CASE("sp_subview_subviews_test")
+TEST_CASE("sp_subview_subviews_test", "[spsubview]")
   {
   SpMat<double> m(20, 20);
   m.sprandu(20, 20, 0.3);
@@ -1345,7 +1345,7 @@ TEST_CASE("sp_subview_subviews_test")
 
 
 
-TEST_CASE("sp_subview_assignment_sp_base")
+TEST_CASE("sp_subview_assignment_sp_base", "[spsubview]")
   {
   mat d(51, 51);
   d.fill(7.0); // Why not?
@@ -1366,7 +1366,7 @@ TEST_CASE("sp_subview_assignment_sp_base")
 
 
 
-TEST_CASE("sp_subview_addition_sp_base")
+TEST_CASE("sp_subview_addition_sp_base", "[spsubview]")
   {
   mat d(51, 51);
   d.fill(7.0); // Why not?
@@ -1386,7 +1386,7 @@ TEST_CASE("sp_subview_addition_sp_base")
   }
 
 
-TEST_CASE("sp_subview_subtraction_sp_base")
+TEST_CASE("sp_subview_subtraction_sp_base", "[spsubview]")
   {
   mat d(51, 51);
   d.fill(7.0); // Why not?
@@ -1407,7 +1407,7 @@ TEST_CASE("sp_subview_subtraction_sp_base")
 
 
 
-TEST_CASE("sp_subview_schur_sp_base")
+TEST_CASE("sp_subview_schur_sp_base", "[spsubview]")
   {
   mat d(51, 51);
   d.fill(7.0); // Why not?
@@ -1428,7 +1428,7 @@ TEST_CASE("sp_subview_schur_sp_base")
 
 
 
-TEST_CASE("sp_subview_division_sp_base")
+TEST_CASE("sp_subview_division_sp_base", "[spsubview]")
   {
   mat d(51, 51);
   d.fill(7.0); // Why not?
@@ -1452,7 +1452,7 @@ TEST_CASE("sp_subview_division_sp_base")
 
 
 
-TEST_CASE("sp_subview_row_iterator_constructor")
+TEST_CASE("sp_subview_row_iterator_constructor", "[spsubview]")
   {
   // Create a row iterator with an exact position.
   Mat<double> tmp =
@@ -1490,7 +1490,7 @@ TEST_CASE("sp_subview_row_iterator_constructor")
 
 
 
-TEST_CASE("sp_subview_row_iterator_test_1")
+TEST_CASE("sp_subview_row_iterator_test_1", "[spsubview]")
   {
   Mat<double> tmp =
     { { 1.1, 1.2, 1.3, 1.4, 1.5 },
@@ -1516,7 +1516,7 @@ TEST_CASE("sp_subview_row_iterator_test_1")
 
 
 
-TEST_CASE("sp_subview_row_iterator_test_2")
+TEST_CASE("sp_subview_row_iterator_test_2", "[spsubview]")
   {
   // Make sure the loop terminates.
   Mat<double> tmp =
@@ -1541,7 +1541,7 @@ TEST_CASE("sp_subview_row_iterator_test_2")
 
 
 
-TEST_CASE("sp_subview_n_nonzero_test")
+TEST_CASE("sp_subview_n_nonzero_test", "[spsubview]")
   {
   sp_mat x;
   x.sprandu(100, 100, 0.3);

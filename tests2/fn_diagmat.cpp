@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_diagmat_1")
+TEST_CASE("fn_diagmat_1", "[diagmat]")
   {
   mat A =
     {
@@ -62,7 +62,7 @@ TEST_CASE("fn_diagmat_1")
 
 
 
-TEST_CASE("fn_diagmat_2")
+TEST_CASE("fn_diagmat_2", "[diagmat]")
   {
   mat A =
     {
@@ -88,7 +88,7 @@ TEST_CASE("fn_diagmat_2")
 
 
 
-TEST_CASE("fn_diagmat_3")
+TEST_CASE("fn_diagmat_3", "[diagmat]")
   {
   mat A =
     {

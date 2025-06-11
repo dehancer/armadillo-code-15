@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("instantiation_mat_1")
+TEST_CASE("instantiation_mat_1", "[instantiation]")
   {
   const uword n_rows = 5;
   const uword n_cols = 6;
@@ -43,7 +43,7 @@ TEST_CASE("instantiation_mat_1")
 // TODO: rowvec_instantiation
 
 
-TEST_CASE("instantiation_cube_1")
+TEST_CASE("instantiation_cube_1", "[instantiation]")
   {
   const uword n_rows   = 5;
   const uword n_cols   = 6;

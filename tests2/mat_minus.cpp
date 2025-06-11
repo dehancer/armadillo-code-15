@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("mat_minus_1")
+TEST_CASE("mat_minus_1", "[minus]")
   {
   mat A = 
     "\

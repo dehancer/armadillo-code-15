@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_trace_1")
+TEST_CASE("fn_trace_1", "[trace]")
   {
   mat A =
     "\
@@ -46,7 +46,7 @@ TEST_CASE("fn_trace_1")
 
 
 
-TEST_CASE("fn_trace_spmat")
+TEST_CASE("fn_trace_spmat", "[trace]")
   {
   SpMat<double> a(6, 6);
   a(0, 0) = 3.0;
@@ -67,7 +67,7 @@ TEST_CASE("fn_trace_spmat")
 
 
 
-TEST_CASE("fn_trace_spmat_mul")
+TEST_CASE("fn_trace_spmat_mul", "[trace]")
   {
   // Test trace(SpMat * SpMat) and ensure the result is the same as if we
   // pre-multiplied the matrices.
@@ -86,7 +86,7 @@ TEST_CASE("fn_trace_spmat_mul")
 
 
 
-TEST_CASE("fn_trace_spmat_t_mul")
+TEST_CASE("fn_trace_spmat_t_mul", "[trace]")
   {
   // Test trace(SpMat.t() * SpMat) and ensure the result is the same as if we
   // pre-multiplied the matrices.

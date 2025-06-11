@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_is_finite_1")
+TEST_CASE("fn_is_finite_1", "[is_finite]")
   {
   mat A = 
     "\

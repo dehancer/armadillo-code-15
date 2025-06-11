@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("decomp_eig_gen_1")
+TEST_CASE("decomp_eig_gen_1", "[eig_gen]")
   {
   mat A = 
     "\
@@ -73,7 +73,7 @@ TEST_CASE("decomp_eig_gen_1")
 
 
 
-TEST_CASE("decomp_eig_gen_2")
+TEST_CASE("decomp_eig_gen_2", "[eig_gen]")
   {
   cx_mat A = 
     { 
@@ -122,7 +122,7 @@ TEST_CASE("decomp_eig_gen_2")
 
 
 
-TEST_CASE("decomp_eig_gen_3")
+TEST_CASE("decomp_eig_gen_3", "[eig_gen]")
   {
   mat A(5,5,fill::randu);
   
@@ -139,7 +139,7 @@ TEST_CASE("decomp_eig_gen_3")
 
 
 
-TEST_CASE("decomp_eig_gen_4")
+TEST_CASE("decomp_eig_gen_4", "[eig_gen]")
   {
   mat A(5,6,fill::randu);
   

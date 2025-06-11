@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_trans_1")
+TEST_CASE("fn_trans_1", "[trans]")
   {
   mat A =
     "\
@@ -166,7 +166,7 @@ TEST_CASE("fn_trans_1")
 
 
 
-TEST_CASE("fn_trans_2")
+TEST_CASE("fn_trans_2", "[trans]")
   {
   mat A =
     "\
@@ -297,7 +297,7 @@ TEST_CASE("fn_trans_2")
 
 
 
-TEST_CASE("fn_trans_3")
+TEST_CASE("fn_trans_3", "[trans]")
   {
   mat A =
     "\
@@ -370,7 +370,7 @@ TEST_CASE("fn_trans_3")
 
 
 
-TEST_CASE("fn_trans_4")
+TEST_CASE("fn_trans_4", "[trans]")
   {
   mat A =
     "\
@@ -491,7 +491,7 @@ TEST_CASE("fn_trans_4")
 
 
 
-TEST_CASE("op_trans_sp_mat")
+TEST_CASE("op_trans_sp_mat", "[trans]")
   {
   SpMat<unsigned int> a(4, 4);
   a(1, 0) = 5;
@@ -578,7 +578,7 @@ TEST_CASE("op_trans_sp_mat")
   }
 
 
-TEST_CASE("op_trans_sp_cxmat")
+TEST_CASE("op_trans_sp_cxmat", "[trans]")
   {
   SpMat<cx_double> a(10, 10);
   for (uword c = 0; c < 7; ++c)

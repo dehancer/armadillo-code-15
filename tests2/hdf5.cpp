@@ -24,7 +24,7 @@ using namespace arma;
 
 #if defined(ARMA_USE_HDF5)
 
-TEST_CASE("hdf5_u8_test")
+TEST_CASE("hdf5_u8_test", "[hdf5]")
   {
   arma::Mat<u8> a;
   a.randu(20, 20);
@@ -57,7 +57,7 @@ TEST_CASE("hdf5_u8_test")
 
 
 
-TEST_CASE("hdf5_u16_test")
+TEST_CASE("hdf5_u16_test", "[hdf5]")
   {
   arma::Mat<u16> a;
   a.randu(20, 20);
@@ -90,7 +90,7 @@ TEST_CASE("hdf5_u16_test")
 
 
 
-TEST_CASE("hdf5_u32_test")
+TEST_CASE("hdf5_u32_test", "[hdf5]")
   {
   arma::Mat<u32> a;
   a.randu(20, 20);
@@ -124,7 +124,7 @@ TEST_CASE("hdf5_u32_test")
 
 
 #ifdef ARMA_USE_U64S64
-TEST_CASE("hdf5_u64_test")
+TEST_CASE("hdf5_u64_test", "[hdf5]")
   {
   arma::Mat<u64> a;
   a.randu(20, 20);
@@ -158,7 +158,7 @@ TEST_CASE("hdf5_u64_test")
 
 
 
-TEST_CASE("hdf5_s8_test")
+TEST_CASE("hdf5_s8_test", "[hdf5]")
   {
   arma::Mat<s8> a;
   a.randu(20, 20);
@@ -191,7 +191,7 @@ TEST_CASE("hdf5_s8_test")
 
 
 
-TEST_CASE("hdf5_s16_test")
+TEST_CASE("hdf5_s16_test", "[hdf5]")
   {
   arma::Mat<s16> a;
   a.randu(20, 20);
@@ -224,7 +224,7 @@ TEST_CASE("hdf5_s16_test")
 
 
 
-TEST_CASE("hdf5_s32_test")
+TEST_CASE("hdf5_s32_test", "[hdf5]")
   {
   arma::Mat<s32> a;
   a.randu(20, 20);
@@ -258,7 +258,7 @@ TEST_CASE("hdf5_s32_test")
 
 
 #ifdef ARMA_USE_U64S64
-TEST_CASE("hdf5_s64_test")
+TEST_CASE("hdf5_s64_test", "[hdf5]")
   {
   arma::Mat<s64> a;
   a.randu(20, 20);
@@ -292,7 +292,7 @@ TEST_CASE("hdf5_s64_test")
 
 
 
-TEST_CASE("hdf5_char_test")
+TEST_CASE("hdf5_char_test", "[hdf5]")
   {
   arma::Mat<char> a;
   a.randu(20, 20);
@@ -325,7 +325,7 @@ TEST_CASE("hdf5_char_test")
 
 
 
-TEST_CASE("hdf5_int_test")
+TEST_CASE("hdf5_int_test", "[hdf5]")
   {
   arma::Mat<signed int> a;
   a.randu(20, 20);
@@ -358,7 +358,7 @@ TEST_CASE("hdf5_int_test")
 
 
 
-TEST_CASE("hdf5_uint_test")
+TEST_CASE("hdf5_uint_test", "[hdf5]")
   {
   arma::Mat<unsigned int> a;
   a.randu(20, 20);
@@ -391,7 +391,7 @@ TEST_CASE("hdf5_uint_test")
 
 
 
-TEST_CASE("hdf5_short_test")
+TEST_CASE("hdf5_short_test", "[hdf5]")
   {
   arma::Mat<signed short> a;
   a.randu(20, 20);
@@ -424,7 +424,7 @@ TEST_CASE("hdf5_short_test")
 
 
 
-TEST_CASE("hdf5_ushort_test")
+TEST_CASE("hdf5_ushort_test", "[hdf5]")
   {
   arma::Mat<unsigned short> a;
   a.randu(20, 20);
@@ -457,7 +457,7 @@ TEST_CASE("hdf5_ushort_test")
 
 
 
-TEST_CASE("hdf5_long_test")
+TEST_CASE("hdf5_long_test", "[hdf5]")
   {
   arma::Mat<signed long> a;
   a.randu(20, 20);
@@ -490,7 +490,7 @@ TEST_CASE("hdf5_long_test")
 
 
 
-TEST_CASE("hdf5_ulong_test")
+TEST_CASE("hdf5_ulong_test", "[hdf5]")
   {
   arma::Mat<unsigned long> a;
   a.randu(20, 20);
@@ -524,7 +524,7 @@ TEST_CASE("hdf5_ulong_test")
 
 
 #ifdef ARMA_USE_U64S64
-TEST_CASE("hdf5_llong_test")
+TEST_CASE("hdf5_llong_test", "[hdf5]")
   {
   arma::Mat<signed long long> a;
   a.randu(20, 20);
@@ -557,7 +557,7 @@ TEST_CASE("hdf5_llong_test")
 
 
 
-TEST_CASE("hdf5_ullong_test")
+TEST_CASE("hdf5_ullong_test", "[hdf5]")
   {
   arma::Mat<unsigned long long> a;
   a.randu(20, 20);
@@ -591,7 +591,7 @@ TEST_CASE("hdf5_ullong_test")
 
 
 
-TEST_CASE("hdf5_float_test")
+TEST_CASE("hdf5_float_test", "[hdf5]")
   {
   arma::Mat<float> a;
   a.randu(20, 20);
@@ -624,7 +624,7 @@ TEST_CASE("hdf5_float_test")
 
 
 
-TEST_CASE("hdf5_double_test")
+TEST_CASE("hdf5_double_test", "[hdf5]")
   {
   arma::Mat<double> a;
   a.randu(20, 20);
@@ -657,7 +657,7 @@ TEST_CASE("hdf5_double_test")
 
 
 
-TEST_CASE("hdf5_complex_float_test")
+TEST_CASE("hdf5_complex_float_test", "[hdf5]")
   {
   arma::Mat<std::complex<float> > a;
   a.randu(20, 20);
@@ -690,7 +690,7 @@ TEST_CASE("hdf5_complex_float_test")
 
 
 
-TEST_CASE("hdf5_complex_double_test")
+TEST_CASE("hdf5_complex_double_test", "[hdf5]")
   {
   arma::Mat<std::complex<double> > a;
   a.randu(20, 20);
@@ -721,7 +721,7 @@ TEST_CASE("hdf5_complex_double_test")
 
 
 
-TEST_CASE("hdf5_dataset_append_test")
+TEST_CASE("hdf5_dataset_append_test", "[hdf5]")
   {
   arma::Mat<double> a;
   a.randu(20, 20);
@@ -758,7 +758,7 @@ TEST_CASE("hdf5_dataset_append_test")
   std::remove("file.h5");
   }
 
-TEST_CASE("hdf5_cube_dataset_append_test")
+TEST_CASE("hdf5_cube_dataset_append_test", "[hdf5]")
   {
   arma::Mat<double> a;
   a.randu(20, 20);
@@ -796,7 +796,7 @@ TEST_CASE("hdf5_cube_dataset_append_test")
   }
 
 
-TEST_CASE("hdf5_dataset_append-overwrite-test")
+TEST_CASE("hdf5_dataset_append-overwrite-test", "[hdf5]")
   {
   arma::Mat<double> a;
   a.randu(20, 20);
@@ -829,7 +829,7 @@ TEST_CASE("hdf5_dataset_append-overwrite-test")
 
 
 
-TEST_CASE("hdf5_dataset_same_dataset_twice_test")
+TEST_CASE("hdf5_dataset_same_dataset_twice_test", "[hdf5]")
   {
   arma::Mat<double> a;
   a.randu(20, 20);

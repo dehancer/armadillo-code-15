@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("mat_mul_real_1")
+TEST_CASE("mat_mul_real_1", "[mat_mul]")
   {
   mat A = 
     "\
@@ -99,7 +99,7 @@ TEST_CASE("mat_mul_real_1")
 
 
 
-TEST_CASE("mat_mul_real_2")
+TEST_CASE("mat_mul_real_2", "[mat_mul]")
   {
   mat A = 
     "\
@@ -224,7 +224,7 @@ TEST_CASE("mat_mul_real_2")
 
 
 
-TEST_CASE("mat_mul_real_3")
+TEST_CASE("mat_mul_real_3", "[mat_mul]")
   {
   mat A = 
     "\
@@ -363,7 +363,7 @@ TEST_CASE("mat_mul_real_3")
 
 
 
-TEST_CASE("mat_mul_real_4")
+TEST_CASE("mat_mul_real_4", "[mat_mul]")
   {
   mat A = 
     "\
@@ -563,7 +563,7 @@ TEST_CASE("mat_mul_real_4")
 
 
 
-TEST_CASE("mat_mul_real_5")
+TEST_CASE("mat_mul_real_5", "[mat_mul]")
   {
   mat A = 
     "\
@@ -777,7 +777,7 @@ TEST_CASE("mat_mul_real_5")
 
 
 
-TEST_CASE("mat_mul_real_6")
+TEST_CASE("mat_mul_real_6", "[mat_mul]")
   {
   mat A = 
     "\

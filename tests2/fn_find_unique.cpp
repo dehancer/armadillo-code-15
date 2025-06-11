@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_find_unique_1")
+TEST_CASE("fn_find_unique_1", "[find]")
   {
   mat A = 
     {
@@ -55,7 +55,7 @@ TEST_CASE("fn_find_unique_1")
 
 
 
-TEST_CASE("fn_find_unique_2")
+TEST_CASE("fn_find_unique_2", "[find]")
   {
   cx_mat A = 
     {

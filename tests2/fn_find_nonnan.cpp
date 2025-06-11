@@ -23,7 +23,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_find_nonnan_1")
+TEST_CASE("fn_find_nonnan_1", "[find]")
   {
   mat A =
     "\
@@ -66,7 +66,7 @@ TEST_CASE("fn_find_nonnan_1")
 
 
 
-TEST_CASE("fn_find_nonnan_cube")
+TEST_CASE("fn_find_nonnan_cube", "[find]")
   {
   cube A(5, 4, 3, fill::randu);
 
@@ -97,7 +97,7 @@ TEST_CASE("fn_find_nonnan_cube")
 
 
 
-TEST_CASE("fn_find_nonnan_spmat")
+TEST_CASE("fn_find_nonnan_spmat", "[find]")
   {
   // sparse matrices will only return nonzero non-nan indices
   sp_mat A(10, 10);

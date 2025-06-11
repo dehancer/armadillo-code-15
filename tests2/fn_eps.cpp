@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_eps_1")
+TEST_CASE("fn_eps_1", "[eps]")
   {
   mat A = 
     "\

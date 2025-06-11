@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_diagvec_1")
+TEST_CASE("fn_diagvec_1", "[diagvec]")
   {
   mat A = 
     "\

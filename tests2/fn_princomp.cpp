@@ -92,7 +92,7 @@ namespace
     }
   }
 
-TEST_CASE("fn_princomp_1")
+TEST_CASE("fn_princomp_1", "[princomp]")
   {
   mat m(1000, 20);
   initMatrix(m);
@@ -100,7 +100,7 @@ TEST_CASE("fn_princomp_1")
   checkEigenvectors(coeff);
   }
 
-TEST_CASE("fn_princomp_2")
+TEST_CASE("fn_princomp_2", "[princomp]")
   {
   mat m(1000, 20);
   initMatrix(m);
@@ -109,7 +109,7 @@ TEST_CASE("fn_princomp_2")
   checkEigenvectors(coeff);
   }
 
-TEST_CASE("fn_princomp_3")
+TEST_CASE("fn_princomp_3", "[princomp]")
   {
   mat m(1000, 20);
   initMatrix(m);
@@ -120,7 +120,7 @@ TEST_CASE("fn_princomp_3")
   checkEigenvectors(coeff);
   }
 
-TEST_CASE("fn_princomp_4")
+TEST_CASE("fn_princomp_4", "[princomp]")
   {
   mat m(1000, 20);
   initMatrix(m);
@@ -133,7 +133,7 @@ TEST_CASE("fn_princomp_4")
   checkEigenvalues(latent);
   }
 
-TEST_CASE("fn_princomp_5")
+TEST_CASE("fn_princomp_5", "[princomp]")
   {
   mat m(1000, 20);
   initMatrix(m);
@@ -148,7 +148,7 @@ TEST_CASE("fn_princomp_5")
   // checkHotteling(tsquared);  // TODO
   }
 
-TEST_CASE("fn_princomp_6")
+TEST_CASE("fn_princomp_6", "[princomp]")
   {
   mat m(5, 20);
   initMatrix(m);
