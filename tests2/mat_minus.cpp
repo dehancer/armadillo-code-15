@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -101,4 +102,29 @@ TEST_CASE("mat_minus_1", "[minus]")
   REQUIRE( accu(abs( 2*(A-B) + 2*neg_of_A_minus_B )) == Approx(0.0).margin(0.001) );
   
   // REQUIRE_THROWS(  );
+  }
+
+
+
+TEMPLATE_TEST_CASE("mat_minus_fp", "[minus]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> A(10, 10, fill::randu);
+  Mat<eT> B = -A;
+  Mat<eT> C = A;
+
+  for (uword i = 0; i < A.n_elem; ++i)
+    {
+    REQUIRE( B[i] == Approx(-A[i]) );
+    }
+
+  Mat<eT> D = A - C;
+
+  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.01);
+
+  for (uword i = 0; i < A.n_elem; ++i)
+    {
+    REQUIRE( D[i] == Approx(eT(0)).margin(margin) );
+    }
   }

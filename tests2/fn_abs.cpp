@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -247,5 +248,21 @@ TEST_CASE("fn_abs_sp_cx_mat", "[fn_elem]")
   for(size_t i = 0; i < xr.n_elem; ++i)
     {
     REQUIRE( xr[i] == Approx((double) yr[i]) );
+    }
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_abs_randu", "[fn_elem]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x = randu<Mat<eT>>(50, 50) - eT(0.5);
+
+  Mat<eT> y = abs(x);
+
+  for (uword i = 0; i < y.n_elem; ++i)
+    {
+    REQUIRE( y[i] == Approx(std::abs(x[i])) );
     }
   }

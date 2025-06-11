@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -50,4 +51,28 @@ TEST_CASE("fn_is_finite_1", "[is_finite]")
   REQUIRE( (2*C).is_finite() == false );
   
   // REQUIRE_THROWS(  );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_is_finite_fp", "[is_finite]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Col<eT> X1(5, fill::randu);
+  Col<eT> X2(5, fill::randu);
+  Col<eT> X3(5, fill::randu);
+  Col<eT> X4(5, fill::randu);
+
+  X1(2) =  Datum<eT>::nan;
+  X1(3) =  Datum<eT>::inf;
+  X1(4) = -Datum<eT>::inf;
+  X2(3) =  Datum<eT>::inf;
+  X2(4) = -Datum<eT>::inf;
+  X3(4) =  Datum<eT>::nan;
+
+  REQUIRE( X1.is_finite() == false );
+  REQUIRE( X2.is_finite() == false );
+  REQUIRE( X3.is_finite() == false );
+  REQUIRE( X4.is_finite() == true );
   }

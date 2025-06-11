@@ -18,6 +18,7 @@
 #include <armadillo>
 
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -754,6 +755,84 @@ TEST_CASE("fn_min_sp_cx_incomplete_subview_row_min_test", "[min]")
 
       REQUIRE( mval.real() == Approx(x(x_min).real()) );
       REQUIRE( mval.imag() == Approx(x(x_min).imag()) );
+      }
+    }
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_min_unary_fp_reference", "[min]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+
+  Mat<eT> X(10, 10, fill::randn);
+  mat X_ref = conv_to<mat>::from(X);
+
+  eT min_val = X.min();
+  uword min_val_index = X.index_min();
+
+  double min_val_ref = X_ref.min();
+  uword min_val_index_ref = X_ref.index_min();
+
+  REQUIRE( min_val == Approx(eT(min_val_ref)).margin(margin) );
+  REQUIRE( min_val_index == min_val_index_ref );
+
+  min_val = min(vectorise(X));
+  min_val_index = index_min(vectorise(X));
+  min_val_ref = min(vectorise(X_ref));
+  min_val_index_ref = index_min(vectorise(X_ref));
+
+  REQUIRE( min_val == Approx(eT(min_val_ref)).margin(margin) );
+  REQUIRE( min_val_index == min_val_index_ref );
+
+  min_val = X.submat(1, 1, 6, 6).min();
+  min_val_index = X.submat(1, 1, 6, 6).index_min();
+  min_val_ref = X_ref.submat(1, 1, 6, 6).min();
+  min_val_index_ref = X_ref.submat(1, 1, 6, 6).index_min();
+
+  REQUIRE( min_val == Approx(eT(min_val_ref)).margin(margin) );
+  REQUIRE( min_val_index == min_val_index_ref );
+
+  min_val = min(vectorise(X.submat(1, 1, 6, 6)));
+  min_val_index = index_min(vectorise(X.submat(1, 1, 6, 6)));
+  min_val_ref = min(vectorise(X_ref.submat(1, 1, 6, 6)));
+  min_val_index_ref = index_min(vectorise(X_ref.submat(1, 1, 6, 6)));
+
+  REQUIRE( min_val == Approx(eT(min_val_ref)).margin(margin) );
+  REQUIRE( min_val_index == min_val_index_ref );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_min_binary_fp_reference", "[min]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(10, 10, fill::randn);
+  Mat<eT> Y(10, 10, fill::randn);
+
+  Mat<eT> Z = min(X, Y);
+
+  REQUIRE( Z.n_rows == X.n_rows );
+  REQUIRE( Z.n_cols == X.n_cols );
+
+  for (uword i = 0; i < Z.n_elem; ++i)
+    {
+    REQUIRE( Z[i] == Approx(std::min(X[i], Y[i])) );
+    }
+
+  Z = min(X.submat(1, 1, 6, 6), Y.submat(1, 1, 6, 6));
+
+  REQUIRE( Z.n_rows == 6 );
+  REQUIRE( Z.n_cols == 6 );
+
+  for (uword c = 0; c < Z.n_cols; ++c)
+    {
+    for (uword r = 0; r < Z.n_rows; ++r)
+      {
+      REQUIRE( Z(r, c) == Approx(std::min(X(r + 1, c + 1), Y(r + 1, c + 1))) );
       }
     }
   }

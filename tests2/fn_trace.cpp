@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -101,4 +102,37 @@ TEST_CASE("fn_trace_spmat_t_mul", "[trace]")
   const double trab = trace(a.t() * b);
 
   REQUIRE( trc == Approx(trab) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_trace_fp", "[trace]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(20, 20, fill::randu);
+
+  const eT tr = trace(X);
+  const eT tr_ref = accu(X.diag());
+
+  constexpr const eT tol = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( tr == Approx(tr_ref).epsilon(tol) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_trace_sparse_fp", "[trace]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  SpMat<eT> X;
+  X.sprandu(50, 50, 0.3);
+
+  const eT tr = trace(X);
+  const eT tr_ref = accu(X.diag());
+
+  constexpr const eT tol = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( tr == Approx(tr_ref).epsilon(tol) );
   }

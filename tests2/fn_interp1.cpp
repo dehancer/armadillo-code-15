@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -52,4 +53,46 @@ TEST_CASE("fn_interp1_1", "[interp1]")
   REQUIRE( accu(abs( yi_b - yi_b_gt )) == Approx(0.0).margin(0.001) );
   
   // REQUIRE_THROWS(  );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_interp1_fp_randu", "[interp1]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Col<eT> x = linspace<Col<eT>>(0, 1, 101);
+  Col<eT> y = square(x);
+  Col<eT> x2 = linspace<Col<eT>>(0, 2, 201);
+  Col<eT> z1, z2, z3, z4;
+
+  vec x_ref = conv_to<vec>::from(x);
+  vec y_ref = conv_to<vec>::from(y);
+  vec x2_ref = conv_to<vec>::from(x2);
+  vec z1_ref, z2_ref, z3_ref, z4_ref;
+
+  interp1(x, y, x2, z1, "nearest", eT(5));
+  interp1(x, y, x2, z2, "linear", eT(5));
+  interp1(x, y, x2, z3, "*nearest", eT(5));
+  interp1(x, y, x2, z4, "*linear", eT(5));
+
+  interp1(x_ref, y_ref, x2_ref, z1_ref, "nearest", 5.0);
+  interp1(x_ref, y_ref, x2_ref, z2_ref, "linear", 5.0);
+  interp1(x_ref, y_ref, x2_ref, z3_ref, "*nearest", 5.0);
+  interp1(x_ref, y_ref, x2_ref, z4_ref, "*linear", 5.0);
+
+  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+
+  REQUIRE( z1.n_elem == z1_ref.n_elem );
+  REQUIRE( z2.n_elem == z2_ref.n_elem );
+  REQUIRE( z3.n_elem == z3_ref.n_elem );
+  REQUIRE( z4.n_elem == z4_ref.n_elem );
+
+  for (uword i = 0; i < z1.n_elem; ++i)
+    {
+    REQUIRE( z1[i] == Approx(eT(z1_ref[i])).margin(margin) );
+    REQUIRE( z2[i] == Approx(eT(z2_ref[i])).margin(margin) );
+    REQUIRE( z3[i] == Approx(eT(z3_ref[i])).margin(margin) );
+    REQUIRE( z4[i] == Approx(eT(z4_ref[i])).margin(margin) );
+    }
   }

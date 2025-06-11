@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -131,4 +132,21 @@ TEST_CASE("fn_accu_spmat", "[accu]")
 
   REQUIRE( accu(b) == 52 );
   REQUIRE( accu(b.submat(1, 1, 3, 3)) == 41 );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_accu_randu", "[accu]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x = randu<Mat<eT>>(50, 50) - eT(0.5);
+  const eT y = accu(x);
+
+  // manually convert to double to check
+  mat x_ref = conv_to<mat>::from(x);
+  const double y_ref = accu(x_ref);
+
+  // large tolerance because fp16/bf16 can be really approximate!
+  REQUIRE( double(y) == Approx(y_ref).epsilon(0.1) );
   }

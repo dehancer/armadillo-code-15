@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -48,4 +49,21 @@ TEST_CASE("fn_find_nonfinite_1", "[find]")
   REQUIRE( accu(indices2 - uvec({6,8,10})) == 0 );
   
   // REQUIRE_THROWS(  );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_find_nonfinite_fp", "[find]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(5, 1, fill::zeros);
+
+  X[1] =  Datum<eT>::nan;
+  X[2] =  Datum<eT>::inf;
+  X[3] = -Datum<eT>::inf;
+
+  uvec r = find_nonfinite(X);
+
+  REQUIRE( all( r == uvec({ 1, 2, 3 }) ) );
   }

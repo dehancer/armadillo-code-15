@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -100,4 +101,22 @@ TEST_CASE("fn_intersect_3", "[intersect]")
   ivec C;
   
   REQUIRE_THROWS( C = intersect(A,B) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_intersect_fp", "[intersect]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(10, 10, fill::randu);
+  Mat<eT> Y(10, 10, fill::randu);
+  Y -= eT(2); // so that no elements match
+
+  Y.submat(1, 1, 8, 8) = X.submat(1, 1, 8, 8);
+  Mat<eT> Z_ref = sort(unique(vectorise(X.submat(1, 1, 8, 8))), "ascending");
+
+  Mat<eT> Z = intersect(X, Y);
+
+  REQUIRE( all( all( Z == Z_ref ) ) );
   }

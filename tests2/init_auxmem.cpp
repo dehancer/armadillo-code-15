@@ -18,30 +18,33 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("init_auxmem_1")
+TEMPLATE_TEST_CASE("init_auxmem_1", "[init]", TEST_FLOAT_TYPES)
   {
-  double data[] = { 1, 2, 3, 4, 5, 6 };
+  typedef TestType eT;
+
+  eT data[] = { 1, 2, 3, 4, 5, 6 };
   
-  mat A(data, 2, 3);
-  mat B(data, 2, 3, false);
-  mat C(data, 2, 3, false, true);
+  Mat<eT> A(data, 2, 3);
+  Mat<eT> B(data, 2, 3, false);
+  Mat<eT> C(data, 2, 3, false, true);
   
-  REQUIRE( A(0,0) == double(1) );
-  REQUIRE( A(1,0) == double(2) );
+  REQUIRE( A(0,0) == eT(1) );
+  REQUIRE( A(1,0) == eT(2) );
   
-  REQUIRE( A(0,1) == double(3) );
-  REQUIRE( A(1,1) == double(4) );
+  REQUIRE( A(0,1) == eT(3) );
+  REQUIRE( A(1,1) == eT(4) );
   
-  REQUIRE( A(0,2) == double(5) );
-  REQUIRE( A(1,2) == double(6) );
+  REQUIRE( A(0,2) == eT(5) );
+  REQUIRE( A(1,2) == eT(6) );
   
-  A(0,0) = 123.0;  REQUIRE( data[0] == 1 );
+  A(0,0) = eT(123.0);  REQUIRE( data[0] == eT(1) );
   
-  B(0,0) = 123.0;  REQUIRE( data[0] == 123.0 );
+  B(0,0) = eT(123.0);  REQUIRE( data[0] == eT(123.0) );
   
   REQUIRE_THROWS( C.set_size(5,6) );
   }

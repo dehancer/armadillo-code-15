@@ -18,20 +18,25 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_cumsum_1")
+TEMPLATE_TEST_CASE("fn_cumsum_1", "[cumsum]", TEST_FLOAT_TYPES)
   {
-  colvec a = linspace<colvec>(1,5,6);
-  rowvec b = linspace<rowvec>(1,5,6);
-  
-  colvec c = { 1.0000, 2.8000, 5.4000, 8.8000, 13.0000, 18.0000 };
-  
-  REQUIRE( accu(abs(cumsum(a) - c    )) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(cumsum(b) - c.t())) == Approx(0.0).margin(0.001) );
-  
+  typedef TestType eT;
+
+  Col<eT> a = linspace<Col<eT>>(1,5,6);
+  Row<eT> b = linspace<Row<eT>>(1,5,6);
+
+  Col<eT> c = { eT(1.0000), eT(2.8000), eT(5.4000), eT(8.8000), eT(13.0000), eT(18.0000) };
+
+  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.2);
+
+  REQUIRE( accu(abs(cumsum(a) - c    )) == Approx(0.0).margin(margin) );
+  REQUIRE( accu(abs(cumsum(b) - c.t())) == Approx(0.0).margin(margin) );
+
   REQUIRE_THROWS( b = cumsum(a) );
   }
 

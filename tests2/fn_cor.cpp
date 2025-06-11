@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -74,4 +75,20 @@ TEST_CASE("fn_cor_2", "[cor]")
   REQUIRE( accu(abs(cor(A)   - AA)) == Approx(0.0).margin(0.0001) );
   REQUIRE( accu(abs(cor(A,B) - AA)) == Approx(0.0).margin(0.0001) );
   REQUIRE( accu(abs(cor(A,C) - AC)) == Approx(0.0).margin(0.0001) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("cor_fp_randu", "[cor]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  // reimplementation of cor_1 for different types
+  Col<eT> a =         linspace<Col<eT>>(1,5,6);
+  Col<eT> b = eT(0.5)*linspace<Col<eT>>(1,5,6);
+  Col<eT> c = flipud(b);
+
+  // greater margin for low-precision types
+  REQUIRE( as_scalar(cor(a,b) - eT(+1.0)) == Approx(eT(0)).margin(0.1) );
+  REQUIRE( as_scalar(cor(a,c) - eT(-1.0)) == Approx(eT(0)).margin(0.1) );
   }

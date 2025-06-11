@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -291,3 +292,45 @@ TEST_CASE("mat_mul_cx_1", "[mat_mul]")
 
 
 
+TEMPLATE_TEST_CASE("mat_mul_cx_fp_compare", "[mat_mul]", TEST_CX_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+  typedef typename get_pod_type<eT>::result T;
+
+  Mat<eT> X(10, 10, fill::randu);
+  Mat<eT> Y(10, 10, fill::randu);
+
+  cx_mat X_ref = conv_to<cx_mat>::from(X);
+  cx_mat Y_ref = conv_to<cx_mat>::from(Y);
+
+  Mat<eT> Z1 = X * Y;
+  Mat<eT> Z2 = X.t() * Y;
+  Mat<eT> Z3 = X * Y.t();
+  Mat<eT> Z4 = X.t() * Y.t();
+
+  cx_mat Z1_ref = X_ref * Y_ref;
+  cx_mat Z2_ref = X_ref.t() * Y_ref;
+  cx_mat Z3_ref = X_ref * Y_ref.t();
+  cx_mat Z4_ref = X_ref.t() * Y_ref.t();
+
+  REQUIRE( Z1.n_rows == Z1_ref.n_rows );
+  REQUIRE( Z1.n_cols == Z1_ref.n_cols );
+  REQUIRE( Z2.n_rows == Z2_ref.n_rows );
+  REQUIRE( Z2.n_cols == Z2_ref.n_cols );
+  REQUIRE( Z3.n_rows == Z3_ref.n_rows );
+  REQUIRE( Z3.n_cols == Z3_ref.n_cols );
+  REQUIRE( Z4.n_rows == Z4_ref.n_rows );
+  REQUIRE( Z4.n_cols == Z4_ref.n_cols );
+
+  cx_mat diff1 = conv_to<cx_mat>::from(Z1) - Z1_ref;
+  cx_mat diff2 = conv_to<cx_mat>::from(Z2) - Z2_ref;
+  cx_mat diff3 = conv_to<cx_mat>::from(Z3) - Z3_ref;
+  cx_mat diff4 = conv_to<cx_mat>::from(Z4) - Z4_ref;
+
+  constexpr const T margin = is_real_fullprec<T>::value ? T(0.0001) : T(0.05);
+
+  REQUIRE( accu(abs(diff1)) == Approx(T(0)).margin(margin * diff1.n_elem) );
+  REQUIRE( accu(abs(diff2)) == Approx(T(0)).margin(margin * diff2.n_elem) );
+  REQUIRE( accu(abs(diff3)) == Approx(T(0)).margin(margin * diff3.n_elem) );
+  REQUIRE( accu(abs(diff4)) == Approx(T(0)).margin(margin * diff4.n_elem) );
+  }

@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -94,3 +95,13 @@ TEST_CASE("fn_all_3", "[all]")
   }
 
 
+
+TEMPLATE_TEST_CASE("fn_all_fp", "[all]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x = randu<Mat<eT>>(50, 50) - eT(0.5);
+  mat x_ref = conv_to<mat>::from(x);
+
+  REQUIRE( all( vectorise( all( x > eT(0) ) ) == vectorise( all( x_ref > 0.0 ) ) ) );
+  }

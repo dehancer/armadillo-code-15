@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -97,4 +98,17 @@ TEST_CASE("fn_find_unique_2", "[find]")
   REQUIRE( accu(abs( A.elem(indices) - unique_elem )) == Approx(0.0).margin(0.001) );
   
   // REQUIRE_THROWS(  );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_find_unique_fp", "[find]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Col<eT> X({ eT(0), eT(1), eT(1), eT(2), eT(1), eT(2) });
+
+  uvec r = find_unique(X);
+
+  REQUIRE( all( r == uvec({ 0, 1, 3 }) ) );
   }

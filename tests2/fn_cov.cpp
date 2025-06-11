@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -74,4 +75,19 @@ TEST_CASE("fn_cov_2", "[cov]")
   REQUIRE( accu(abs(cov(A)   - AA)) == Approx(0.0).margin(0.001) );
   REQUIRE( accu(abs(cov(A,B) - AB)) == Approx(0.0).margin(0.001) );
   REQUIRE( accu(abs(cov(A,C) - AC)) == Approx(0.0).margin(0.001) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_cov_fp_randu", "[cov]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  // the same as cov_1, but with different types and a larger margin for low-precision types
+  Col<eT> a =         linspace<Col<eT>>(1,5,6);
+  Col<eT> b = eT(0.5)*linspace<Col<eT>>(1,5,6);
+  Col<eT> c = flipud(b);
+  
+  REQUIRE( as_scalar(cov(a,b) - eT(+1.12)) == Approx(eT(0)).margin(eT(0.1)) );
+  REQUIRE( as_scalar(cov(a,c) - eT(-1.12)) == Approx(eT(0)).margin(eT(0.1)) );
   }

@@ -18,6 +18,7 @@
 #include <armadillo>
 
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -548,4 +549,39 @@ TEST_CASE("fn_var_sparse_alias_test", "[var]")
     {
     REQUIRE( d[i] == Approx((double) s[i]) );
     }
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_var_fp_reference", "[var]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Col<eT> X(10, fill::randn);
+  vec X_ref = conv_to<vec>::from(X);
+
+  const eT var_val = var(X);
+  const double var_ref = var(X_ref);
+
+  const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( var_val == Approx(eT(var_ref)).margin(margin) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_var_sp_fp_reference", "[var]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  SpCol<eT> X;
+  X.sprandu(100, 1, 0.3);
+  sp_vec X_ref = conv_to<sp_mat>::from(X);
+
+  const eT var_val = var(X);
+  const double var_ref = var(X_ref);
+
+  const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( var_val == Approx(eT(var_ref)).margin(margin) );
   }

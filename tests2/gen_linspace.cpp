@@ -18,43 +18,45 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("gen_linspace_1")
+TEMPLATE_TEST_CASE("gen_linspace_1", "[linspace]", TEST_FLOAT_TYPES)
   {
-  vec a = linspace(1,5,5);
+  typedef TestType eT;
+
+  Col<eT> a = linspace<Col<eT>>(1,5,5);
+
+  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.05);
   
-  REQUIRE(a(0) == Approx(1.0));
-  REQUIRE(a(1) == Approx(2.0));
-  REQUIRE(a(2) == Approx(3.0));
-  REQUIRE(a(3) == Approx(4.0));
-  REQUIRE(a(4) == Approx(5.0));
+  REQUIRE(a(0) == Approx(1.0).margin(margin));
+  REQUIRE(a(1) == Approx(2.0).margin(margin));
+  REQUIRE(a(2) == Approx(3.0).margin(margin));
+  REQUIRE(a(3) == Approx(4.0).margin(margin));
+  REQUIRE(a(4) == Approx(5.0).margin(margin));
   
-  vec b = linspace<vec>(1,5,6);
+  Col<eT> b = linspace<Col<eT>>(1,5,6);
   
-  REQUIRE(b(0) == Approx(1.0));
-  REQUIRE(b(1) == Approx(1.8));
-  REQUIRE(b(2) == Approx(2.6));
-  REQUIRE(b(3) == Approx(3.4));
-  REQUIRE(b(4) == Approx(4.2));
-  REQUIRE(b(5) == Approx(5.0));
+  REQUIRE(b(0) == Approx(1.0).margin(margin));
+  REQUIRE(b(1) == Approx(1.8).margin(margin));
+  REQUIRE(b(2) == Approx(2.6).margin(margin));
+  REQUIRE(b(3) == Approx(3.4).margin(margin));
+  REQUIRE(b(4) == Approx(4.2).margin(margin));
+  REQUIRE(b(5) == Approx(5.0).margin(margin));
   
-  rowvec c = linspace<rowvec>(1,5,6);
+  Row<eT> c = linspace<Row<eT>>(1,5,6);
   
-  REQUIRE(c(0) == Approx(1.0));
-  REQUIRE(c(1) == Approx(1.8));
-  REQUIRE(c(2) == Approx(2.6));
-  REQUIRE(c(3) == Approx(3.4));
-  REQUIRE(c(4) == Approx(4.2));
-  REQUIRE(c(5) == Approx(5.0));
+  REQUIRE(c(0) == Approx(1.0).margin(margin));
+  REQUIRE(c(1) == Approx(1.8).margin(margin));
+  REQUIRE(c(2) == Approx(2.6).margin(margin));
+  REQUIRE(c(3) == Approx(3.4).margin(margin));
+  REQUIRE(c(4) == Approx(4.2).margin(margin));
+  REQUIRE(c(5) == Approx(5.0).margin(margin));
   
-  mat X = linspace<mat>(1,5,6);
+  Mat<eT> X = linspace<Mat<eT>>(1,5,6);
   
   REQUIRE(X.n_rows == 6);
   REQUIRE(X.n_cols == 1);
   }
-
-
-

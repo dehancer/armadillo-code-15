@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -45,4 +46,37 @@ TEST_CASE("fn_conv_1", "[conv]")
      };
   
   REQUIRE( accu(abs(c - d)) == Approx(0.0).margin(0.001) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_conv_fp_randu", "[conv]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  // generalized version of the test above with higher tolerances
+  Col<eT> a =   linspace<Col<eT>>(1,5,6);
+  Col<eT> b = 2*linspace<Col<eT>>(1,6,7);
+
+  Col<eT> c = conv(a,b);
+  Col<eT> d =
+    {
+    eT(  2.00),
+    eT(  7.27),
+    eT( 17.13),
+    eT( 32.93),
+    eT( 56.00),
+    eT( 87.67),
+    eT(117.67),
+    eT(134.00),
+    eT(137.73),
+    eT(127.53),
+    eT(102.07),
+    eT( 60.00)
+    };
+
+  for (uword i = 0; i < c.n_elem; ++i)
+    {
+    REQUIRE( eT(c[i]) == Approx(eT(d[i])).epsilon(eT(0.02)) );
+    }
   }

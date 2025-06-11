@@ -18,34 +18,40 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_diff_1")
+TEMPLATE_TEST_CASE("fn_diff_1", "[diff]", TEST_FLOAT_TYPES)
   {
-  colvec a = square( linspace<colvec>(1,5,6) );
-  rowvec b = square( linspace<rowvec>(1,5,5) );
+  typedef TestType eT;
   
-  colvec a_diff_1 = { 2.2400, 3.5200, 4.8000, 6.0800, 7.3600 };
-  colvec a_diff_2 = { 1.2800, 1.2800, 1.2800, 1.2800 };
-  colvec a_diff_9;
+  Col<eT> a = square( linspace<Col<eT>>(1,5,6) );
+  Row<eT> b = square( linspace<Row<eT>>(1,5,5) );
   
-  rowvec b_diff_1 = { 3, 5, 7, 9 };
-  rowvec b_diff_2 = { 2, 2, 2 };
-  rowvec b_diff_9;
+  Col<eT> a_diff_1 = { eT(2.2400), eT(3.5200), eT(4.8000), eT(6.0800), eT(7.3600) };
+  Col<eT> a_diff_2 = { eT(1.2800), eT(1.2800), eT(1.2800), eT(1.2800) };
+  Col<eT> a_diff_9;
   
-  REQUIRE( accu(abs(diff(a,0) - a       )) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(a  ) - a_diff_1)) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(a,1) - a_diff_1)) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(a,2) - a_diff_2)) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(a,9) - a_diff_9)) == Approx(0.0).margin(0.001) );
+  Row<eT> b_diff_1 = { eT(3), eT(5), eT(7), eT(9) };
+  Row<eT> b_diff_2 = { eT(2), eT(2), eT(2) };
+  Row<eT> b_diff_9;
+
+  // significantly larger margin for low-precision because the errors can really add up!
+  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(1.0);
   
-  REQUIRE( accu(abs(diff(b,0) - b       )) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(b  ) - b_diff_1)) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(b,1) - b_diff_1)) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(b,2) - b_diff_2)) == Approx(0.0).margin(0.001) );
-  REQUIRE( accu(abs(diff(b,9) - b_diff_9)) == Approx(0.0).margin(0.001) );
+  REQUIRE( eT(accu(abs(diff(a,0) - a       ))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(a  ) - a_diff_1))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(a,1) - a_diff_1))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(a,2) - a_diff_2))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(a,9) - a_diff_9))) == Approx(eT(0)).margin(margin) );
+  
+  REQUIRE( eT(accu(abs(diff(b,0) - b       ))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(b  ) - b_diff_1))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(b,1) - b_diff_1))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(b,2) - b_diff_2))) == Approx(eT(0)).margin(margin) );
+  REQUIRE( eT(accu(abs(diff(b,9) - b_diff_9))) == Approx(eT(0)).margin(margin) );
   }
 
 

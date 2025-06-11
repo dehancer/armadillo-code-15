@@ -18,6 +18,7 @@
 #include <armadillo>
 
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -754,6 +755,84 @@ TEST_CASE("fn_max_sp_cx_incomplete_subview_row_max_test", "[max]")
 
       REQUIRE( mval.real() == Approx(x(x_max).real()) );
       REQUIRE( mval.imag() == Approx(x(x_max).imag()) );
+      }
+    }
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_max_unary_fp_reference", "[max]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+
+  Mat<eT> X(10, 10, fill::randn);
+  mat X_ref = conv_to<mat>::from(X);
+
+  eT max_val = X.max();
+  uword max_val_index = X.index_max();
+
+  double max_val_ref = X_ref.max();
+  uword max_val_index_ref = X_ref.index_max();
+
+  REQUIRE( max_val == Approx(eT(max_val_ref)).margin(margin) );
+  REQUIRE( max_val_index == max_val_index_ref );
+
+  max_val = max(vectorise(X));
+  max_val_index = index_max(vectorise(X));
+  max_val_ref = max(vectorise(X_ref));
+  max_val_index_ref = index_max(vectorise(X_ref));
+
+  REQUIRE( max_val == Approx(eT(max_val_ref)).margin(margin) );
+  REQUIRE( max_val_index == max_val_index_ref );
+
+  max_val = X.submat(1, 1, 6, 6).max();
+  max_val_index = X.submat(1, 1, 6, 6).index_max();
+  max_val_ref = X_ref.submat(1, 1, 6, 6).max();
+  max_val_index_ref = X_ref.submat(1, 1, 6, 6).index_max();
+
+  REQUIRE( max_val == Approx(eT(max_val_ref)).margin(margin) );
+  REQUIRE( max_val_index == max_val_index_ref );
+
+  max_val = max(vectorise(X.submat(1, 1, 6, 6)));
+  max_val_index = index_max(vectorise(X.submat(1, 1, 6, 6)));
+  max_val_ref = max(vectorise(X_ref.submat(1, 1, 6, 6)));
+  max_val_index_ref = index_max(vectorise(X_ref.submat(1, 1, 6, 6)));
+
+  REQUIRE( max_val == Approx(eT(max_val_ref)).margin(margin) );
+  REQUIRE( max_val_index == max_val_index_ref );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_max_binary_fp_reference", "[max]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(10, 10, fill::randn);
+  Mat<eT> Y(10, 10, fill::randn);
+
+  Mat<eT> Z = max(X, Y);
+
+  REQUIRE( Z.n_rows == X.n_rows );
+  REQUIRE( Z.n_cols == X.n_cols );
+
+  for (uword i = 0; i < Z.n_elem; ++i)
+    {
+    REQUIRE( Z[i] == Approx(std::max(X[i], Y[i])) );
+    }
+
+  Z = max(X.submat(1, 1, 6, 6), Y.submat(1, 1, 6, 6));
+
+  REQUIRE( Z.n_rows == 6 );
+  REQUIRE( Z.n_cols == 6 );
+
+  for (uword c = 0; c < Z.n_cols; ++c)
+    {
+    for (uword r = 0; r < Z.n_rows; ++r)
+      {
+      REQUIRE( Z(r, c) == Approx(std::max(X(r + 1, c + 1), Y(r + 1, c + 1))) );
       }
     }
   }

@@ -18,6 +18,7 @@
 #include <armadillo>
 
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -947,4 +948,41 @@ TEST_CASE("fn_mean_sparse_alias_test", "[mean]")
     {
     REQUIRE( d[i] == Approx((double) s[i]) );
     }
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_mean_fp_ref", "[mean]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  // keep number of elements small so that floating-point error remains small
+  Col<eT> X(10, fill::randu);
+  vec X_ref = conv_to<vec>::from(X);
+
+  const eT mean_val = mean(X);
+  const double mean_val_ref = mean(X_ref);
+
+  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( mean_val == Approx(eT(mean_val_ref)).margin(margin) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_mean_sp_fp_ref", "[mean]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  // keep number of elements small so that floating-point error remains small
+  SpCol<eT> X;
+  X.sprandu(100, 1, 0.3);
+  sp_vec X_ref = conv_to<sp_mat>::from(X);
+
+  const eT mean_val = mean(X);
+  const double mean_val_ref = mean(X_ref);
+
+  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( mean_val == Approx(eT(mean_val_ref)).margin(margin) );
   }

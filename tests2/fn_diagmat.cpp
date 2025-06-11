@@ -18,6 +18,7 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
@@ -140,4 +141,43 @@ TEST_CASE("fn_diagmat_3", "[diagmat]")
   REQUIRE( accu(abs((diagmat(A) * B.t() ) - Adiagmat_times_Bt  )) == Approx(0.0).margin(0.001) );
   
   // TODO: Asub and At
+  }
+
+
+
+TEMPLATE_TEST_CASE("diagmat_fp_mul_randu", "[diagmat]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> d1 = diagmat(randu<Col<eT>>(10));
+  Mat<eT> d2 = diagmat(randu<Row<eT>>(10));
+  Mat<eT>  x = randu<Mat<eT>>(10, 10);
+
+  Mat<eT> d3 = d1 * d2;
+  Mat<eT> d4 = d2 * d1;
+  Mat<eT> x2 = d1 * x;
+  Mat<eT> x3 = x * d1;
+
+  REQUIRE( d3.n_rows == d1.n_rows );
+  REQUIRE( d3.n_cols == d1.n_cols );
+  REQUIRE( d4.n_rows == d1.n_rows );
+  REQUIRE( d4.n_cols == d1.n_cols );
+  for (uword i = 0; i < d1.n_rows; ++i)
+    {
+    REQUIRE( eT(d3(i, i)) == Approx(eT(d1(i, i)) * eT(d2(i, i))).epsilon(0.01) );
+    REQUIRE( eT(d4(i, i)) == Approx(eT(d1(i, i)) * eT(d2(i, i))).epsilon(0.01) );
+    }
+
+  REQUIRE( x2.n_rows == d1.n_rows );
+  REQUIRE( x2.n_cols == d1.n_cols );
+  REQUIRE( x3.n_rows == d1.n_rows );
+  REQUIRE( x3.n_cols == d1.n_cols );
+  for (uword c = 0; c < x2.n_cols; ++c)
+    {
+    for (uword r = 0; r < x2.n_rows; ++r)
+      {
+      REQUIRE( eT(x2(r, c)) == Approx(eT(d1(r, r)) * eT(x(r, c))).epsilon(0.01) );
+      REQUIRE( eT(x3(r, c)) == Approx(eT(d1(c, c)) * eT(x(r, c))).epsilon(0.01) );
+      }
+    }
   }
