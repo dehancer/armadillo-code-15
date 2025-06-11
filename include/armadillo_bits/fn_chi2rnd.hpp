@@ -38,7 +38,7 @@ chi2rnd(const double df)
 template<typename eT>
 arma_warn_unused
 inline
-typename arma_real_only<eT>::result
+typename arma_real_fullprec_only<eT>::result
 chi2rnd(const eT df)
   {
   arma_debug_sigprint();
@@ -46,6 +46,22 @@ chi2rnd(const eT df)
   op_chi2rnd_varying_df<eT> generator;
   
   return generator(df);
+  }
+
+
+
+template<typename eT>
+arma_warn_unused
+inline
+typename arma_real_lowprec_only<eT>::result
+chi2rnd(const eT df)
+  {
+  arma_debug_sigprint();
+
+  // std::chi_squared_distribution is undefined for types other than float, double, and long double
+  op_chi2rnd_varying_df<float> generator;
+
+  return eT(generator(df));
   }
 
 

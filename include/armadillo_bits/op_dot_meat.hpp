@@ -101,7 +101,7 @@ op_dot::direct_dot_arma(const uword n_elem, const eT* const A, const eT* const B
 //! for two arrays, float and double version
 template<typename eT>
 inline
-typename arma_real_only<eT>::result
+typename arma_real_fullprec_only<eT>::result
 op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
   {
   arma_debug_sigprint();
@@ -132,7 +132,7 @@ op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
 //! for two arrays, complex version
 template<typename eT>
 inline
-typename arma_cx_only<eT>::result
+typename arma_cx_fullprec_only<eT>::result
 op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
   {
   if(n_elem <= 16u)  { return op_dot::direct_dot_arma(n_elem, A, B); }
@@ -154,6 +154,18 @@ op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
     return op_dot::direct_dot_arma(n_elem, A, B);
     }
   #endif
+  }
+
+
+
+//! for two arrays, low-precision floating point version
+template<typename eT>
+inline
+typename arma_lowprec_only<eT>::result
+op_dot::direct_dot(const uword n_elem, const eT* const A, const eT* const B)
+  {
+  // always use the internal implementation, as no BLAS version may be available
+  return op_dot::direct_dot_arma(n_elem, A, B);
   }
 
 
@@ -447,9 +459,10 @@ op_cdot::direct_cdot_arma(const uword n_elem, const eT* const A, const eT* const
 template<typename eT>
 inline
 eT
-op_cdot::direct_cdot(const uword n_elem, const eT* const A, const eT* const B)
+op_cdot::direct_cdot(const uword n_elem, const eT* const A, const eT* const B, const typename arma_real_or_cx_fullprec_only<eT>::result* junk)
   {
   arma_debug_sigprint();
+  arma_ignore(junk);
   
   if(n_elem <= 32u)  { return op_cdot::direct_cdot_arma(n_elem, A, B); }
   
@@ -481,6 +494,17 @@ op_cdot::direct_cdot(const uword n_elem, const eT* const A, const eT* const B)
     return op_cdot::direct_cdot_arma(n_elem, A, B);
     }
   #endif
+  }
+
+
+
+template<typename eT>
+inline
+eT
+op_cdot::direct_cdot(const uword n_elem, const eT* const A, const eT* const B, const typename arma_lowprec_only<eT>::result* junk)
+  {
+  // Use direct Armadillo implementation.
+  return op_cdot::direct_cdot_arma(n_elem, A, B);
   }
 
 

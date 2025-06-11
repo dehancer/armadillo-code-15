@@ -217,9 +217,10 @@ op_norm::vec_norm_1(const Proxy<T1>& P, const typename arma_cx_only<typename T1:
 template<typename eT>
 inline
 eT
-op_norm::vec_norm_1_direct_std(const Mat<eT>& X)
+op_norm::vec_norm_1_direct_std(const Mat<eT>& X, const typename arma_real_fullprec_only<eT>::result* junk)
   {
   arma_debug_sigprint();
+  arma_ignore(junk);
   
   const uword N = X.n_elem;
   const eT*   A = X.memptr();
@@ -250,6 +251,19 @@ op_norm::vec_norm_1_direct_std(const Mat<eT>& X)
   #endif
   
   return (out_val <= eT(0)) ? eT(0) : out_val;
+  }
+
+
+
+template<typename eT>
+inline
+eT
+op_norm::vec_norm_1_direct_std(const Mat<eT>& X, const typename arma_real_lowprec_only<eT>::result* junk)
+  {
+  arma_ignore(junk);
+
+  // Forward to non-BLAS implementation.
+  return op_norm::vec_norm_1_direct_mem(X.n_elem, X.memptr());
   }
 
 
@@ -518,9 +532,10 @@ op_norm::vec_norm_2(const Proxy<T1>& P, const typename arma_cx_only<typename T1:
 template<typename eT>
 inline
 eT
-op_norm::vec_norm_2_direct_std(const Mat<eT>& X)
+op_norm::vec_norm_2_direct_std(const Mat<eT>& X, const typename arma_real_fullprec_only<eT>::result* junk)
   {
   arma_debug_sigprint();
+  arma_ignore(junk);
   
   const uword N = X.n_elem;
   const eT*   A = X.memptr();
@@ -560,6 +575,19 @@ op_norm::vec_norm_2_direct_std(const Mat<eT>& X)
     
     return op_norm::vec_norm_2_direct_robust(X);
     }
+  }
+
+
+
+template<typename eT>
+inline
+eT
+op_norm::vec_norm_2_direct_std(const Mat<eT>& X, const typename arma_real_lowprec_only<eT>::result* junk)
+  {
+  arma_ignore(junk);
+
+  // Forward to non-BLAS implementation.
+  return op_norm::vec_norm_2_direct_mem(X.n_elem, X.memptr());
   }
 
 
@@ -707,7 +735,7 @@ op_norm::vec_norm_k(const Proxy<T1>& P, const int k)
     
     for(uword i=0; i<N; ++i)
       {
-      acc += std::pow(std::abs(A[i]), k);
+      acc += std::pow(std::abs(A[i]), T(k));
       }
     }
   else
@@ -720,14 +748,14 @@ op_norm::vec_norm_k(const Proxy<T1>& P, const int k)
       for(uword col=0; col < n_cols; ++col)
       for(uword row=0; row < n_rows; ++row)
         {
-        acc += std::pow(std::abs(P.at(row,col)), k);
+        acc += std::pow(std::abs(P.at(row,col)), T(k));
         }
       }
     else
       {
       for(uword col=0; col < n_cols; ++col)
         {
-        acc += std::pow(std::abs(P.at(0,col)), k);
+        acc += std::pow(std::abs(P.at(0,col)), T(k));
         }
       }
     }

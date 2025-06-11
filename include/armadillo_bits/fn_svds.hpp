@@ -25,14 +25,14 @@ inline
 bool
 svds_helper
   (
-           Mat<typename T1::elem_type>&    U,
-           Col<typename T1::pod_type >&    S,
-           Mat<typename T1::elem_type>&    V,
-  const SpBase<typename T1::elem_type,T1>& X,
-  const uword                              k,
-  const typename T1::pod_type              tol,
-  const bool                               calc_UV,
-  const typename arma_real_only<typename T1::elem_type>::result* junk = nullptr
+           Mat<typename T1::elem_type>&                                   U,
+           Col<typename T1::pod_type >&                                   S,
+           Mat<typename T1::elem_type>&                                   V,
+  const SpBase<typename T1::elem_type,T1>&                                X,
+  const uword                                                             k,
+  const typename T1::pod_type                                             tol,
+  const bool                                                              calc_UV,
+  const typename arma_real_fullprec_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();
@@ -270,13 +270,13 @@ inline
 bool
 svds
   (
-           Mat<typename T1::elem_type>&    U,
-           Col<typename T1::pod_type >&    S,
-           Mat<typename T1::elem_type>&    V,
-  const SpBase<typename T1::elem_type,T1>& X,
-  const uword                              k,
-  const typename T1::pod_type              tol  = 0.0,
-  const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
+           Mat<typename T1::elem_type>&                                         U,
+           Col<typename T1::pod_type >&                                         S,
+           Mat<typename T1::elem_type>&                                         V,
+  const SpBase<typename T1::elem_type,T1>&                                      X,
+  const uword                                                                   k,
+  const typename T1::pod_type                                                   tol  = 0.0,
+  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();
@@ -297,11 +297,11 @@ inline
 bool
 svds
   (
-           Col<typename T1::pod_type >&    S,
-  const SpBase<typename T1::elem_type,T1>& X,
-  const uword                              k,
-  const typename T1::pod_type              tol  = 0.0,
-  const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
+           Col<typename T1::pod_type >&                                         S,
+  const SpBase<typename T1::elem_type,T1>&                                      X,
+  const uword                                                                   k,
+  const typename T1::pod_type                                                   tol  = 0.0,
+  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();
@@ -326,10 +326,10 @@ inline
 Col<typename T1::pod_type>
 svds
   (
-  const SpBase<typename T1::elem_type,T1>& X,
-  const uword                              k,
-  const typename T1::pod_type              tol  = 0.0,
-  const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
+  const SpBase<typename T1::elem_type,T1>&                                      X,
+  const uword                                                                   k,
+  const typename T1::pod_type                                                   tol  = 0.0,
+  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();

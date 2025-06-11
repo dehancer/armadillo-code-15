@@ -22,6 +22,44 @@
 
 
 //! Base * scalar
+
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// TODO during review of the FP16 PR:
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+//  - this overload will not match, e.g., 5.0 * Col<fp16>, because C++ rules do not allow
+//    implicit conversions from float/double to narrower fp16/bf16; see
+//    https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p1467r4.html#implicit
+//  - so, what will actually happen is that 5.0 * Col<fp16> will activate the overload for complex scalars!
+//    this will of course, then, fail to compile;
+//
+// There are (at least) two routes to fix this:
+//
+//  1. Use std::is_convertible<scalar_type, pod_type> in any place where we are checking if a scalar is of the same type as a complex element type;
+//     maybe a local 'is_convertible' wrapper is worthwhile since Armadillo code doesn't use many std:: restrictors,
+//     or an 'is_complex_elem_type' trait;
+//     this means that 5.0 * Col<fp16> still won't work, which matches general C++ handling,
+//     but now you'll get a 'no matching function' error that could be very ugly
+//
+//  2. revamp handling of all scalars to use new internal traits facilities to check;
+//     this could allow me to write 5.0 * Col<fp16> and have it work, but,
+//     this then differs from the standard interaction behavior between low- and full-precision numbers;
+//     but, if a user does 5.0 * Col<fp16>, we can optionally make the code at least give them a -Wnarrowing warning on GCC (and probably clang)
+//
+// My main worry about solution (1) is that people are going to want to write 2.5 * Col<eT> and expect it to work,
+// and won't understand that there are different rules for low-precision floating point.
+// If I was going to pick, I'd pick (2).  I guess the signature for the function below would be:
+//
+// template<typename T1, typename in_eT>
+// arma_inline
+// typename enable_if2< is_arma_type<T1>::value && is_convertible<in_eT, typename T1::elem_type>::value, const eOp<T1, eop_scalar_times> >::result
+// operator*(const T1& x, const in_eT k)
+//   {
+//   // manual cast will suppress implicit conversion -Wnarrowing by making it explicit
+//   return eOp<T1, eop_scalar_times>(X, (typename T1::elem_type) k);
+//   }
+//
+
 template<typename T1>
 arma_inline
 typename enable_if2< is_arma_type<T1>::value, const eOp<T1, eop_scalar_times> >::result
