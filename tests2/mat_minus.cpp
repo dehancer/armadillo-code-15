@@ -121,7 +121,7 @@ TEMPLATE_TEST_CASE("mat_minus_fp", "[minus]", TEST_FLOAT_TYPES)
 
   Mat<eT> D = A - C;
 
-  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.01);
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
 
   for (uword i = 0; i < A.n_elem; ++i)
     {

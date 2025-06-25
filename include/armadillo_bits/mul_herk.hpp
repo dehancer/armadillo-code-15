@@ -484,25 +484,6 @@ class herk
     {
     herk<do_trans_A, use_alpha, use_beta>::apply_blas_type(C,A,alpha,beta);
     }
-
-
-
-  template<typename eT, typename TA>
-  arma_inline
-  static
-  void
-  apply
-    (
-          Mat< std::complex<eT> >&                C,
-    const TA&                                     A,
-    const eT                                      alpha = eT(1),
-    const eT                                      beta  = eT(0),
-    const typename arma_lowprec_only<eT>::result* junk = 0
-    )
-    {
-    // for non-BLAS real types, always use emulated herk()
-    herk_emul<do_trans_A, use_alpha, use_beta>::apply(C, A, alpha, beta);
-    }
   };
 
 

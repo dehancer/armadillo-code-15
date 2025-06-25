@@ -127,16 +127,16 @@ op_norm2est::norm2est
   Col<eT> x(A.n_rows, fill::none);
   Col<eT> y(A.n_cols, fill::none);
   
-  if (is_real_fullprec<eT>::value)
-    {
-    randu_filler.fill(y.memptr(), y.n_elem);
-    }
-  else
+  if (is_fp16<eT>::yes)
     {
     // randu_filler can only fill floats, so do that and then convert
     Col<float> tmp(y.n_elem);
     randu_filler.fill(tmp.memptr(), tmp.n_elem);
     arrayops::convert(y.memptr(), tmp.memptr(), tmp.n_elem);
+    }
+  else
+    {
+    randu_filler.fill(y.memptr(), y.n_elem);
     }
   
   T est_old = 0;

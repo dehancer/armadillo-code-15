@@ -141,7 +141,7 @@ TEMPLATE_TEST_CASE("fn_symmat_fp", "[symmat]", TEST_FLOAT_TYPES)
   REQUIRE( XL.n_rows == X.n_rows );
   REQUIRE( XL.n_cols == X.n_cols );
 
-  constexpr const eT tol = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.01);
+  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
 
   for (uword c = 0; c < X.n_cols; ++c)
     {
@@ -185,7 +185,7 @@ TEMPLATE_TEST_CASE("fn_symmat_sparse_fp", "[symmat]", TEST_FLOAT_TYPES)
   REQUIRE( XL.n_rows == X.n_rows );
   REQUIRE( XL.n_cols == X.n_cols );
 
-  constexpr const eT tol = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.01);
+  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
 
   for (uword c = 0; c < X.n_cols; ++c)
     {

@@ -178,7 +178,7 @@ TEMPLATE_TEST_CASE("fn_sum_fp_ref", "[sum]", TEST_FLOAT_TYPES)
   REQUIRE( res1.n_elem == ref1.n_elem );
   REQUIRE( res2.n_elem == ref2.n_elem );
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   for (uword i = 0; i < res1.n_elem; ++i)
     {
@@ -210,7 +210,7 @@ TEMPLATE_TEST_CASE("fn_sum_sparse_fp_ref", "[sum]", TEST_FLOAT_TYPES)
   REQUIRE( res1.n_elem == ref1.n_elem );
   REQUIRE( res2.n_elem == ref2.n_elem );
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   for (uword i = 0; i < res1.n_elem; ++i)
     {

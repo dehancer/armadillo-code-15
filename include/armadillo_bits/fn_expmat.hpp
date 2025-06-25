@@ -26,7 +26,7 @@ inline
 typename
 enable_if2
   <
-  is_real_fullprec<typename T1::pod_type>::value,
+  is_blas_real<typename T1::pod_type>::value,
   const Op<T1,op_expmat>
   >::result
 expmat(const Base<typename T1::elem_type,T1>& A)
@@ -43,7 +43,7 @@ inline
 typename
 enable_if2
   <
-  is_real_fullprec<typename T1::pod_type>::value,
+  is_blas_real<typename T1::pod_type>::value,
   bool
   >::result
 expmat(Mat<typename T1::elem_type>& B, const Base<typename T1::elem_type,T1>& A)

@@ -963,7 +963,7 @@ TEMPLATE_TEST_CASE("fn_mean_fp_ref", "[mean]", TEST_FLOAT_TYPES)
   const eT mean_val = mean(X);
   const double mean_val_ref = mean(X_ref);
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
 
   REQUIRE( mean_val == Approx(eT(mean_val_ref)).margin(margin) );
   }
@@ -982,7 +982,7 @@ TEMPLATE_TEST_CASE("fn_mean_sp_fp_ref", "[mean]", TEST_FLOAT_TYPES)
   const eT mean_val = mean(X);
   const double mean_val_ref = mean(X_ref);
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
 
   REQUIRE( mean_val == Approx(eT(mean_val_ref)).margin(margin) );
   }

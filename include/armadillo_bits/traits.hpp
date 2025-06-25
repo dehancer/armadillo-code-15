@@ -957,12 +957,20 @@ struct is_double<double>
 
 template<typename T1>
 struct is_fp16
-  { static constexpr bool value = false; };
+  {
+  static constexpr bool value = false;
+  static constexpr bool yes   = false;
+  static constexpr bool no    = true;
+  };
 
 #ifdef ARMA_HAVE_FP16
 template<>
 struct is_fp16<fp16>
-  { static constexpr bool value = true; };
+  {
+  static constexpr bool value = true;
+  static constexpr bool yes   = true;
+  static constexpr bool no    = false;
+  };
 #endif
 
 
@@ -1004,7 +1012,7 @@ struct is_real<fp16>
 
 
 template<typename T1>
-struct is_real_fullprec
+struct is_blas_real
   {
   static constexpr bool value = false;
   static constexpr bool yes   = false;
@@ -1012,7 +1020,7 @@ struct is_real_fullprec
   };
 
 template<>
-struct is_real_fullprec<float>
+struct is_blas_real<float>
   {
   static constexpr bool value = true;
   static constexpr bool yes   = true;
@@ -1020,7 +1028,7 @@ struct is_real_fullprec<float>
   };
   
 template<>
-struct is_real_fullprec<double>
+struct is_blas_real<double>
   {
   static constexpr bool value = true;
   static constexpr bool yes   = true;

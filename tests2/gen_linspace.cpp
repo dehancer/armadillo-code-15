@@ -29,7 +29,7 @@ TEMPLATE_TEST_CASE("gen_linspace_1", "[linspace]", TEST_FLOAT_TYPES)
 
   Col<eT> a = linspace<Col<eT>>(1,5,5);
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.05);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.0001) : eT(0.05);
   
   REQUIRE(a(0) == Approx(1.0).margin(margin));
   REQUIRE(a(1) == Approx(2.0).margin(margin));

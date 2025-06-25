@@ -81,7 +81,7 @@ TEMPLATE_TEST_CASE("fn_interp1_fp_randu", "[interp1]", TEST_FLOAT_TYPES)
   interp1(x_ref, y_ref, x2_ref, z3_ref, "*nearest", 5.0);
   interp1(x_ref, y_ref, x2_ref, z4_ref, "*linear", 5.0);
 
-  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   REQUIRE( z1.n_elem == z1_ref.n_elem );
   REQUIRE( z2.n_elem == z2_ref.n_elem );

@@ -74,7 +74,7 @@ TEMPLATE_TEST_CASE("fn_flip_1", "[flip]", TEST_FLOAT_TYPES)
     ";
 
   // very large margins are needed for the low precision types
-  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
   
   REQUIRE( accu(abs( fliplr(A) - A_fliplr )) == Approx(eT(0)).margin(margin) );
   REQUIRE( accu(abs( flipud(A) - A_flipud )) == Approx(eT(0)).margin(margin) );

@@ -115,7 +115,7 @@ TEMPLATE_TEST_CASE("fn_trace_fp", "[trace]", TEST_FLOAT_TYPES)
   const eT tr = trace(X);
   const eT tr_ref = accu(X.diag());
 
-  constexpr const eT tol = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
 
   REQUIRE( tr == Approx(tr_ref).epsilon(tol) );
   }
@@ -132,7 +132,7 @@ TEMPLATE_TEST_CASE("fn_trace_sparse_fp", "[trace]", TEST_FLOAT_TYPES)
   const eT tr = trace(X);
   const eT tr_ref = accu(X.diag());
 
-  constexpr const eT tol = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
 
   REQUIRE( tr == Approx(tr_ref).epsilon(tol) );
   }

@@ -32,7 +32,7 @@ TEMPLATE_TEST_CASE("fn_cumsum_1", "[cumsum]", TEST_FLOAT_TYPES)
 
   Col<eT> c = { eT(1.0000), eT(2.8000), eT(5.4000), eT(8.8000), eT(13.0000), eT(18.0000) };
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.2);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.2);
 
   REQUIRE( accu(abs(cumsum(a) - c    )) == Approx(0.0).margin(margin) );
   REQUIRE( accu(abs(cumsum(b) - c.t())) == Approx(0.0).margin(margin) );

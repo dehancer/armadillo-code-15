@@ -110,16 +110,19 @@ template<> struct arma_real_only< fp16   > { typedef fp16   result; };
 
 
 
-template<typename T> struct arma_real_fullprec_only { };
+template<typename T> struct arma_blas_real_only { };
 
-template<> struct arma_real_fullprec_only< float  > { typedef float  result; };
-template<> struct arma_real_fullprec_only< double > { typedef double result; };
+template<> struct arma_blas_real_only< float  > { typedef float  result; };
+template<> struct arma_blas_real_only< double > { typedef double result; };
 
-template<typename T> struct arma_real_lowprec_only { };
+
+
+template<typename T> struct arma_fp16_only { };
 
 #if defined(ARMA_HAVE_FP16)
-template<> struct arma_real_lowprec_only< fp16 > { typedef fp16 result; };
+template<> struct arma_fp16_only< fp16 > { typedef fp16 result; };
 #endif
+
 
 
 template<typename T> struct arma_real_or_cx_only { };
@@ -133,12 +136,12 @@ template<> struct arma_real_or_cx_only< cx_float  > { typedef cx_float  result; 
 template<> struct arma_real_or_cx_only< cx_double > { typedef cx_double result; };
 
 
-template<typename T> struct arma_real_or_cx_fullprec_only { };
+template<typename T> struct arma_blas_real_or_cx_only { };
 
-template<> struct arma_real_or_cx_fullprec_only< float     > { typedef float     result; };
-template<> struct arma_real_or_cx_fullprec_only< double    > { typedef double    result; };
-template<> struct arma_real_or_cx_fullprec_only< cx_float  > { typedef cx_float  result; };
-template<> struct arma_real_or_cx_fullprec_only< cx_double > { typedef cx_double result; };
+template<> struct arma_blas_real_or_cx_only< float     > { typedef float     result; };
+template<> struct arma_blas_real_or_cx_only< double    > { typedef double    result; };
+template<> struct arma_blas_real_or_cx_only< cx_float  > { typedef cx_float  result; };
+template<> struct arma_blas_real_or_cx_only< cx_double > { typedef cx_double result; };
 
 
 
@@ -146,21 +149,6 @@ template<typename T> struct arma_cx_only { };
 
 template<> struct arma_cx_only< cx_float  > { typedef cx_float  result; };
 template<> struct arma_cx_only< cx_double > { typedef cx_double result; };
-
-
-
-template<typename T> struct arma_cx_fullprec_only { };
-
-template<> struct arma_cx_fullprec_only< cx_float  > { typedef cx_float  result; };
-template<> struct arma_cx_fullprec_only< cx_double > { typedef cx_double result; };
-
-
-
-template<typename T> struct arma_lowprec_only { };
-
-#if defined(ARMA_HAVE_FP16)
-template<> struct arma_lowprec_only< fp16 > { typedef fp16 result; };
-#endif
 
 
 

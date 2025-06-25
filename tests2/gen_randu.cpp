@@ -36,8 +36,8 @@ TEMPLATE_TEST_CASE("gen_randu_1", "[randu]", TEST_FLOAT_TYPES)
 
   Mat<eT> C; C.randu(n_rows,n_cols);
 
-  constexpr const double margin1 = is_real_fullprec<eT>::value ? 0.02  : 0.2;
-  constexpr const double margin2 = is_real_fullprec<eT>::value ? 0.025 : 0.3;
+  constexpr const double margin1 = is_blas_real<eT>::value ? 0.02  : 0.2;
+  constexpr const double margin2 = is_blas_real<eT>::value ? 0.025 : 0.3;
 
   // low-precision types could underflow, so convert to doubles before computing the mean
 
@@ -58,8 +58,8 @@ TEMPLATE_TEST_CASE("gen_randu_2", "[randu]", TEST_FLOAT_TYPES)
 
   A(span(1,48),span(1,58)).randu();
 
-  constexpr const     eT margin1 = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.01 );
-  constexpr const double margin2 = is_real_fullprec<eT>::value ? eT(0.025) : eT(0.025);
+  constexpr const     eT margin1 = is_blas_real<eT>::value ? eT(0.001) : eT(0.01 );
+  constexpr const double margin2 = is_blas_real<eT>::value ? eT(0.025) : eT(0.025);
 
   REQUIRE( accu(A.head_cols(1)) == Approx(eT(0)).margin(margin1) );
   REQUIRE( accu(A.head_rows(1)) == Approx(eT(0)).margin(margin1) );

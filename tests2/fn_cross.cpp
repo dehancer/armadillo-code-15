@@ -32,7 +32,7 @@ TEMPLATE_TEST_CASE("fn_cross_1", "[cross]", TEST_FLOAT_TYPES)
 
   Col<eT> c = { eT(-17.050), eT(29.150), eT(-14.520) };
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   REQUIRE( accu(abs(cross(a,b) - c)) == Approx(eT(0)).margin(margin) );
   }

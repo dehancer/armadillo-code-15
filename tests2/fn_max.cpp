@@ -765,7 +765,7 @@ TEMPLATE_TEST_CASE("fn_max_unary_fp_reference", "[max]", TEST_FLOAT_TYPES)
   {
   typedef TestType eT;
 
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   Mat<eT> X(10, 10, fill::randn);
   mat X_ref = conv_to<mat>::from(X);

@@ -27,7 +27,7 @@ TEMPLATE_TEST_CASE("gen_zeros_1", "[zeros]", TEST_FLOAT_TYPES)
   {
   typedef TestType eT;
 
-  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.01);
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.01);
 
   Mat<eT> A(5,6,fill::zeros);
 
@@ -72,7 +72,7 @@ TEMPLATE_TEST_CASE("gen_zeros_2", "[zeros]", TEST_FLOAT_TYPES)
 
   A.col(1).zeros();
 
-  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.01);
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.01);
 
   REQUIRE( accu(A.col(0)) == Approx(eT(A.n_rows)) );
   REQUIRE( accu(A.col(1)) == Approx(eT(0)).margin(margin)              );
@@ -113,7 +113,7 @@ TEMPLATE_TEST_CASE("gen_zeros_3", "[zeros]", TEST_FLOAT_TYPES)
 
   Mat<eT> A(5,6,fill::ones);
 
-  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.01);
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.01);
 
   uvec indices = { 2, 4, 6 };
 

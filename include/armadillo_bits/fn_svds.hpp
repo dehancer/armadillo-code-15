@@ -32,7 +32,7 @@ svds_helper
   const uword                                                             k,
   const typename T1::pod_type                                             tol,
   const bool                                                              calc_UV,
-  const typename arma_real_fullprec_only<typename T1::elem_type>::result* junk = nullptr
+  const typename arma_blas_real_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();
@@ -276,7 +276,7 @@ svds
   const SpBase<typename T1::elem_type,T1>&                                      X,
   const uword                                                                   k,
   const typename T1::pod_type                                                   tol  = 0.0,
-  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
+  const typename arma_blas_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();
@@ -301,7 +301,7 @@ svds
   const SpBase<typename T1::elem_type,T1>&                                      X,
   const uword                                                                   k,
   const typename T1::pod_type                                                   tol  = 0.0,
-  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
+  const typename arma_blas_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();
@@ -329,7 +329,7 @@ svds
   const SpBase<typename T1::elem_type,T1>&                                      X,
   const uword                                                                   k,
   const typename T1::pod_type                                                   tol  = 0.0,
-  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
+  const typename arma_blas_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();

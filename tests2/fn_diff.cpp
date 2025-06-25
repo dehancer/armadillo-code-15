@@ -39,7 +39,7 @@ TEMPLATE_TEST_CASE("fn_diff_1", "[diff]", TEST_FLOAT_TYPES)
   Row<eT> b_diff_9;
 
   // significantly larger margin for low-precision because the errors can really add up!
-  constexpr eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(1.0);
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(1.0);
   
   REQUIRE( eT(accu(abs(diff(a,0) - a       ))) == Approx(eT(0)).margin(margin) );
   REQUIRE( eT(accu(abs(diff(a  ) - a_diff_1))) == Approx(eT(0)).margin(margin) );

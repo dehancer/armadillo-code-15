@@ -136,7 +136,7 @@ TEMPLATE_TEST_CASE("mat_plus_fp_compare", "[plus]", TEST_FLOAT_TYPES)
   REQUIRE( D.n_rows == A.n_rows );
   REQUIRE( D.n_cols == A.n_cols );
 
-  constexpr const eT margin = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.01);
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
 
   REQUIRE( all( all( abs(conv_to<mat>::from(C) - C_ref) < margin ) ) );
   REQUIRE( all( all( abs(conv_to<mat>::from(D) - D_ref) < margin ) ) );

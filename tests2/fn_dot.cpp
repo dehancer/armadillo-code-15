@@ -136,7 +136,7 @@ TEMPLATE_TEST_CASE("fn_dot_fp_randu", "[dot]", TEST_FLOAT_TYPES)
   eT d = dot(x1, x2);
   double d_ref = dot(x1_ref, x2_ref);
 
-  constexpr eT eps = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr eT eps = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   REQUIRE( double(d) == Approx(d_ref).epsilon(eps) );
   }
@@ -157,7 +157,7 @@ TEMPLATE_TEST_CASE("fn_sp_dot_fp_randu", "[dot]", TEST_FLOAT_TYPES)
   eT d = dot(x1, x2);
   double d_ref = dot(x1_ref, x2_ref);
 
-  constexpr eT eps = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr eT eps = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   REQUIRE( double(d) == Approx(d_ref).epsilon(eps) );
   }
@@ -178,7 +178,7 @@ TEMPLATE_TEST_CASE("fn_cdot_fp_randu", "[dot]", TEST_CX_FLOAT_TYPES)
   std::complex<double> d_ref = cdot(x1_ref, x2_ref);
 
   typedef typename get_pod_type<eT>::result epsT;
-  constexpr epsT eps = is_real_fullprec<eT>::value ? epsT(0.001) : epsT(0.1);
+  constexpr epsT eps = is_blas_real<eT>::value ? epsT(0.001) : epsT(0.1);
 
   REQUIRE( double(std::real(d)) == Approx(std::real(d_ref)).epsilon(eps) );
   REQUIRE( double(std::imag(d)) == Approx(std::imag(d_ref)).epsilon(eps) );
@@ -199,7 +199,7 @@ TEMPLATE_TEST_CASE("fn_norm_dot_fp_randu", "[dot]", TEST_FLOAT_TYPES)
 
   const eT d_norm = norm_dot(x1, x2);
 
-  constexpr eT eps = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.1);
+  constexpr eT eps = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
 
   REQUIRE( d_norm == Approx(d_unnorm / (norm1 * norm2)).epsilon(eps) );
   }

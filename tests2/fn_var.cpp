@@ -563,7 +563,7 @@ TEMPLATE_TEST_CASE("fn_var_fp_reference", "[var]", TEST_FLOAT_TYPES)
   const eT var_val = var(X);
   const double var_ref = var(X_ref);
 
-  const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+  const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
 
   REQUIRE( var_val == Approx(eT(var_ref)).margin(margin) );
   }
@@ -581,7 +581,7 @@ TEMPLATE_TEST_CASE("fn_var_sp_fp_reference", "[var]", TEST_FLOAT_TYPES)
   const eT var_val = var(X);
   const double var_ref = var(X_ref);
 
-  const eT margin = is_real_fullprec<eT>::value ? eT(0.001) : eT(0.02);
+  const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
 
   REQUIRE( var_val == Approx(eT(var_ref)).margin(margin) );
   }

@@ -327,7 +327,7 @@ TEMPLATE_TEST_CASE("mat_mul_cx_fp_compare", "[mat_mul]", TEST_CX_FLOAT_TYPES)
   cx_mat diff3 = conv_to<cx_mat>::from(Z3) - Z3_ref;
   cx_mat diff4 = conv_to<cx_mat>::from(Z4) - Z4_ref;
 
-  constexpr const T margin = is_real_fullprec<T>::value ? T(0.0001) : T(0.05);
+  constexpr const T margin = is_blas_real<T>::value ? T(0.0001) : T(0.05);
 
   REQUIRE( accu(abs(diff1)) == Approx(T(0)).margin(margin * diff1.n_elem) );
   REQUIRE( accu(abs(diff2)) == Approx(T(0)).margin(margin * diff2.n_elem) );

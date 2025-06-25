@@ -29,7 +29,7 @@ norm
   (
   const T1&   X,
   const uword k = uword(2),
-  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
+  const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();
@@ -58,52 +58,6 @@ norm
     
     if(k == uword(1))  { return op_norm::mat_norm_1(U.M); }
     if(k == uword(2))  { return op_norm::mat_norm_2(U.M); }
-      
-    arma_stop_logic_error("norm(): unsupported matrix norm type");
-    }
-  
-  return T(0);
-  }
-
-
-
-template<typename T1>
-arma_warn_unused
-inline
-typename enable_if2< is_arma_type<T1>::value, typename T1::pod_type >::result
-norm
-  (
-  const T1&   X,
-  const uword k = uword(2),
-  const typename arma_lowprec_only<typename T1::elem_type>::result* junk = nullptr
-  )
-  {
-  arma_debug_sigprint();
-  arma_ignore(junk);
-  
-  typedef typename T1::pod_type T;
-  
-  const Proxy<T1> P(X);
-  
-  if(P.get_n_elem() == 0)  { return T(0); }
-  
-  const bool is_vec = (T1::is_xvec) || (T1::is_row) || (T1::is_col) || (P.get_n_rows() == 1) || (P.get_n_cols() == 1);
-  
-  if(is_vec)
-    {
-    if(k == uword(1))  { return op_norm::vec_norm_1(P); }
-    if(k == uword(2))  { return op_norm::vec_norm_2(P); }
-    
-    arma_conform_check( (k == 0), "norm(): unsupported vector norm type" );
-    
-    return op_norm::vec_norm_k(P, int(k));
-    }
-  else
-    {
-    const quasi_unwrap<typename Proxy<T1>::stored_type> U(P.Q);
-    
-    if(k == uword(1))  { return op_norm::mat_norm_1(U.M); }
-    if(k == uword(2))  { arma_stop_logic_error("norm(): matrix 2-norm not supported for low-precision types"); /* no BLAS support */ }
       
     arma_stop_logic_error("norm(): unsupported matrix norm type");
     }
@@ -222,7 +176,7 @@ norm
   (
   const T1&   expr,
   const uword k = uword(2),
-  const typename arma_real_or_cx_fullprec_only<typename T1::elem_type>::result* junk = nullptr
+  const typename arma_real_or_cx_only<typename T1::elem_type>::result* junk = nullptr
   )
   {
   arma_debug_sigprint();

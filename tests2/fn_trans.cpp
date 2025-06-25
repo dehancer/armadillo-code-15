@@ -635,7 +635,7 @@ TEMPLATE_TEST_CASE("fn_trans_fp", "[trans]", TEST_FLOAT_TYPES)
   Mat<eT> X(10, 10, fill::randu);
   Mat<eT> Y = trans(X);
 
-  constexpr eT tol = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.01);
+  constexpr eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
 
   REQUIRE( Y.n_rows == X.n_rows );
   REQUIRE( Y.n_cols == X.n_cols );
@@ -659,7 +659,7 @@ TEMPLATE_TEST_CASE("fn_trans_sparse_fp", "[trans]", TEST_FLOAT_TYPES)
   X.sprandu(25, 25, 0.3);
   SpMat<eT> Y = trans(X);
 
-  constexpr eT tol = is_real_fullprec<eT>::value ? eT(0.0001) : eT(0.01);
+  constexpr eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
 
   REQUIRE( Y.n_rows == X.n_rows );
   REQUIRE( Y.n_cols == X.n_cols );
@@ -685,7 +685,7 @@ TEMPLATE_TEST_CASE("fn_trans_cx_fp", "[trans]", TEST_CX_FLOAT_TYPES)
   Mat<eT> Y3 = strans(X);
 
   typedef typename get_pod_type<eT>::result gT;
-  constexpr gT tol = is_real_fullprec<gT>::value ? gT(0.0001) : gT(0.01);
+  constexpr gT tol = is_blas_real<gT>::value ? gT(0.0001) : gT(0.01);
 
   REQUIRE( Y1.n_rows == X.n_rows );
   REQUIRE( Y1.n_cols == X.n_cols );
