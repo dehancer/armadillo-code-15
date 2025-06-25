@@ -56,20 +56,6 @@ arma_isfinite(double x)
 
 
 
-#if defined(ARMA_HAVE_FP16)
-template<>
-inline
-bool
-arma_isfinite(fp16 x)
-  {
-  // Technically not required until C++23 but basically every compiler supports it.
-  // (this is true for almost every fp16 overload in this file)
-  return std::isfinite(x);
-  }
-#endif
-
-
-
 template<typename T>
 inline
 bool
@@ -156,18 +142,6 @@ arma_isinf(double x)
 
 
 
-#if defined(ARMA_HAVE_FP16)
-template<>
-inline
-bool
-arma_isinf(fp16 x)
-  {
-  return std::isinf(x);
-  }
-#endif
-
-
-
 template<typename T>
 inline
 bool
@@ -211,18 +185,6 @@ arma_isnan(double x)
   {
   return std::isnan(x);
   }
-
-
-
-#if defined(ARMA_HAVE_FP16)
-template<>
-inline
-bool
-arma_isnan(fp16 x)
-  {
-  return std::isnan(x);
-  }
-#endif
 
 
 
@@ -323,18 +285,6 @@ arma_hypot(const double x, const double y)
 
 
 
-#if defined(ARMA_HAVE_FP16)
-template<>
-inline
-fp16
-arma_hypot(const fp16 x, const fp16 y)
-  {
-  return std::hypot(x, y);
-  }
-#endif
-
-
-
 //
 // implementation of arma_sinc()
 
@@ -380,18 +330,6 @@ arma_sinc(const double x)
   {
   return arma_sinc_generic(x);
   }
-
-
-
-#if defined(ARMA_HAVE_FP16)
-template<>
-inline
-fp16
-arma_sinc(const fp16 x)
-  {
-  return arma_sinc_generic(x);
-  }
-#endif
 
 
 
@@ -451,22 +389,6 @@ struct arma_arg<double>
 
 
 
-#if defined(ARMA_HAVE_FP16)
-template<>
-struct arma_arg<fp16>
-  {
-  static
-  inline
-  fp16
-  eval(const fp16 x)
-    {
-    return std::arg(x);
-    }
-  };
-#endif
-
-
-
 template<>
 struct arma_arg< std::complex<float> >
   {
@@ -492,6 +414,79 @@ struct arma_arg< std::complex<double> >
     return std::arg(x);
     }
   };
+
+
+
+//
+// wrappers for low-precision fp16
+
+#if defined(ARMA_HAVE_FP16)
+
+template<>
+inline
+bool
+arma_isfinite(fp16 x)
+  {
+  // Technically not required until C++23 but basically every compiler supports it.
+  // (this is true for almost every fp16 overload below)
+  return std::isfinite(x);
+  }
+
+
+
+template<>
+inline
+bool
+arma_isinf(fp16 x)
+  {
+  return std::isinf(x);
+  }
+
+
+
+template<>
+inline
+bool
+arma_isnan(fp16 x)
+  {
+  return std::isnan(x);
+  }
+
+
+
+template<>
+inline
+fp16
+arma_hypot(const fp16 x, const fp16 y)
+  {
+  return std::hypot(x, y);
+  }
+
+
+
+template<>
+inline
+fp16
+arma_sinc(const fp16 x)
+  {
+  return arma_sinc_generic(x);
+  }
+
+
+
+template<>
+struct arma_arg<fp16>
+  {
+  static
+  inline
+  fp16
+  eval(const fp16 x)
+    {
+    return std::arg(x);
+    }
+  };
+
+#endif
 
 
 
