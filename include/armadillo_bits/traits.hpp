@@ -968,18 +968,6 @@ struct is_fp16<fp16>
 
 
 template<typename T1>
-struct is_bf16
-  { static constexpr bool value = false; };
-
-#ifdef ARMA_HAVE_BF16
-template<>
-struct is_bf16<bf16>
-  { static constexpr bool value = true; };
-#endif
-
-
-
-template<typename T1>
 struct is_real
   {
   static constexpr bool value = false;
@@ -1006,16 +994,6 @@ struct is_real<double>
 #ifdef ARMA_HAVE_FP16
 template<>
 struct is_real<fp16>
-  {
-  static constexpr bool value = true;
-  static constexpr bool yes   = true;
-  static constexpr bool no    = false;
-  };
-#endif
-
-#ifdef ARMA_HAVE_BF16
-template<>
-struct is_real<bf16>
   {
   static constexpr bool value = true;
   static constexpr bool yes   = true;
@@ -1108,46 +1086,6 @@ struct is_cx_double< std::complex<double> >
 
 
 template<typename T1>
-struct is_cx_fp16
-  {
-  static constexpr bool value = false;
-  static constexpr bool yes   = false;
-  static constexpr bool no    = true;
-  };
-
-#if defined(ARMA_HAVE_CX_FP16)
-template<>
-struct is_cx_fp16< std::complex<fp16> >
-  {
-  static constexpr bool value = true;
-  static constexpr bool yes   = true;
-  static constexpr bool no    = false;
-  };
-#endif
-
-
-
-template<typename T1>
-struct is_cx_bf16
-  {
-  static constexpr bool value = false;
-  static constexpr bool yes   = false;
-  static constexpr bool no    = true;
-  };
-
-#if defined(ARMA_HAVE_CX_BF16)
-template<>
-struct is_cx_bf16< std::complex<bf16> >
-  {
-  static constexpr bool value = true;
-  static constexpr bool yes   = true;
-  static constexpr bool no    = false;
-  };
-#endif
-
-
-
-template<typename T1>
 struct is_supported_elem_type
   {
   static constexpr bool value = \
@@ -1164,11 +1102,8 @@ struct is_supported_elem_type
     is_float<T1>::value ||
     is_double<T1>::value ||
     is_fp16<T1>::value ||
-    is_bf16<T1>::value ||
     is_cx_float<T1>::value ||
-    is_cx_double<T1>::value ||
-    is_cx_fp16<T1>::value ||
-    is_cx_bf16<T1>::value;
+    is_cx_double<T1>::value;
   };
 
 
@@ -1225,15 +1160,6 @@ template<> struct is_non_integral< std::complex<double> > { static constexpr boo
 
 #if defined(ARMA_HAVE_FP16)
 template<> struct is_non_integral<              fp16    > { static constexpr bool value = true; };
-#endif
-#if defined(ARMA_HAVE_BF16)
-template<> struct is_non_integral<              bf16    > { static constexpr bool value = true; };
-#endif
-#if defined(ARMA_HAVE_CX_FP16)
-template<> struct is_non_integral< std::complex<fp16>   > { static constexpr bool value = true; };
-#endif
-#if defined(ARMA_HAVE_CX_BF16)
-template<> struct is_non_integral< std::complex<bf16>   > { static constexpr bool value = true; };
 #endif
 
 

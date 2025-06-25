@@ -52,9 +52,6 @@ namespace fill
   #if defined(ARMA_HAVE_FP16)
   template<> struct allow_conversion<std::complex<double>, fp16  > { static constexpr bool value = false; };
   #endif
-  #if defined(ARMA_HAVE_BF16)
-  template<> struct allow_conversion<std::complex<double>, bf16 > { static constexpr bool value = false; };
-  #endif
   template<> struct allow_conversion<std::complex<double>, u64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<double>, s64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<double>, u32   > { static constexpr bool value = false; };
@@ -69,9 +66,6 @@ namespace fill
   #if defined(ARMA_HAVE_FP16)
   template<> struct allow_conversion<std::complex<float>, fp16  > { static constexpr bool value = false; };
   #endif
-  #if defined(ARMA_HAVE_BF16)
-  template<> struct allow_conversion<std::complex<float>, bf16  > { static constexpr bool value = false; };
-  #endif
   template<> struct allow_conversion<std::complex<float>, u64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<float>, s64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<float>, u32   > { static constexpr bool value = false; };
@@ -80,40 +74,6 @@ namespace fill
   template<> struct allow_conversion<std::complex<float>, s16   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<float>, u8    > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<float>, s8    > { static constexpr bool value = false; };
-
-  #if defined(ARMA_HAVE_CX_FP16)
-  template<> struct allow_conversion<std::complex<fp16>, double> { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, float > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, fp16  > { static constexpr bool value = false; };
-  #if defined(ARMA_HAVE_BF16)
-  template<> struct allow_conversion<std::complex<fp16>, bf16  > { static constexpr bool value = false; };
-  #endif
-  template<> struct allow_conversion<std::complex<fp16>, u64   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, s64   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, u32   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, s32   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, u16   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, s16   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, u8    > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<fp16>, s8    > { static constexpr bool value = false; };
-  #endif
-
-  #if defined(ARMA_HAVE_CX_BF16)
-  template<> struct allow_conversion<std::complex<bf16>, double> { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, float > { static constexpr bool value = false; };
-  #if defined(ARMA_HAVE_FP16)
-  template<> struct allow_conversion<std::complex<bf16>, fp16  > { static constexpr bool value = false; };
-  #endif
-  template<> struct allow_conversion<std::complex<bf16>, bf16  > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, u64   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, s64   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, u32   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, s32   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, u16   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, s16   > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, u8    > { static constexpr bool value = false; };
-  template<> struct allow_conversion<std::complex<bf16>, s8    > { static constexpr bool value = false; };
-  #endif
   
   //
   
@@ -122,9 +82,6 @@ namespace fill
   template<>            inline bool isfinite_wrapper(double           x)  { return std::isfinite(x);                                   }
   #if defined(ARMA_HAVE_FP16)
   template<>            inline bool isfinite_wrapper(fp16             x)  { return std::isfinite(x);                                   }
-  #endif
-  #if defined(ARMA_HAVE_BF16)
-  template<>            inline bool isfinite_wrapper(bf16             x)  { return std::isfinite(x);                                   }
   #endif
   template<typename  T> inline bool isfinite_wrapper(std::complex<T>& x)  { return std::isfinite(x.real()) && std::isfinite(x.imag()); }
   

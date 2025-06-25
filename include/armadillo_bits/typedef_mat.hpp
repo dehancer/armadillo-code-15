@@ -106,30 +106,6 @@ typedef Row <fp16> fp16_rowvec;
 typedef Cube<fp16> fp16_cube;
 #endif
 
-#if defined(ARMA_HAVE_BF16)
-typedef Mat <bf16> bf16_mat;
-typedef Col <bf16> bf16_vec;
-typedef Col <bf16> bf16_colvec;
-typedef Row <bf16> bf16_rowvec;
-typedef Cube<bf16> bf16_cube;
-#endif
-
-#if defined(ARMA_HAVE_CX_FP16)
-typedef Mat < cx_fp16 > cx_fp16_mat;
-typedef Col < cx_fp16 > cx_fp16_vec;
-typedef Col < cx_fp16 > cx_fp16_colvec;
-typedef Row < cx_fp16 > cx_fp16_rowvec;
-typedef Cube< cx_fp16 > cx_fp16_cube;
-#endif
-
-#if defined(ARMA_HAVE_CX_BF16)
-typedef Mat < cx_bf16 > cx_bf16_mat;
-typedef Col < cx_bf16 > cx_bf16_vec;
-typedef Col < cx_bf16 > cx_bf16_colvec;
-typedef Row < cx_bf16 > cx_bf16_rowvec;
-typedef Cube< cx_bf16 > cx_bf16_cube;
-#endif
-
 
 
 typedef SpMat <uword> sp_umat;
@@ -179,26 +155,6 @@ typedef SpCol <fp16> sp_fp16_colvec;
 typedef SpRow <fp16> sp_fp16_rowvec;
 #endif
 
-#if defined(ARMA_HAVE_BF16)
-typedef SpMat <bf16> sp_bf16_mat;
-typedef SpCol <bf16> sp_bf16_vec;
-typedef SpCol <bf16> sp_bf16_colvec;
-typedef SpRow <bf16> sp_bf16_rowvec;
-#endif
-
-#if defined(ARMA_HAVE_CX_FP16)
-typedef SpMat <cx_fp16> sp_cx_fp16_mat;
-typedef SpCol <cx_fp16> sp_cx_fp16_vec;
-typedef SpCol <cx_fp16> sp_cx_fp16_colvec;
-typedef SpRow <cx_fp16> sp_cx_fp16_rowvec;
-#endif
-
-#if defined(ARMA_HAVE_CX_BF16)
-typedef SpMat <cx_bf16> sp_cx_bf16_mat;
-typedef SpCol <cx_bf16> sp_cx_bf16_vec;
-typedef SpCol <cx_bf16> sp_cx_bf16_colvec;
-typedef SpRow <cx_bf16> sp_cx_bf16_rowvec;
-#endif
 
 
 //! @}

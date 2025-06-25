@@ -18,22 +18,10 @@
 
 #include <armadillo>
 
-#if defined(ARMA_HAVE_FP16) && defined(ARMA_HAVE_BF16)
-  #define TEST_FLOAT_TYPES double, float, fp16, bf16
-#elif defined(ARMA_HAVE_FP16)
+#if defined(ARMA_HAVE_FP16)
   #define TEST_FLOAT_TYPES double, float, fp16
-#elif defined(ARMA_HAVE_BF16)
-  #define TEST_FLOAT_TYPES double, float, bf16
 #else
   #define TEST_FLOAT_TYPES double, float
 #endif
 
-#if defined(ARMA_HAVE_CX_FP16) && defined(ARMA_HAVE_CX_BF16)
-  #define TEST_CX_FLOAT_TYPES cx_double, cx_float, cx_fp16, cx_bf16
-#elif defined(ARMA_HAVE_CX_FP16)
-  #define TEST_CX_FLOAT_TYPES cx_double, cx_float, cx_fp16
-#elif defined(ARMA_HAVE_CX_BF16)
-  #define TEST_CX_FLOAT_TYPES cx_double, cx_float, cx_bf16
-#else
-  #define TEST_CX_FLOAT_TYPES cx_double, cx_float
-#endif
+#define TEST_CX_FLOAT_TYPES cx_double, cx_float

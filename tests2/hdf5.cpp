@@ -880,14 +880,4 @@ TEST_CASE("hdf5_fail_to_load_fp16", "[hdf5]")
 
 
 
-#if defined(ARMA_HAVE_BF16)
-TEST_CASE("hdf5_fail_to_load_bf16", "[hdf5]")
-  {
-  arma::Mat<bf16> a;
-  a.randu(20, 20);
-
-  REQUIRE_FALSE( a.save(hdf5_name("file.h5", "dataset1"), hdf5_binary) );
-  }
-#endif
-
 #endif

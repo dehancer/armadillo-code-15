@@ -561,7 +561,7 @@ Conrad Sanderson and Ryan Curtin.
 <tr><td><a href="#output_streams">output&nbsp;streams</a></td><td>&nbsp;</td><td>streams for printing warnings and errors</td></tr>
 <tr><td><a href="#uword">uword&nbsp;/&nbsp;sword</a></td><td>&nbsp;</td><td>shorthand for unsigned and signed integers</td></tr>
 <tr><td><a href="#cx_double">cx_double&nbsp;/&nbsp;cx_float</a></td><td>&nbsp;</td><td>shorthand for std::complex&lt;double&gt; and std::complex&lt;float&gt;</td></tr>
-<tr style="background-color: #F5F5F5;"><td><a href="#lowprec">fp16&nbsp;/&nbsp;bf16</a></td><td>&nbsp;</td><td>shorthand for low-precision types, if supported</td></tr>
+<tr style="background-color: #F5F5F5;"><td><a href="#lowprec">fp16</a></td><td>&nbsp;</td><td>shorthand for low-precision types, if supported</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#syntax">Matlab/Armadillo&nbsp;syntax&nbsp;differences</a></td><td>&nbsp;</td><td>examples of Matlab syntax and conceptually corresponding Armadillo syntax</td></tr>
 <tr style="background-color: #F5F5F5;"><td><a href="#example_prog">example&nbsp;program</a></td><td>&nbsp;</td><td>short example program</td></tr>
 <tr><td><a href="#config_hpp">config.hpp</a></td><td>&nbsp;</td><td>configuration options</td></tr>
@@ -711,39 +711,6 @@ For convenience the following typedefs have been defined:
       </td>
       <td style="vertical-align: top;">
       <code>Mat&lt;<a href="#lowprec">fp16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>bf16_mat</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Mat&lt;<a href="#lowprec">bf16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_fp16_mat</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Mat&lt;<a href="#lowprec">cx_fp16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_bf16_mat</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Mat&lt;<a href="#uword">cx_bf16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font></font>
       </td>
     </tr>
   </tbody>
@@ -1125,57 +1092,6 @@ For convenience the following typedefs have been defined:
       <code>Col&lt;<a href="#lowprec">fp16</a>&gt;</code>
       </td>
     </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>bf16_vec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top; text-align: right;">
-      <code>bf16_colvec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Col&lt;<a href="#lowprec">bf16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_fp16_vec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_fp16_colvec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Col&lt;<a href="#lowprec">cx_fp16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_bf16_vec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_bf16_colvec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Col&lt;<a href="#lowprec">cx_bf16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font>
-      </td>
-    </tr>
   </tbody>
 </table>
 </ul>
@@ -1436,39 +1352,6 @@ For convenience the following typedefs have been defined:
       </td>
       <td style="vertical-align: top;">
       <code>Row&lt;<a href="#lowprec">fp16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>bf16_rowvec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Row&lt;<a href="#lowprec">bf16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>cx_fp16_rowvec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Row&lt;<a href="#lowprec">cx_fp16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; text-align: right;">
-      <code>bf16_rowvec</code>
-      </td>
-      <td style="vertical-align: top;">
-      &nbsp;=&nbsp;
-      </td>
-      <td style="vertical-align: top;">
-      <code>Row&lt;<a href="#lowprec">cx_bf16</a>&gt;</code><font style="font-size: 75%"><i> (only if supported by compiler and hardware)</i></font>
       </td>
     </tr>
   </tbody>
@@ -18509,15 +18392,15 @@ cx_double val = X(2,3);
 
 <div class="pagebreak"></div><div class="noprint"><hr class="greyline"><br></div>
 <a name="lowprec"></a>
-<b>fp16</b>, <b>bf16</b>, <b>cx_fp16</b>, <b>cx_bf16</b>
+<b>fp16</b>
 <ul>
 <li>
-Convenience short forms (typedefs) for low-precision element types; <b>compiler and hardware support is required</b>
+Convenience short form (typedef) for low-precision element types; <b>compiler and hardware support is required</b>
 </li>
 <br>
 <br>
 <li>
-Low-precision types can be used with all Armadillo functions that do not require LAPACK (e.g., almost any operation that is not a decomposition like <code>svd()</code> or similar)
+The low-precision <i>fp16</i> type can be used with all Armadillo functions that do not require LAPACK (e.g., almost any operation that is not a decomposition like <code>svd()</code> or similar)
 </li>
 <br>
 <li>
@@ -18526,27 +18409,19 @@ To enable automatic support for low-precision elements, <b>both</b> of the follo
 <ul>
 <li>compiler C++23 support (e.g. compile with <code>-std=c++23</code> or similar)</li>
 <br>
-<li>hardware support for native FP16/BF16 operation (not emulated):
+<li>hardware support for native FP16 operation (not emulated):
 <ul>
-<li>ARM devices require the <code>+fp16</code> and/or <code>+bf16</code> extensions (typically found on ARMv8.6-A+ devices)</li>
-<li>x86_64 devices require the AVX512-FP16 extension for <b>fp16</b> support</li>
+<li>ARM devices require the <code>+fp16</code> extension (typically found on ARMv8.2-A+ devices)</li>
+<li>x86_64 devices require the AVX512-FP16 extension</li>
 </ul>
 </li>
 <br>
 <li>
-If only FP16 support is available, then only <i>fp16</i> and <i>cx_fp16</i> types are available
+If no compiler or hardware support is detected, <i>fp16</i> will <b>not</b> be available
 </li>
 <br>
 <li>
-If only BF16 support is available, then only <i>bf16</i> and <i>cx_bf16</i> types are available
-</li>
-<br>
-<li>
-If no compiler or hardware support is detected, <b>no low-precision types</b> will be available
-</li>
-<br>
-<li>
-The C++ low-precision types <code>std::float16_t</code> and <code>std::bfloat16_t</code> are preferentially used to define the <i>fp16</i> and <i>bf16</i> types,
+The C++ low-precision types <code>std::float16_t</code> is preferentially used to define the <i>fp16</i> type,
 but in certain situations other underlying intrinsic types such as <code>_Float16</code>, <code>__fp16</code>, or similar will be used
 </li>
 <br>
@@ -18554,17 +18429,14 @@ but in certain situations other underlying intrinsic types such as <code>_Float1
 <b>NOTE:</b>
 Low-precision types can have numerical stability issues,
 and are not suitable for all applications:
-<ul>
-<li><i>fp16</i> only has a range from roughly -65536 to 65536;</li>
-<li><i>bf16</i> has a range from roughly -1e+38 to 1e+38 but has very low precision</li>
-</ul>
+<i>fp16</i> only has a range from roughly -65536 to 65536!
 </li>
 <br>
 <li>
-The <code>ARMA_FORCE_USE_FP16</code> and <code>ARMA_FORCE_USE_BF16</code> macros can be defined before including Armadillo
+The <code>ARMA_FORCE_USE_FP16</code> macro can be defined before including Armadillo
 to force emulated support even when native hardware support is not detected
 <ul>
-<li>Emulated FP16/BF16 support can be <b>very slow!</b></li>
+<li>Emulated FP16 support can be <b>very slow!</b></li>
 <li>Manually forcing support is only recommended when Armadillo's auto-detection is failing;</li>
 <li>in which case, please send an email to the developers to improve the auto-detection!</li>
 </ul>
@@ -18574,7 +18446,6 @@ to force emulated support even when native hardware support is not detected
 Example:
 <ul>
 <pre>
-// or replace fp16_mat with bf16_mat and fp16 with bf16
 fp16_mat X(5, 5, fill::randu);
 
 X(1,2) = fp16(1.5);
@@ -18586,13 +18457,12 @@ fp16 val = X(2,3);
 <li>See also:
 <ul>
 <li><a href="https://en.wikipedia.org/wiki/Half-precision_floating-point_format">half-precision floating point format on Wikipedia</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Bfloat16_floating-point_format">bfloat16 format on Wikipedia</a></li>
 <li><a href="https://gcc.gnu.org/onlinedocs/gcc/Half-Precision.html">gcc half-precision documentation</a></li>
 <li><a href="https://clang.llvm.org/docs/LanguageExtensions.html#half-precision-floating-point">clang half-precision documentation</a></li>
 <li><a href="https://en.cppreference.com/w/cpp/header/stdfloat.html">std::float16_t and std::bfloat16_t reference</a></li>
 <li><a href="https://cplusplus.com/doc/tutorial/other_data_types/">explanation of <i>typedef</i></a></li>
-<li><a href="#Mat">fp16_mat and bf16_mat</a> matrix types
-<li><a href="#Col">fp16_vec and bf16_vec</a> vector types
+<li><a href="#Mat">fp16_mat</a> matrix type
+<li><a href="#Col">fp16_vec</a> vector type
 </ul>
 </li>
 <br>
@@ -20496,7 +20366,7 @@ List of additions and changes for each version:
 <li>added <a href="#balance">balance()</a> for producing balanced matrices where column and row norms are roughly the same</li>
 <li>added <a href="#find_nan_nonnan">find_nonnan()</a> for finding indices of non-NaN elements</li>
 <li>added standalone <a href="#replace_standalone">replace()</a> function</li>
-<li>added support for <a href="#lowprec">low-precision fp16 and bf16 types</a> when native hardware support is detected</li>
+<li>added support for <a href="#lowprec">low-precision fp16 type</a> when native hardware support is detected</li>
 <li>...</li>
 </ul>
 </li>

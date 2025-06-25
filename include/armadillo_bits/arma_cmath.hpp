@@ -63,19 +63,7 @@ bool
 arma_isfinite(fp16 x)
   {
   // Technically not required until C++23 but basically every compiler supports it.
-  // (this is true for almost every fp16/bf16 overload in this file)
-  return std::isfinite(x);
-  }
-#endif
-
-
-
-#if defined(ARMA_HAVE_BF16)
-template<>
-inline
-bool
-arma_isfinite(bf16 x)
-  {
+  // (this is true for almost every fp16 overload in this file)
   return std::isfinite(x);
   }
 #endif
@@ -180,18 +168,6 @@ arma_isinf(fp16 x)
 
 
 
-#if defined(ARMA_HAVE_BF16)
-template<>
-inline
-bool
-arma_isinf(bf16 x)
-  {
-  return std::isinf(x);
-  }
-#endif
-
-
-
 template<typename T>
 inline
 bool
@@ -243,18 +219,6 @@ template<>
 inline
 bool
 arma_isnan(fp16 x)
-  {
-  return std::isnan(x);
-  }
-#endif
-
-
-
-#if defined(ARMA_HAVE_BF16)
-template<>
-inline
-bool
-arma_isnan(bf16 x)
   {
   return std::isnan(x);
   }
@@ -371,18 +335,6 @@ arma_hypot(const fp16 x, const fp16 y)
 
 
 
-#if defined(ARMA_HAVE_BF16)
-template<>
-inline
-bf16
-arma_hypot(const bf16 x, const bf16 y)
-  {
-  return std::hypot(x, y);
-  }
-#endif
-
-
-
 //
 // implementation of arma_sinc()
 
@@ -436,18 +388,6 @@ template<>
 inline
 fp16
 arma_sinc(const fp16 x)
-  {
-  return arma_sinc_generic(x);
-  }
-#endif
-
-
-
-#if defined(ARMA_HAVE_BF16)
-template<>
-inline
-bf16
-arma_sinc(const bf16 x)
   {
   return arma_sinc_generic(x);
   }
@@ -527,22 +467,6 @@ struct arma_arg<fp16>
 
 
 
-#if defined(ARMA_HAVE_BF16)
-template<>
-struct arma_arg<bf16>
-  {
-  static
-  inline
-  bf16
-  eval(const bf16 x)
-    {
-    return std::arg(x);
-    }
-  };
-#endif
-
-
-
 template<>
 struct arma_arg< std::complex<float> >
   {
@@ -568,38 +492,6 @@ struct arma_arg< std::complex<double> >
     return std::arg(x);
     }
   };
-
-
-
-#if defined(ARMA_HAVE_CX_FP16)
-template<>
-struct arma_arg< std::complex<fp16> >
-  {
-  static
-  inline
-  fp16
-  eval(const std::complex<fp16>& x)
-    {
-    return std::arg(x);
-    }
-  };
-#endif
-
-
-
-#if defined(ARMA_HAVE_CX_BF16)
-template<>
-struct arma_arg< std::complex<bf16> >
-  {
-  static
-  inline
-  bf16
-  eval(const std::complex<bf16>& x)
-    {
-    return std::arg(x);
-    }
-  };
-#endif
 
 
 

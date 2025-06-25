@@ -227,26 +227,3 @@ TEST_CASE("fn_conv_to_fp16", "[conv_to]")
     }
   }
 #endif
-
-#if defined(ARMA_HAVE_BF16)
-TEST_CASE("fn_conv_to_bf16", "[conv_to]")
-  {
-  bf16_mat x1 = randu<bf16_mat>(50, 50);
-  mat x2 = conv_to<mat>::from(x1);
-
-  REQUIRE( x1.n_rows == x2.n_rows );
-  REQUIRE( x1.n_cols == x2.n_cols );
-  for (uword i = 0; i < x1.n_elem; ++i)
-    {
-    REQUIRE( double(x1[i]) == Approx(x2[i]) );
-    }
-
-  x2.randu();
-  x1 = conv_to<bf16_mat>::from(x2);
-
-  for (uword i = 0; i < x1.n_elem; ++i)
-    {
-    REQUIRE( x1[i] == Approx(bf16(x2[i])) );
-    }
-  }
-#endif

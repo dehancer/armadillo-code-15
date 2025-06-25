@@ -147,6 +147,6 @@ TEMPLATE_TEST_CASE("fn_accu_randu", "[accu]", TEST_FLOAT_TYPES)
   mat x_ref = conv_to<mat>::from(x);
   const double y_ref = accu(x_ref);
 
-  // large tolerance because fp16/bf16 can be really approximate!
+  // large tolerance because fp16 can be really approximate!
   REQUIRE( double(y) == Approx(y_ref).epsilon(0.1) );
   }
