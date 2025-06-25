@@ -146,7 +146,7 @@ typedef void* void_ptr;
   // All Armadillo-supported GCC versions support FP16.
   #if defined(__FLT16_MAX__) && defined(__ARM_FP16_FORMAT_IEEE)
     #define ARMA_HAVE_FP16
-    typedef __fp16 fp16;
+    typedef _Float16 fp16;
   #elif defined(__FLT16_MAX__) && defined(__SSE2__)
     // See https://gcc.gnu.org/bugzilla/show_bug.cgi?id=116122 for why __SSE2__ is needed.
     #define ARMA_HAVE_FP16
