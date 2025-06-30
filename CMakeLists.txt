@@ -41,7 +41,7 @@
 ## NOTE: More details: https://arma.sourceforge.net/faq.html
 
 
-cmake_minimum_required(VERSION 3.10 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5...3.10 FATAL_ERROR)
 
 if(POLICY CMP0025)
   # enable differentiation between vanilla Clang and AppleClang
@@ -102,13 +102,13 @@ endif()
 
 if(DEFINED CMAKE_CXX_COMPILER_ID AND DEFINED CMAKE_CXX_COMPILER_VERSION)
   if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    if(NOT (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 8.1.0))
+    if(NOT (${CMAKE_CXX_COMPILER_VERSION} VERSION_LESS 6.1.0))
       if(NOT DEFINED CMAKE_CXX_STANDARD)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
         message(STATUS "Added '-std=c++14' to compiler flags")
       endif()
     else()
-      message(FATAL_ERROR "Compiler too old; need at least gcc 8.1")
+      message(FATAL_ERROR "Compiler too old; need at least gcc 6.1")
     endif()
   else()
     if(NOT (${CMAKE_MAJOR_VERSION} LESS 3))
