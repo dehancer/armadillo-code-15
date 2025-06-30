@@ -116,37 +116,4 @@ spop_omit::apply_noalias(SpMat<typename T1::elem_type>& out, const SpProxy<T1>& 
 
 
 
-// template<typename T1, typename functor>
-// inline
-// void
-// spop_omit::apply_direct(SpMat<typename T1::elem_type>& out, const T1& expr, functor is_omitted)
-//   {
-//   arma_debug_sigprint();
-//   
-//   typedef typename T1::elem_type eT;
-//   
-//   constexpr eT eT_zero = eT(0);
-//   
-//   out = expr;
-//   
-//   const uword N = out.n_elem;
-//   
-//   out.reshape(N, 1);
-//   
-//   out.sync();
-//   
-//   eT* values = access::rw(out.values);
-//   
-//   for(uword i=0; i < N; ++i)
-//     {
-//     eT& val = values[i];
-//     
-//     if(is_omitted(val))  { val = eT_zero; }
-//     }
-//   
-//   out.remove_zeros();
-//   }
-
-
-
 //! @}
