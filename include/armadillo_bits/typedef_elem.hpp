@@ -136,6 +136,7 @@ typedef void* void_ptr;
 // Attempt to capture all supported float16 types.
 // If C++23 or newer is used, we have a native type;
 // otherwise, there are a few possibilities.
+#undef ARMA_HAVE_FP16
 #if defined(ARMA_HAVE_CXX23)
   #if defined(__STDCPP_FLOAT16_T__) && (__STDCPP_FLOAT16_T__ == 1)
     #define ARMA_HAVE_FP16
@@ -169,6 +170,7 @@ typedef void* void_ptr;
 // then it's going to be really slow.  Disable it and tell the user---unless they
 // force the issue.
 #if defined(ARMA_HAVE_FP16)
+  #undef ARMA_BAD_FP16
   #if defined(__aarch64__)
     #if !defined(__ARM_FEATURE_FP16_SCALAR_ARITHMETIC)
       // We have to have the scalar intrinsics for native FP16 support.
