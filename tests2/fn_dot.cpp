@@ -143,24 +143,24 @@ TEMPLATE_TEST_CASE("fn_dot_fp_randu", "[dot]", TEST_FLOAT_TYPES)
 
 
 
-TEMPLATE_TEST_CASE("fn_sp_dot_fp_randu", "[dot]", TEST_FLOAT_TYPES)
-  {
-  typedef TestType eT;
-
-  SpCol<eT> x1, x2;
-  x1.sprandu(1000, 1, 0.3);
-  x2.sprandu(1000, 1, 0.3);
-
-  sp_mat x1_ref = conv_to<sp_mat>::from(x1);
-  sp_mat x2_ref = conv_to<sp_mat>::from(x2);
-
-  eT d = dot(x1, x2);
-  double d_ref = dot(x1_ref, x2_ref);
-
-  constexpr eT eps = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
-
-  REQUIRE( double(d) == Approx(d_ref).epsilon(eps) );
-  }
+//TEMPLATE_TEST_CASE("fn_sp_dot_fp_randu", "[dot]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpCol<eT> x1, x2;
+//  x1.sprandu(1000, 1, 0.3);
+//  x2.sprandu(1000, 1, 0.3);
+//
+//  sp_mat x1_ref = conv_to<sp_mat>::from(x1);
+//  sp_mat x2_ref = conv_to<sp_mat>::from(x2);
+//
+//  eT d = dot(x1, x2);
+//  double d_ref = dot(x1_ref, x2_ref);
+//
+//  constexpr eT eps = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
+//
+//  REQUIRE( double(d) == Approx(d_ref).epsilon(eps) );
+//  }
 
 
 

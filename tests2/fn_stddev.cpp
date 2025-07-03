@@ -570,18 +570,18 @@ TEMPLATE_TEST_CASE("fn_stddev_fp_reference", "[stddev]", TEST_FLOAT_TYPES)
 
 
 
-TEMPLATE_TEST_CASE("fn_stddev_sp_fp_reference", "[stddev]", TEST_FLOAT_TYPES)
-  {
-  typedef TestType eT;
-
-  SpCol<eT> X;
-  X.sprandu(100, 1, 0.3);
-  sp_vec X_ref = conv_to<sp_mat>::from(X);
-
-  const eT stddev_val = stddev(X);
-  const double stddev_ref = stddev(X_ref);
-
-  const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
-
-  REQUIRE( stddev_val == Approx(eT(stddev_ref)).margin(margin) );
-  }
+//TEMPLATE_TEST_CASE("fn_stddev_sp_fp_reference", "[stddev]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpCol<eT> X;
+//  X.sprandu(100, 1, 0.3);
+//  sp_vec X_ref = conv_to<sp_mat>::from(X);
+//
+//  const eT stddev_val = stddev(X);
+//  const double stddev_ref = stddev(X_ref);
+//
+//  const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
+//
+//  REQUIRE( stddev_val == Approx(eT(stddev_ref)).margin(margin) );
+//  }

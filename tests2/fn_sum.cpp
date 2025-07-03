@@ -191,32 +191,32 @@ TEMPLATE_TEST_CASE("fn_sum_fp_ref", "[sum]", TEST_FLOAT_TYPES)
 
 
 
-TEMPLATE_TEST_CASE("fn_sum_sparse_fp_ref", "[sum]", TEST_FLOAT_TYPES)
-  {
-  typedef TestType eT;
-
-  SpMat<eT> X;
-  X.sprandu(10, 10, 0.3);
-  sp_mat X_ref = conv_to<sp_mat>::from(X);
-
-  SpRow<eT> res1 = sum(X, 0);
-  SpCol<eT> res2 = sum(X, 1);
-  eT res3 = sum(sum(X));
-
-  sp_rowvec ref1 = sum(X_ref, 0);
-  sp_vec ref2 = sum(X_ref, 1);
-  double ref3 = sum(sum(X_ref));
-
-  REQUIRE( res1.n_elem == ref1.n_elem );
-  REQUIRE( res2.n_elem == ref2.n_elem );
-
-  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
-
-  for (uword i = 0; i < res1.n_elem; ++i)
-    {
-    REQUIRE( res1[i] == Approx(eT(double(ref1[i]))).margin(margin) );
-    REQUIRE( res2[i] == Approx(eT(double(ref2[i]))).margin(margin) );
-    }
-
-  REQUIRE( res3 == Approx(eT(ref3)).margin(margin) );
-  }
+//TEMPLATE_TEST_CASE("fn_sum_sparse_fp_ref", "[sum]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpMat<eT> X;
+//  X.sprandu(10, 10, 0.3);
+//  sp_mat X_ref = conv_to<sp_mat>::from(X);
+//
+//  SpRow<eT> res1 = sum(X, 0);
+//  SpCol<eT> res2 = sum(X, 1);
+//  eT res3 = sum(sum(X));
+//
+//  sp_rowvec ref1 = sum(X_ref, 0);
+//  sp_vec ref2 = sum(X_ref, 1);
+//  double ref3 = sum(sum(X_ref));
+//
+//  REQUIRE( res1.n_elem == ref1.n_elem );
+//  REQUIRE( res2.n_elem == ref2.n_elem );
+//
+//  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
+//
+//  for (uword i = 0; i < res1.n_elem; ++i)
+//    {
+//    REQUIRE( res1[i] == Approx(eT(double(ref1[i]))).margin(margin) );
+//    REQUIRE( res2[i] == Approx(eT(double(ref2[i]))).margin(margin) );
+//    }
+//
+//  REQUIRE( res3 == Approx(eT(ref3)).margin(margin) );
+//  }

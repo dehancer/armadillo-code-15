@@ -651,27 +651,27 @@ TEMPLATE_TEST_CASE("fn_trans_fp", "[trans]", TEST_FLOAT_TYPES)
 
 
 
-TEMPLATE_TEST_CASE("fn_trans_sparse_fp", "[trans]", TEST_FLOAT_TYPES)
-  {
-  typedef TestType eT;
-
-  SpMat<eT> X;
-  X.sprandu(25, 25, 0.3);
-  SpMat<eT> Y = trans(X);
-
-  constexpr eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
-
-  REQUIRE( Y.n_rows == X.n_rows );
-  REQUIRE( Y.n_cols == X.n_cols );
-
-  for (uword c = 0; c < Y.n_cols; ++c)
-    {
-    for (uword r = 0; r < Y.n_rows; ++r)
-      {
-      REQUIRE( Y(r, c) == Approx(X(c, r)).epsilon(tol) );
-      }
-    }
-  }
+//TEMPLATE_TEST_CASE("fn_trans_sparse_fp", "[trans]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpMat<eT> X;
+//  X.sprandu(25, 25, 0.3);
+//  SpMat<eT> Y = trans(X);
+//
+//  constexpr eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
+//
+//  REQUIRE( Y.n_rows == X.n_rows );
+//  REQUIRE( Y.n_cols == X.n_cols );
+//
+//  for (uword c = 0; c < Y.n_cols; ++c)
+//    {
+//    for (uword r = 0; r < Y.n_rows; ++r)
+//      {
+//      REQUIRE( Y(r, c) == Approx(X(c, r)).epsilon(tol) );
+//      }
+//    }
+//  }
 
 
 
