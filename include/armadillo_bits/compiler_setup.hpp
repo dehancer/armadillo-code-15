@@ -172,7 +172,7 @@
     #pragma message("INFO: support for GCC versions older than 8.1 is deprecated")
   #endif
   
-  #if (ARMA_GCC_VERSION >= 170000)
+  #if (ARMA_GCC_VERSION >= 180000)
     #undef ARMA_IGNORE_DEPRECATED_MARKER
   #endif
   
@@ -234,7 +234,7 @@
   // #pragma message ("using Clang extensions")
   
   #if defined(__clang_major__) && !defined(__apple_build_version__)
-    #if (__clang_major__ >= 24)
+    #if (__clang_major__ >= 26)
       #undef ARMA_IGNORE_DEPRECATED_MARKER
     #endif
   #endif
@@ -487,7 +487,7 @@
 #undef major
 
 
-// WARNING: option 'ARMA_IGNORE_DEPRECATED_MARKER' is not supported when compiling with gcc 17+ or clang 24+
+// WARNING: option 'ARMA_IGNORE_DEPRECATED_MARKER' is not supported when compiling with gcc 18+ or clang 26+
 // WARNING: disabling deprecation messages is counter-productive
 
 #if defined(ARMA_IGNORE_DEPRECATED_MARKER)
