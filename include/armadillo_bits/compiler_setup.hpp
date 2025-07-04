@@ -487,9 +487,6 @@
 #undef major
 
 
-// WARNING: option 'ARMA_IGNORE_DEPRECATED_MARKER' is not supported when compiling with gcc 18+ or clang 26+
-// WARNING: disabling deprecation messages is counter-productive
-
 #if defined(ARMA_IGNORE_DEPRECATED_MARKER)
   #undef  arma_deprecated
   #define arma_deprecated
