@@ -25,13 +25,6 @@ struct arma_cx_median_packet
   {
   T     val;
   uword index;
-  
-  inline arma_cx_median_packet() : val(0), index(0) {}
-  
-  inline explicit arma_cx_median_packet(const T in_val, const uword in_index) : val(in_val), index(in_index) {}
-  inline          arma_cx_median_packet(const arma_cx_median_packet& in     ) : val(in.val), index(in.index) {}
-  
-  inline void operator=(const arma_cx_median_packet& in) { if(this == &in) { return; } val = in.val; index = in.index; }
   };
 
 
@@ -77,29 +70,6 @@ class op_median
   
   template<typename T>
   inline static void direct_cx_median_index(uword& out_index1, uword& out_index2, std::vector< arma_cx_median_packet<T> >& X);
-  };
-
-
-
-class op_median_omit
-  : public traits_op_xvec
-  {
-  public:
-  
-  template<typename T1>
-  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1,op_median_omit>& expr);
-  
-  template<typename eT, typename functor>
-  inline static void apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword dim, functor is_omitted, const typename arma_not_cx<eT>::result* junk = nullptr);
-  
-  template<typename eT, typename functor>
-  inline static void apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword dim, functor is_omitted, const typename arma_cx_only<eT>::result* junk = nullptr);
-  
-  template<typename T1, int omit_mode>
-  inline static typename T1::elem_type median_vec(const T1& X, const elem_opts::omit_indicator<omit_mode>&, const typename arma_not_cx<typename T1::elem_type>::result* junk = nullptr);
-  
-  template<typename T1, int omit_mode>
-  inline static typename T1::elem_type median_vec(const T1& X, const elem_opts::omit_indicator<omit_mode>&, const typename arma_cx_only<typename T1::elem_type>::result* junk = nullptr);
   };
 
 

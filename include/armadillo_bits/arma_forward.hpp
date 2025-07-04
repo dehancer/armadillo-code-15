@@ -93,6 +93,7 @@ class op_vectorise_row;
 class op_vectorise_col;
 class op_symmatu;
 class op_symmatl;
+class op_omit;
 
 class op_row_as_mat;
 class op_col_as_mat;
@@ -359,16 +360,6 @@ template<bool do_zeros> struct arma_initmode_indicator {};
 
 struct arma_zeros_indicator   : public arma_initmode_indicator<true > {};
 struct arma_nozeros_indicator : public arma_initmode_indicator<false> {};
-
-
-
-namespace elem_opts
-  {
-  template<int omit_mode> struct omit_indicator {};
-  
-  static constexpr omit_indicator<1> omit_nan;
-  static constexpr omit_indicator<2> omit_nonfinite;
-  }
 
 
 

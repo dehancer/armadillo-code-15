@@ -33,19 +33,6 @@ median(const T1& X)
 
 
 
-template<typename T1, int omit_mode>
-arma_warn_unused
-inline
-typename enable_if2< is_arma_type<T1>::value && resolves_to_vector<T1>::yes, typename T1::elem_type >::result
-median(const T1& X, const elem_opts::omit_indicator<omit_mode>& indicator)
-  {
-  arma_debug_sigprint();
-  
-  return op_median_omit::median_vec(X, indicator);
-  }
-
-
-
 template<typename T1>
 arma_warn_unused
 arma_inline
@@ -68,19 +55,6 @@ median(const T1& X, const uword dim)
   arma_debug_sigprint();
   
   return Op<T1, op_median>(X, dim, 0);
-  }
-
-
-
-template<typename T1, int omit_mode>
-arma_warn_unused
-arma_inline
-typename enable_if2< is_arma_type<T1>::value, const Op<T1, op_median_omit> >::result
-median(const T1& X, const uword dim, const elem_opts::omit_indicator<omit_mode>&)
-  {
-  arma_debug_sigprint();
-  
-  return Op<T1, op_median_omit>(X, dim, uword(omit_mode));
   }
 
 

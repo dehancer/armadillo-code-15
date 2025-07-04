@@ -33,19 +33,6 @@ sum(const T1& X)
 
 
 
-template<typename T1, int omit_mode>
-arma_warn_unused
-inline
-typename enable_if2< is_arma_type<T1>::value && resolves_to_vector<T1>::yes, typename T1::elem_type >::result
-sum(const T1& X, const elem_opts::omit_indicator<omit_mode>& indicator)
-  {
-  arma_debug_sigprint();
-  
-  return accu(X, indicator);
-  }
-
-
-
 template<typename T1>
 arma_warn_unused
 arma_inline
@@ -68,19 +55,6 @@ sum(const T1& X, const uword dim)
   arma_debug_sigprint();
   
   return Op<T1, op_sum>(X, dim, 0);
-  }
-
-
-
-template<typename T1, int omit_mode>
-arma_warn_unused
-arma_inline
-typename enable_if2< is_arma_type<T1>::value, const Op<T1, op_sum_omit> >::result
-sum(const T1& X, const uword dim, const elem_opts::omit_indicator<omit_mode>&)
-  {
-  arma_debug_sigprint();
-  
-  return Op<T1, op_sum_omit>(X, dim, uword(omit_mode));
   }
 
 
@@ -114,24 +88,6 @@ sum
 
 
 
-template<typename T1, int omit_mode>
-arma_warn_unused
-arma_inline
-const OpCube<T1, op_sum_omit>
-sum
-  (
-  const BaseCube<typename T1::elem_type,T1>& X,
-  const uword dim,
-  const elem_opts::omit_indicator<omit_mode>&
-  )
-  {
-  arma_debug_sigprint();
-  
-  return OpCube<T1, op_sum_omit>(X.get_ref(), dim, uword(omit_mode));
-  }
-
-
-
 //! sum of sparse object
 template<typename T1>
 arma_warn_unused
@@ -148,24 +104,6 @@ sum(const T1& x)
   
   // sum elements
   return accu(x);
-  }
-
-
-
-template<typename T1, int omit_mode>
-arma_warn_unused
-inline
-typename
-enable_if2
-  <
-  is_arma_sparse_type<T1>::value && resolves_to_sparse_vector<T1>::yes,
-  typename T1::elem_type
-  >::result
-sum(const T1& x, const elem_opts::omit_indicator<omit_mode>& indicator)
-  {
-  arma_debug_sigprint();
-  
-  return accu(x, indicator);
   }
 
 
@@ -202,24 +140,6 @@ sum(const T1& x, const uword dim)
   arma_debug_sigprint();
   
   return mtSpReduceOp<typename T1::elem_type, T1, op_sp_sum>(x, dim, 0);
-  }
-
-
-
-template<typename T1, int omit_mode>
-arma_warn_unused
-inline
-typename
-enable_if2
-  <
-  is_arma_sparse_type<T1>::value,
-  const mtSpReduceOp<typename T1::elem_type, T1, op_sp_sum_omit>
-  >::result
-sum(const T1& x, const uword dim, const elem_opts::omit_indicator<omit_mode>&)
-  {
-  arma_debug_sigprint();
-  
-  return mtSpReduceOp<typename T1::elem_type, T1, op_sp_sum_omit>(x, dim, uword(omit_mode));
   }
 
 

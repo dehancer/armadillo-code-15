@@ -59,29 +59,4 @@ class op_sum
   };
 
 
-
-class op_sum_omit
-  : public traits_op_xvec
-  {
-  public:
-  
-  // dense matrices
-  
-  template<typename T1>
-  inline static void apply(Mat<typename T1::elem_type>& out, const Op<T1, op_sum_omit>& in);
-  
-  template<typename T1, typename functor>
-  inline static void apply_proxy_noalias(Mat<typename T1::elem_type>& out, const Proxy<T1>& P, const uword dim, functor is_omitted);
-  
-  
-  // cubes
-  
-  template<typename T1>
-  inline static void apply(Cube<typename T1::elem_type>& out, const OpCube<T1, op_sum_omit>& in);
-  
-  template<typename T1, typename functor>
-  inline static void apply_proxy_noalias(Cube<typename T1::elem_type>& out, const ProxyCube<T1>& P, const uword dim, functor is_omitted);
-  };
-
-
 //! @}

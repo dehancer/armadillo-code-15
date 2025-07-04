@@ -67,7 +67,7 @@ sort_index
 
 
 
-// TODO: deprecate this function in lieu of sort_index()
+// DO NOT USE: kept only for compatibility with old user code
 template<typename T1>
 arma_warn_unused
 arma_inline
@@ -84,7 +84,7 @@ stable_sort_index
 
 
 
-// TODO: deprecate this function in lieu of sort_index()
+// DO NOT USE: kept only for compatibility with old user code
 template<typename T1, typename T2>
 arma_warn_unused
 inline

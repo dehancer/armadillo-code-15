@@ -130,6 +130,7 @@ op_mean::apply(Cube<typename T1::elem_type>& out, const OpCube<T1,op_mean>& in)
   typedef typename T1::elem_type eT;
   
   const uword dim = in.aux_uword_a;
+  
   arma_conform_check( (dim > 2), "mean(): parameter 'dim' must be 0 or 1 or 2" );
   
   const unwrap_cube<T1> U(in.m);
@@ -211,7 +212,7 @@ op_mean::apply_noalias(Cube<eT>& out, const Cube<eT>& X, const uword dim)
           
           if(arma_isnonfinite(old_mean))
             {
-            tmp_vec.copy(tmp_mat, row);
+            tmp_vec.copy_row(tmp_mat, row);
             
             out_mem[row] = op_mean::direct_mean_robust(old_mean, tmp_vec.memptr(), tmp_vec.n_elem);
             }
@@ -294,7 +295,7 @@ op_mean::direct_mean_robust(const eT old_mean, const eT* X_mem, const uword N)
   
   for(uword i=0; i < N; ++i)
     {
-    r_mean = r_mean + (X_mem[i] - r_mean)/T(i+1);
+    r_mean = r_mean + (X_mem[i] - r_mean) / T(i+1);
     }
   
   return r_mean;
@@ -308,7 +309,7 @@ op_mean::direct_mean_robust(const eT old_mean, const eT* X_mem, const uword N)
 
 template<typename T1>
 inline
-typename T1::elem_type 
+typename T1::elem_type
 op_mean::mean_all(const T1& X)
   {
   arma_debug_sigprint();
@@ -325,6 +326,91 @@ op_mean::mean_all(const T1& X)
     }
   
   return op_mean::direct_mean(U.M.memptr(), U.M.n_elem);
+  }
+
+
+
+template<typename T1>
+inline
+typename T1::elem_type
+op_mean::mean_all(const Op<T1, op_omit>& in)
+  {
+  arma_debug_sigprint();
+  
+  typedef typename T1::elem_type eT;
+  
+  const uword omit_mode = in.aux_uword_a;
+  
+  if(arma_config::fast_math_warn)
+    {
+    if(omit_mode == 1)  { arma_warn(1, "omit_nan(): detection of NaN is not reliable in fast math mode"); }
+    if(omit_mode == 2)  { arma_warn(1, "omit_nonfinite(): detection of non-finite values is not reliable in fast math mode"); }
+    }
+  
+  const quasi_unwrap<T1> U(in.m);
+  
+  if(U.M.n_elem == 0)
+    {
+    arma_conform_check(true, "mean(): object has no elements");
+    
+    return Datum<eT>::nan;
+    }
+  
+  auto is_omitted_1 = [](const eT& x) -> bool { return arma_isnan(x);       };
+  auto is_omitted_2 = [](const eT& x) -> bool { return arma_isnonfinite(x); };
+  
+  eT result = eT(0);
+  
+  if(omit_mode == 1)  { result = op_mean::mean_all_omit(U.M.memptr(), U.M.n_elem, is_omitted_1); }
+  if(omit_mode == 2)  { result = op_mean::mean_all_omit(U.M.memptr(), U.M.n_elem, is_omitted_2); }
+  
+  return result;
+  }
+
+
+
+template<typename eT, typename functor>
+inline
+eT
+op_mean::mean_all_omit(const eT* X_mem, const uword N, functor is_omitted)
+  {
+  arma_debug_sigprint();
+  
+  typedef typename get_pod_type<eT>::result T;
+  
+  uword count = 0;
+  eT    acc   = eT(0);
+  
+  for(uword i=0; i < N; ++i)
+    {
+    const eT val = X_mem[i];
+    
+    if(is_omitted(val) == false)  { acc += val; ++count; }
+    }
+  
+  acc /= T(count);
+  
+  if(arma_isfinite(acc))  { return acc; }
+  
+  // handle possible overflow
+  
+  eT r_mean = eT(0);
+  
+  count = 0;
+  
+  for(uword i=0; i < N; ++i)
+    {
+    const eT val = X_mem[i];
+    
+    if(is_omitted(val) == false)
+      {
+      r_mean = r_mean + (val - r_mean) / T(count+1);  // kept as count+1 to use same algorithm as op_mean::direct_mean_robust()
+      
+      ++count;
+      }
+    }
+  
+  return r_mean;
   }
 
 
@@ -351,172 +437,6 @@ op_mean::robust_mean(const std::complex<T>& A, const std::complex<T>& B)
   typedef typename std::complex<T> eT;
   
   return (arma_isfinite(A) && arma_isfinite(B)) ? eT( A + (B - A)/T(2) ) : eT( (A+B)/T(2) );
-  }
-
-
-
-//
-
-
-
-template<typename T1>
-inline
-void
-op_mean_omit::apply(Mat<typename T1::elem_type>& out, const Op<T1,op_mean_omit>& in)
-  {
-  arma_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
-  
-  const uword dim       = in.aux_uword_a;
-  const uword omit_mode = in.aux_uword_b;
-  
-  arma_conform_check( (dim > 1), "mean(): parameter 'dim' must be 0 or 1" );
-  
-  auto is_omitted_1 = [](const eT& x) -> bool { return arma_isnan(x);       };
-  auto is_omitted_2 = [](const eT& x) -> bool { return arma_isnonfinite(x); };
-  
-  const quasi_unwrap<T1> U(in.m);
-  
-  if(U.is_alias(out))
-    {
-    Mat<eT> tmp;
-    
-    if(omit_mode == 1)  { op_mean_omit::apply_noalias(tmp, U.M, dim, is_omitted_1); }
-    if(omit_mode == 2)  { op_mean_omit::apply_noalias(tmp, U.M, dim, is_omitted_2); }
-    
-    out.steal_mem(tmp);
-    }
-  else
-    {
-    if(omit_mode == 1)  { op_mean_omit::apply_noalias(out, U.M, dim, is_omitted_1); }
-    if(omit_mode == 2)  { op_mean_omit::apply_noalias(out, U.M, dim, is_omitted_2); }
-    }
-  }
-
-
-
-template<typename eT, typename functor>
-inline
-void
-op_mean_omit::apply_noalias(Mat<eT>& out, const Mat<eT>& X, const uword dim, functor is_omitted)
-  {
-  arma_debug_sigprint();
-  
-  const uword X_n_rows = X.n_rows;
-  const uword X_n_cols = X.n_cols;
-  
-  podarray<eT> work;
-    
-  if(dim == 0)
-    {
-    out.set_size((X_n_rows > 0) ? 1 : 0, X_n_cols);
-    
-    if(X_n_rows == 0)  { return; }
-    
-    eT* out_mem = out.memptr();
-    
-    for(uword col=0; col < X_n_cols; ++col)
-      {
-      out_mem[col] = op_mean_omit::direct_mean(X.colptr(col), X_n_rows, is_omitted, work);
-      }
-    }
-  else
-  if(dim == 1)
-    {
-    out.set_size(X_n_rows, (X_n_cols > 0) ? 1 : 0);
-    
-    if(X_n_cols == 0)  { return; }
-    
-    eT* out_mem = out.memptr();
-    
-    podarray<eT> tmp;
-    
-    for(uword row=0; row < X_n_rows; ++row)
-      {
-      tmp.copy_row(X, row);
-      
-      out_mem[row] = op_mean_omit::direct_mean(tmp.memptr(), tmp.n_elem, is_omitted, work);
-      }
-    }
-  }
-
-
-
-template<typename eT, typename functor>
-inline
-eT
-op_mean_omit::direct_mean(const eT* X_mem, const uword N, functor is_omitted, podarray<eT>& work)
-  {
-  arma_debug_sigprint();
-  
-  typedef typename get_pod_type<eT>::result T;
-  
-  uword count = 0;
-  
-  eT val = eT(0);
-  
-  for(uword i=0; i < N; ++i)
-    {
-    const eT tmp = X_mem[i];
-    
-    if(is_omitted(tmp) == false)  { val += tmp;  ++count; }
-    }
-  
-  val /= T(count);
-  
-  if( arma_isfinite(val) || (count == 0) )  { return val; }
-  
-  arma_debug_print("op_mean_omit::direct_mean(): possible overflow; fallback to robust mean calculation");
-  
-  work.set_size(N);
-  
-  eT* work_mem = work.memptr();
-  
-  count = 0;
-  
-  for(uword i=0; i < N; ++i)
-    {
-    const eT tmp = X_mem[i];
-    
-    if(is_omitted(tmp) == false)  { work_mem[count] = tmp; ++count; }
-    }
-  
-  return op_mean::direct_mean_robust(val, work_mem, count);
-  }
-
-
-
-template<typename T1, int omit_mode>
-inline
-typename T1::elem_type 
-op_mean_omit::mean_all(const T1& X, const elem_opts::omit_indicator<omit_mode>&)
-  {
-  arma_debug_sigprint();
-  
-  typedef typename T1::elem_type eT;
-  
-  const quasi_unwrap<T1> U(X);
-  const Mat<eT>&     A = U.M;
-  
-  const uword A_n_elem = A.n_elem;
-  
-  if(A_n_elem == 0)
-    {
-    arma_conform_check(true, "mean(): object has no elements");
-    
-    return Datum<eT>::nan;
-    }
-  
-  auto is_omitted = [](const eT& x) -> bool
-    {
-    if(omit_mode == 1)  { return arma_isnan(x);       }
-    if(omit_mode == 2)  { return arma_isnonfinite(x); }
-    };
-  
-  podarray<eT> work;
-  
-  return op_mean_omit::direct_mean(A.memptr(), A_n_elem, is_omitted, work);
   }
 
 

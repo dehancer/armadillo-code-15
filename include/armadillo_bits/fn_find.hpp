@@ -437,7 +437,7 @@ find_nonfinite(const SpBase<typename T1::elem_type,T1>& X)
   
   for(uword i=0; i<n_nz; ++i)
     {
-    if(arma_isfinite(*it) == false)
+    if(arma_isnonfinite(*it))
       {
       const uword index = it.row() + it.col()*n_rows;
       

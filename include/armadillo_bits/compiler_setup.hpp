@@ -34,8 +34,8 @@
 #define arma_aligned
 #define arma_align_mem
 #define arma_warn_unused
-#define arma_deprecated
-#define arma_frown(msg)
+#define arma_deprecated        [[deprecated]]
+#define arma_frown(msg)        [[deprecated(msg)]]
 #define arma_malloc
 #define arma_inline            inline
 #define arma_noinline
@@ -162,10 +162,6 @@
     #error "*** newer compiler required; need at least gcc 8.1 ***"
   #endif
   
-  #if (__GNUC__ >= 17)
-    #undef ARMA_IGNORE_DEPRECATED_MARKER
-  #endif
-  
   #define ARMA_GOOD_COMPILER
   
   #undef  arma_hot
@@ -222,12 +218,6 @@
 #if defined(__clang__) && !defined(ARMA_DETECTED_FAKE_CLANG)
   
   // #pragma message ("using Clang extensions")
-  
-  #if defined(__clang_major__) && !defined(__apple_build_version__)
-    #if (__clang_major__ >= 24)
-      #undef ARMA_IGNORE_DEPRECATED_MARKER
-    #endif
-  #endif
   
   #define ARMA_GOOD_COMPILER
   
@@ -378,15 +368,6 @@
 #endif
 
 
-#if defined(ARMA_HAVE_CXX14)
-  #undef  arma_deprecated
-  #define arma_deprecated [[deprecated]]
-
-  #undef  arma_frown
-  #define arma_frown(msg) [[deprecated(msg)]]
-#endif
-
-
 #if defined(ARMA_HAVE_CXX17)
   #undef  arma_warn_unused
   #define arma_warn_unused  [[nodiscard]]
@@ -474,15 +455,3 @@
 // https://sourceware.org/bugzilla/show_bug.cgi?id=19239
 #undef minor
 #undef major
-
-
-// WARNING: option 'ARMA_IGNORE_DEPRECATED_MARKER' is not supported when compiling with gcc 17+ or clang 24+
-// WARNING: disabling deprecation messages is counter-productive
-
-#if defined(ARMA_IGNORE_DEPRECATED_MARKER)
-  #undef  arma_deprecated
-  #define arma_deprecated
-
-  #undef  arma_frown
-  #define arma_frown(msg)
-#endif

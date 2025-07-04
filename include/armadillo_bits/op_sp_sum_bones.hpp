@@ -33,17 +33,4 @@ class op_sp_sum
   };
 
 
-class op_sp_sum_omit
-  : public traits_op_xvec
-  {
-  public:
-  
-  template<typename eT, typename T1>
-  inline static void apply(Mat<eT>& out, const mtSpReduceOp<eT, T1, op_sp_sum_omit>& in);
-  
-  template<typename eT, typename T1, typename functor>
-  inline static void apply(Mat<eT>& out, const SpProxy<T1>& p, const uword dim, functor is_omitted);
-  };
-
-
 //! @}
