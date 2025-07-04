@@ -21,7 +21,7 @@
 
 using namespace arma;
 
-TEST_CASE("fn_eigs_test")
+TEST_CASE("fn_eigs_test", "[eigs_sym]")
   {
   for (size_t trial = 0; trial < 10; ++trial)
     {
@@ -62,7 +62,7 @@ TEST_CASE("fn_eigs_test")
 
 
 
-TEST_CASE("fn_eigs_float_test")
+TEST_CASE("fn_eigs_float_test", "[eigs_sym]")
   {
   for (size_t trial = 0; trial < 10; ++trial)
     {
@@ -103,7 +103,7 @@ TEST_CASE("fn_eigs_float_test")
 
 
 
-TEST_CASE("fn_eigs_sm_test")
+TEST_CASE("fn_eigs_sm_test", "[eigs_sym]")
   {
   for (size_t trial = 0; trial < 10; ++trial)
     {
@@ -141,7 +141,7 @@ TEST_CASE("fn_eigs_sm_test")
 
 
 
-TEST_CASE("fn_eigs_sigma_test")
+TEST_CASE("fn_eigs_sigma_test", "[eigs_sym]")
   {
   const uword n_trials = 10;
   

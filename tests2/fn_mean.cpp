@@ -18,10 +18,11 @@
 #include <armadillo>
 
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
-TEST_CASE("fn_mean_spmat_empty_test")
+TEST_CASE("fn_mean_spmat_empty_test", "[mean]")
   {
   SpMat<double> m(20, 25);
 
@@ -69,7 +70,7 @@ TEST_CASE("fn_mean_spmat_empty_test")
 
 
 
-TEST_CASE("fn_mean_spcxmat_empty_test")
+TEST_CASE("fn_mean_spcxmat_empty_test", "[mean]")
   {
   // Now with complex numbers.
   SpMat<std::complex<double> > m(20, 25);
@@ -123,7 +124,7 @@ TEST_CASE("fn_mean_spcxmat_empty_test")
 
 
 
-TEST_CASE("fn_mean_spmat_test")
+TEST_CASE("fn_mean_spmat_test", "[mean]")
   {
   // Create a random matrix and do mean testing on it, with varying levels of
   // nonzero (eventually this becomes a fully dense matrix).
@@ -228,7 +229,7 @@ TEST_CASE("fn_mean_spmat_test")
 
 
 
-TEST_CASE("fn_mean_spcxmat_test")
+TEST_CASE("fn_mean_spcxmat_test", "[mean]")
   {
   // Create a random matrix and do mean testing on it, with varying levels of
   // nonzero (eventually this becomes a fully dense matrix).
@@ -360,7 +361,7 @@ TEST_CASE("fn_mean_spcxmat_test")
   }
 
 
-TEST_CASE("fn_mean_sp_vector_test")
+TEST_CASE("fn_mean_sp_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<double> c(1000);
@@ -435,7 +436,7 @@ TEST_CASE("fn_mean_sp_vector_test")
 
 
 
-TEST_CASE("fn_mean_sp_cx_vector_test")
+TEST_CASE("fn_mean_sp_cx_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<std::complex<double> > c(1000);
@@ -519,7 +520,7 @@ TEST_CASE("fn_mean_sp_cx_vector_test")
 
 
 
-TEST_CASE("fn_mean_robust_sparse_test")
+TEST_CASE("fn_mean_robust_sparse_test", "[mean]")
   {
   // Create a sparse matrix with values that will overflow.
   SpMat<double> x;
@@ -644,7 +645,7 @@ TEST_CASE("fn_mean_robust_sparse_test")
 
 
 
-TEST_CASE("fn_mean_robust_cx_sparse_test")
+TEST_CASE("fn_mean_robust_cx_sparse_test", "[mean]")
   {
   SpMat<std::complex<double> > x;
   x.sprandu(50, 75, 0.3);
@@ -780,7 +781,7 @@ TEST_CASE("fn_mean_robust_cx_sparse_test")
 
 
 
-TEST_CASE("fn_mean_robust_sparse_vector_test")
+TEST_CASE("fn_mean_robust_sparse_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<double> c(1000);
@@ -850,7 +851,7 @@ TEST_CASE("fn_mean_robust_sparse_vector_test")
 
 
 
-TEST_CASE("fn_mean_robust_cx_sparse_vector_test")
+TEST_CASE("fn_mean_robust_cx_sparse_vector_test", "[mean]")
   {
   // Test mean() on vectors.
   SpCol<std::complex<double> > c(1000);
@@ -922,7 +923,7 @@ TEST_CASE("fn_mean_robust_cx_sparse_vector_test")
 
 
 
-TEST_CASE("fn_mean_sparse_alias_test")
+TEST_CASE("fn_mean_sparse_alias_test", "[mean]")
   {
   sp_mat s;
   s.sprandu(70, 70, 0.3);
@@ -948,3 +949,40 @@ TEST_CASE("fn_mean_sparse_alias_test")
     REQUIRE( d[i] == Approx((double) s[i]) );
     }
   }
+
+
+
+TEMPLATE_TEST_CASE("fn_mean_fp_ref", "[mean]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  // keep number of elements small so that floating-point error remains small
+  Col<eT> X(10, fill::randu);
+  vec X_ref = conv_to<vec>::from(X);
+
+  const eT mean_val = mean(X);
+  const double mean_val_ref = mean(X_ref);
+
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( mean_val == Approx(eT(mean_val_ref)).margin(margin) );
+  }
+
+
+
+//TEMPLATE_TEST_CASE("fn_mean_sp_fp_ref", "[mean]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  // keep number of elements small so that floating-point error remains small
+//  SpCol<eT> X;
+//  X.sprandu(100, 1, 0.3);
+//  sp_vec X_ref = conv_to<sp_mat>::from(X);
+//
+//  const eT mean_val = mean(X);
+//  const double mean_val_ref = mean(X_ref);
+//
+//  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
+//
+//  REQUIRE( mean_val == Approx(eT(mean_val_ref)).margin(margin) );
+//  }

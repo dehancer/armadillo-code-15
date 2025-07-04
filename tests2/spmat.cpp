@@ -22,7 +22,7 @@
 using namespace arma;
 
 // Does the matrix correctly report when it is empty?
-TEST_CASE("empty_test")
+TEST_CASE("empty_test", "[spmat]")
   {
   // bool testPassed = true;
 
@@ -34,7 +34,7 @@ TEST_CASE("empty_test")
   }
 
 // Can we insert items into the matrix correctly?
-TEST_CASE("insertion_test")
+TEST_CASE("insertion_test", "[spmat]")
   {
   int correctResult[3][4] =
       {{1, 0, 0, 0},
@@ -63,7 +63,7 @@ TEST_CASE("insertion_test")
   }
 
 // Does sparse-sparse matrix multiplication work?
-TEST_CASE("full_sparse_sparse_matrix_multiplication_test")
+TEST_CASE("full_sparse_sparse_matrix_multiplication_test", "[spmat]")
   {
   // Now perform the test again for SpMat.
   SpMat<int> spa(3, 3);
@@ -104,7 +104,7 @@ TEST_CASE("full_sparse_sparse_matrix_multiplication_test")
     }
   }
 
-TEST_CASE("sparse_sparse_matrix_multiplication_test")
+TEST_CASE("sparse_sparse_matrix_multiplication_test", "[spmat]")
   {
   SpMat<double> spaa(10, 10);
   spaa(1, 5) = 0.4;
@@ -144,7 +144,7 @@ TEST_CASE("sparse_sparse_matrix_multiplication_test")
     }
   }
 
-TEST_CASE("hadamard_product_test")
+TEST_CASE("hadamard_product_test", "[spmat]")
   {
   SpMat<int> a(4, 4), b(4, 4);
 
@@ -198,7 +198,7 @@ TEST_CASE("hadamard_product_test")
     }
   }
 
-TEST_CASE("division_test")
+TEST_CASE("division_test", "[spmat]")
   {
   SpMat<double> a(2, 2), b(2, 2);
 
@@ -215,7 +215,7 @@ TEST_CASE("division_test")
   REQUIRE( std::isnan((double) a(1, 1)) );
   }
 
-TEST_CASE("insert_delete_test")
+TEST_CASE("insert_delete_test", "[spmat]")
   {
   SpMat<double> sp;
   sp.set_size(10, 10);
@@ -236,7 +236,7 @@ TEST_CASE("insert_delete_test")
   REQUIRE( sp.n_nonzero == 0 );
   }
 
-TEST_CASE("value_operator_test")
+TEST_CASE("value_operator_test", "[spmat]")
   {
   // Test operators that work with a single value.
   // =(double), /=(double), *=(double)
@@ -284,7 +284,7 @@ TEST_CASE("value_operator_test")
     }
   }
 
-TEST_CASE("iterator_test")
+TEST_CASE("iterator_test", "[spmat]")
   {
   SpMat<double> x(5, 5);
   x(4, 1) = 3.1;
@@ -357,7 +357,7 @@ TEST_CASE("iterator_test")
   REQUIRE( x.n_nonzero == 4 );
 }
 
-TEST_CASE("row_iterator_test")
+TEST_CASE("row_iterator_test", "[spmat]")
   {
   SpMat<double> x(5, 5);
   x(4, 1) = 3.1;
@@ -430,7 +430,7 @@ TEST_CASE("row_iterator_test")
   REQUIRE( x.n_nonzero == 4 );
   }
 
-TEST_CASE("basic_sp_mat_operator_test")
+TEST_CASE("basic_sp_mat_operator_test", "[spmat]")
   {
   // +=, -=, *=, /=, %=
   SpMat<double> a(6, 5);
@@ -495,7 +495,7 @@ TEST_CASE("basic_sp_mat_operator_test")
     }
   }
 
-TEST_CASE("min_max_test")
+TEST_CASE("min_max_test", "[spmat]")
   {
   SpMat<double> a(6, 5);
   a(0, 0) = 3.4;
@@ -520,7 +520,7 @@ TEST_CASE("min_max_test")
   REQUIRE( index2 == 19 );
   }
 
-TEST_CASE("swap_row_test")
+TEST_CASE("swap_row_test", "[spmat]")
   {
   SpMat<double> a(6, 5);
   a(0, 0) = 3.4;
@@ -580,7 +580,7 @@ TEST_CASE("swap_row_test")
     }
   }
 
-TEST_CASE("swap_col_test")
+TEST_CASE("swap_col_test", "[spmat]")
   {
   SpMat<double> a(6, 5);
   a(0, 0) = 3.4;
@@ -652,7 +652,7 @@ TEST_CASE("swap_col_test")
     }
   }
 
-TEST_CASE("shed_col_test")
+TEST_CASE("shed_col_test", "[spmat]")
   {
   SpMat<int> a(2, 2);
   a(0, 0) = 1;
@@ -677,7 +677,7 @@ TEST_CASE("shed_col_test")
   REQUIRE( a(1, 0) == 1 );
   }
 
-TEST_CASE("shed_cols_test")
+TEST_CASE("shed_cols_test", "[spmat]")
   {
   SpMat<int> a(3, 3);
   a(0, 0) = 1;
@@ -737,7 +737,7 @@ TEST_CASE("shed_cols_test")
   REQUIRE( c.row_indices[c.n_nonzero] == 0 );
   }
 
-TEST_CASE("shed_row_test")
+TEST_CASE("shed_row_test", "[spmat]")
   {
   SpMat<int> a(3, 3);
   a(0, 0) = 1;
@@ -774,7 +774,7 @@ TEST_CASE("shed_row_test")
     }
   }
 
-TEST_CASE("shed_rows_test")
+TEST_CASE("shed_rows_test", "[spmat]")
   {
   SpMat<int> a(5, 5);
   a(0, 0) = 1;
@@ -834,7 +834,7 @@ TEST_CASE("shed_rows_test")
     }
   }
 
-TEST_CASE("sp_mat_reshape_test")
+TEST_CASE("sp_mat_reshape_test", "[spmat]")
   {
   // Input matrix:
   // [[0 2 0]
@@ -875,7 +875,7 @@ TEST_CASE("sp_mat_reshape_test")
   REQUIRE( (unsigned int) ref(2, 3) == 6 );
   }
 
-TEST_CASE("sp_mat_zeros_tests")
+TEST_CASE("sp_mat_zeros_tests", "[spmat]")
   {
   SpMat<double> m(4, 3);
   m(1, 0) = 1;
@@ -937,7 +937,7 @@ TEST_CASE("sp_mat_zeros_tests")
 /**
  * Check that eye() works.
  */
-TEST_CASE("sp_mat_eye_test")
+TEST_CASE("sp_mat_eye_test", "[spmat]")
   {
   SpMat<double> e = eye<SpMat<double> >(5, 5);
 
@@ -967,7 +967,7 @@ TEST_CASE("sp_mat_eye_test")
 /**
  * Check that pow works.
  *
-TEST_CASE("sp_mat_pow_test")
+TEST_CASE("sp_mat_pow_test", "[spmat]")
   {
   SpMat<double> a(3, 3);
   a(0, 2) = 4.3;
@@ -997,7 +997,7 @@ TEST_CASE("sp_mat_pow_test")
 // I hate myself.
 #undef TEST_OPERATOR
 #define TEST_OPERATOR(EOP_TEST, EOP) \
-TEST_CASE(EOP_TEST) \
+TEST_CASE(EOP_TEST, "[spmat]") \
   {\
   SpMat<double> a(3, 3);\
   a(0, 2) = 4.3;\
@@ -1151,7 +1151,7 @@ TEST_OPERATOR("sp_mat_ceil_test", ceil)
 //TEST_OPERATOR(atanhTest, atanh);
 
 /*
-TEST_CASE("spmat_diskio_tests")
+TEST_CASE("spmat_diskio_tests", "[spmat]")
   {
   std::string file_names[] = {"raw_ascii.txt",
                               "raw_binary.bin",
@@ -1209,7 +1209,7 @@ TEST_CASE("spmat_diskio_tests")
 */
 
 
-TEST_CASE("min_test")
+TEST_CASE("min_test", "[spmat]")
   {
   SpCol<double> a(5);
 
@@ -1292,7 +1292,7 @@ TEST_CASE("min_test")
   }
 
 
-TEST_CASE("max_test")
+TEST_CASE("max_test", "[spmat]")
   {
   SpCol<double> a(5);
 
@@ -1375,7 +1375,7 @@ TEST_CASE("max_test")
   }
 
 
-TEST_CASE("spmat_min_cx_test")
+TEST_CASE("spmat_min_cx_test", "[spmat]")
 {
   SpCol<cx_double> a(5);
 
@@ -1463,7 +1463,7 @@ TEST_CASE("spmat_min_cx_test")
 
 
 
-TEST_CASE("spmat_max_cx_test")
+TEST_CASE("spmat_max_cx_test", "[spmat]")
 {
   SpCol<cx_double> a(5);
 
@@ -1550,7 +1550,7 @@ TEST_CASE("spmat_max_cx_test")
 
 
 
-TEST_CASE("spmat_complex_constructor_test")
+TEST_CASE("spmat_complex_constructor_test", "[spmat]")
   {
   // First make two sparse matrices.
   SpMat<double> a(8, 10);
@@ -1602,7 +1602,7 @@ TEST_CASE("spmat_complex_constructor_test")
 
 
 
-TEST_CASE("spmat_unary_operators_test")
+TEST_CASE("spmat_unary_operators_test", "[spmat]")
   {
   SpMat<int> a(3, 3);
   SpMat<int> b(3, 3);
@@ -1679,7 +1679,7 @@ TEST_CASE("spmat_unary_operators_test")
 
 
 
-TEST_CASE("spmat_unary_val_operators_test")
+TEST_CASE("spmat_unary_val_operators_test", "[spmat]")
   {
   SpMat<double> a(2, 2);
 
@@ -1704,7 +1704,7 @@ TEST_CASE("spmat_unary_val_operators_test")
   }
 
 
-TEST_CASE("spmat_sparse_unary_multiplication_test")
+TEST_CASE("spmat_sparse_unary_multiplication_test", "[spmat]")
   {
   SpMat<double> spaa(10, 10);
   spaa(1, 5) = 0.4;
@@ -1771,7 +1771,7 @@ TEST_CASE("spmat_sparse_unary_multiplication_test")
 
 
 
-TEST_CASE("spmat_unary_operator_test_2")
+TEST_CASE("spmat_unary_operator_test_2", "[spmat]")
   {
   SpMat<double> a(3, 3);
   a(0, 0) = 1;
@@ -1859,7 +1859,7 @@ TEST_CASE("spmat_unary_operator_test_2")
 
 
 
-TEST_CASE("spmat_mat_operator_tests")
+TEST_CASE("spmat_mat_operator_tests", "[spmat]")
   {
   SpMat<double> a(3, 3);
   a(0, 0) = 2.0;
@@ -1982,7 +1982,7 @@ TEST_CASE("spmat_mat_operator_tests")
   }
 
 
-TEST_CASE("spmat_empty_hadamard")
+TEST_CASE("spmat_empty_hadamard", "[spmat]")
   {
   SpMat<double> x(5, 5), y(5, 5), z;
 
@@ -1995,7 +1995,7 @@ TEST_CASE("spmat_empty_hadamard")
 
 
 
-TEST_CASE("spmat_sparse_dense_in_place")
+TEST_CASE("spmat_sparse_dense_in_place", "[spmat]")
   {
   SpMat<double> a;
   a.sprandu(50, 50, 0.1);
@@ -2071,7 +2071,7 @@ TEST_CASE("spmat_sparse_dense_in_place")
 
 
 
-TEST_CASE("spmat_sparse_dense_not_in_place")
+TEST_CASE("spmat_sparse_dense_not_in_place", "[spmat]")
   {
   SpMat<double> a;
   a.sprandu(50, 50, 0.1);
@@ -2212,7 +2212,7 @@ TEST_CASE("spmat_sparse_dense_not_in_place")
 
 
 
-TEST_CASE("spmat_batch_insert_test")
+TEST_CASE("spmat_batch_insert_test", "[spmat]")
   {
   Mat<uword> locations(2, 5);
   locations(1, 0) = 1;
@@ -2261,7 +2261,7 @@ TEST_CASE("spmat_batch_insert_test")
 
 
 
-TEST_CASE("spmat_batch_insert_unsorted_test")
+TEST_CASE("spmat_batch_insert_unsorted_test", "[spmat]")
   {
   Mat<uword> locations(2, 5);
   locations(1, 0) = 4;
@@ -2308,7 +2308,7 @@ TEST_CASE("spmat_batch_insert_unsorted_test")
 
 
 
-TEST_CASE("spmat_batch_insert_empty_test")
+TEST_CASE("spmat_batch_insert_empty_test", "[spmat]")
   {
   Mat<uword> locations(2, 0);
   Col<double> values;
@@ -2354,7 +2354,7 @@ void CheckMatrices(const T1& a, const T2& b)
 }
 
 // Test the constructor written by Dirk.
-TEST_CASE("spmat_dirk_constructor_test")
+TEST_CASE("spmat_dirk_constructor_test", "[spmat]")
   {
   // Come up with some values and stuff.
   vec values = "4.0 2.0 1.0 3.2 1.2 3.5";
@@ -2401,7 +2401,7 @@ TEST_CASE("spmat_dirk_constructor_test")
 
 
 
-TEST_CASE("spmat_dirk_constructor_test2")
+TEST_CASE("spmat_dirk_constructor_test2", "[spmat]")
   {
   // note the zero at (1,1)
    vec values      = "4.0 2.0 0.0 1.0 3.2 1.2 3.5";
@@ -2449,7 +2449,7 @@ TEST_CASE("spmat_dirk_constructor_test2")
 
 
 
-TEST_CASE("spmat_clear_test")
+TEST_CASE("spmat_clear_test", "[spmat]")
   {
   sp_mat x;
   x.sprandu(10, 10, 0.6);
@@ -2463,7 +2463,7 @@ TEST_CASE("spmat_clear_test")
 
 
 
-TEST_CASE("spmat_batch_insert_zeroes_test")
+TEST_CASE("spmat_batch_insert_zeroes_test", "[spmat]")
   {
   Mat<uword> locations(2, 5);
   locations(1, 0) = 1;
@@ -2510,7 +2510,7 @@ TEST_CASE("spmat_batch_insert_zeroes_test")
 
 
 
-TEST_CASE("spmat_batch_insert_unsorted_case_zeroes")
+TEST_CASE("spmat_batch_insert_unsorted_case_zeroes", "[spmat]")
   {
   Mat<uword> locations(2, 5);
   locations(1, 0) = 4;
@@ -2559,7 +2559,7 @@ TEST_CASE("spmat_batch_insert_unsorted_case_zeroes")
 
 
 
-TEST_CASE("spmat_const_row_col_iterator_test")
+TEST_CASE("spmat_const_row_col_iterator_test", "[spmat]")
   {
   mat X;
   X.zeros(5, 5);
@@ -2608,7 +2608,7 @@ TEST_CASE("spmat_const_row_col_iterator_test")
 
 
 
-TEST_CASE("spmat_row_col_iterator_test")
+TEST_CASE("spmat_row_col_iterator_test", "[spmat]")
   {
   mat X;
   X.zeros(5, 5);
@@ -2657,7 +2657,7 @@ TEST_CASE("spmat_row_col_iterator_test")
 
 
 
-TEST_CASE("spmat_const_sprow_col_iterator_test")
+TEST_CASE("spmat_const_sprow_col_iterator_test", "[spmat]")
   {
   sp_mat X(5, 5);
   for (uword i = 0; i < 5; ++i)
@@ -2705,7 +2705,7 @@ TEST_CASE("spmat_const_sprow_col_iterator_test")
 
 
 
-TEST_CASE("spmat_sprow_col_iterator_test")
+TEST_CASE("spmat_sprow_col_iterator_test", "[spmat]")
   {
   sp_mat X(5, 5);
   for (uword i = 0; i < 5; ++i)
@@ -2752,7 +2752,7 @@ TEST_CASE("spmat_sprow_col_iterator_test")
   }
 
 
-TEST_CASE("spmat_row_iterator_constructor")
+TEST_CASE("spmat_row_iterator_constructor", "[spmat]")
   {
   // Create a row iterator with an exact position.
   Mat<double> tmp =
@@ -2786,7 +2786,7 @@ TEST_CASE("spmat_row_iterator_constructor")
 
 
 // Check that sparse + scalar works.
-TEST_CASE("spmat_scalar_add")
+TEST_CASE("spmat_scalar_add", "[spmat]")
   {
   sp_mat m;
   m.sprandu(100, 200, 0.1);
@@ -2806,7 +2806,7 @@ TEST_CASE("spmat_scalar_add")
 
 
 // Check that sparse - scalar works.
-TEST_CASE("spmat_scalar_minus")
+TEST_CASE("spmat_scalar_minus", "[spmat]")
   {
   sp_mat m;
   m.sprandu(100, 200, 0.1);
@@ -2826,7 +2826,7 @@ TEST_CASE("spmat_scalar_minus")
 
 
 // Check that sparse / (sparse + eps) works.  (and also for (sparse - eps) and (eps - sparse).
-TEST_CASE("spmat_div_test")
+TEST_CASE("spmat_div_test", "[spmat]")
   {
   sp_mat m;
   m.sprandu(100, 200, 0.1);
@@ -2865,7 +2865,7 @@ TEST_CASE("spmat_div_test")
 
 
 // Check that sparse % (sparse + eps) works.  (and also for (sparse - eps) and (eps - sparse).
-TEST_CASE("spmat_schur_test")
+TEST_CASE("spmat_schur_test", "[spmat]")
   {
   sp_mat m;
   m.sprandu(100, 200, 0.1);
@@ -2904,7 +2904,7 @@ TEST_CASE("spmat_schur_test")
 
 
 // Make sure this compiles and works.
-TEST_CASE("spmat_repeated_add_subtract")
+TEST_CASE("spmat_repeated_add_subtract", "[spmat]")
   {
   sp_mat m;
   m.sprandu(100, 200, 0.1);
@@ -2941,7 +2941,7 @@ TEST_CASE("spmat_repeated_add_subtract")
 
 // If we wrap an sp_mat() constructor around a (sparse + plus) it should force
 // evaluate into a sparse matrix.
-TEST_CASE("spmat_force_plus_minus_sparse")
+TEST_CASE("spmat_force_plus_minus_sparse", "[spmat]")
   {
   // We can't test that our desired optimization is used but we can test that it
   // compiles.
@@ -2966,7 +2966,7 @@ TEST_CASE("spmat_force_plus_minus_sparse")
 
 
 // Test elementwise max().
-TEST_CASE("spmat_elementwise_max")
+TEST_CASE("spmat_elementwise_max", "[spmat]")
   {
   sp_mat m, n;
   m.sprandu(100, 200, 0.1);
@@ -2986,7 +2986,7 @@ TEST_CASE("spmat_elementwise_max")
 
 
 // Test elementwise max() with a dense object.
-TEST_CASE("spmat_mat_elementwise_max")
+TEST_CASE("spmat_mat_elementwise_max", "[spmat]")
   {
   sp_mat m;
   mat n;
@@ -3010,7 +3010,7 @@ TEST_CASE("spmat_mat_elementwise_max")
 
 
 // Test elementwise complex max().
-TEST_CASE("spmat_elementwise_max_cx")
+TEST_CASE("spmat_elementwise_max_cx", "[spmat]")
   {
   sp_cx_mat m, n;
   m.sprandu(100, 200, 0.1);
@@ -3033,7 +3033,7 @@ TEST_CASE("spmat_elementwise_max_cx")
 
 
 // Test elementwise min().
-TEST_CASE("spmat_elementwise_min")
+TEST_CASE("spmat_elementwise_min", "[spmat]")
   {
   sp_mat m, n;
   m.sprandu(100, 200, 0.1);
@@ -3053,7 +3053,7 @@ TEST_CASE("spmat_elementwise_min")
 
 
 // Test elementwise min() with a dense object.
-TEST_CASE("spmat_mat_elementwise_min")
+TEST_CASE("spmat_mat_elementwise_min", "[spmat]")
   {
   sp_mat m;
   mat n;
@@ -3077,7 +3077,7 @@ TEST_CASE("spmat_mat_elementwise_min")
 
 
 // Test elementwise complex min().
-TEST_CASE("spmat_elementwise_min_cx")
+TEST_CASE("spmat_elementwise_min_cx", "[spmat]")
   {
   sp_cx_mat m, n;
   m.sprandu(100, 200, 0.1);
@@ -3099,7 +3099,7 @@ TEST_CASE("spmat_elementwise_min_cx")
 
 
 // Test vectorise() on a matrix.
-TEST_CASE("spmat_vectorise_matrix")
+TEST_CASE("spmat_vectorise_matrix", "[spmat]")
   {
   sp_mat m;
   m.sprandu(10, 10, 0.1);
@@ -3119,7 +3119,7 @@ TEST_CASE("spmat_vectorise_matrix")
 
 
 // Test vectorise() as an alias.
-TEST_CASE("spmat_vectorise_alias")
+TEST_CASE("spmat_vectorise_alias", "[spmat]")
   {
   sp_mat m;
   m.sprandu(10, 10, 0.1);
@@ -3138,7 +3138,7 @@ TEST_CASE("spmat_vectorise_alias")
 
 
 // Test vectorise() with the dimension argument.
-TEST_CASE("spmat_vectorise_dimension")
+TEST_CASE("spmat_vectorise_dimension", "[spmat]")
   {
   sp_mat m;
   m.sprandu(10, 10, 0.1);
@@ -3161,7 +3161,7 @@ TEST_CASE("spmat_vectorise_dimension")
 
 
 // Test vectorise() with an alias and a dimension argument.
-TEST_CASE("spmat_vectorise_dimension_alias")
+TEST_CASE("spmat_vectorise_dimension_alias", "[spmat]")
   {
   sp_mat m;
   m.sprandu(10, 10, 0.1);

@@ -18,10 +18,11 @@
 #include <armadillo>
 
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
-TEST_CASE("fn_stddev_empty_sparse_test", "[fn_stddev]")
+TEST_CASE("fn_stddev_empty_sparse_test", "[stddev]")
   {
   SpMat<double> m(100, 100);
 
@@ -82,7 +83,7 @@ TEST_CASE("fn_stddev_empty_sparse_test", "[fn_stddev]")
 
 
 
-TEST_CASE("fn_stddev_empty_cx_sparse_test", "[fn_stddev]")
+TEST_CASE("fn_stddev_empty_cx_sparse_test", "[stddev]")
   {
   SpMat<std::complex<double> > m(100, 100);
 
@@ -143,7 +144,7 @@ TEST_CASE("fn_stddev_empty_cx_sparse_test", "[fn_stddev]")
 
 
 
-TEST_CASE("fn_stddev_sparse_test", "[fn_stddev]")
+TEST_CASE("fn_stddev_sparse_test", "[stddev]")
   {
   // Create a random matrix and do variance testing on it, with varying levels
   // of nonzero (eventually this becomes a fully dense matrix).
@@ -333,7 +334,7 @@ TEST_CASE("fn_stddev_sparse_test", "[fn_stddev]")
 
 
 
-TEST_CASE("fn_stddev_sparse_cx_test", "[fn_stddev]")
+TEST_CASE("fn_stddev_sparse_cx_test", "[stddev]")
   {
   // Create a random matrix and do variance testing on it, with varying levels
   // of nonzero (eventually this becomes a fully dense matrix).
@@ -523,7 +524,7 @@ TEST_CASE("fn_stddev_sparse_cx_test", "[fn_stddev]")
 
 
 
-TEST_CASE("fn_stddev_sparse_alias_test", "[fn_stddev]")
+TEST_CASE("fn_stddev_sparse_alias_test", "[stddev]")
   {
   sp_mat s;
   s.sprandu(70, 70, 0.3);
@@ -549,3 +550,38 @@ TEST_CASE("fn_stddev_sparse_alias_test", "[fn_stddev]")
     REQUIRE( d[i] == Approx((double) s[i]) );
     }
   }
+
+
+
+TEMPLATE_TEST_CASE("fn_stddev_fp_reference", "[stddev]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Col<eT> X(10, fill::randn);
+  vec X_ref = conv_to<vec>::from(X);
+
+  const eT stddev_val = stddev(X);
+  const double stddev_ref = stddev(X_ref);
+
+  const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( stddev_val == Approx(eT(stddev_ref)).margin(margin) );
+  }
+
+
+
+//TEMPLATE_TEST_CASE("fn_stddev_sp_fp_reference", "[stddev]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpCol<eT> X;
+//  X.sprandu(100, 1, 0.3);
+//  sp_vec X_ref = conv_to<sp_mat>::from(X);
+//
+//  const eT stddev_val = stddev(X);
+//  const double stddev_ref = stddev(X_ref);
+//
+//  const eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
+//
+//  REQUIRE( stddev_val == Approx(eT(stddev_ref)).margin(margin) );
+//  }

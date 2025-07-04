@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_abs_1")
+TEST_CASE("fn_abs_1", "[fn_elem]")
   {
   mat A =
     "\
@@ -93,7 +94,7 @@ TEST_CASE("fn_abs_1")
 
 
 
-TEST_CASE("fn_abs_2")
+TEST_CASE("fn_abs_2", "[fn_elem]")
   {
   mat A =
     "\
@@ -142,7 +143,7 @@ TEST_CASE("fn_abs_2")
 
 
 
-TEST_CASE("fn_abs_3")
+TEST_CASE("fn_abs_3", "[fn_elem]")
   {
   vec re =  2*linspace<vec>(1,5,6);
   vec im = -4*linspace<vec>(1,5,6);
@@ -167,7 +168,7 @@ TEST_CASE("fn_abs_3")
   }
 
 
-TEST_CASE("fn_abs_4")
+TEST_CASE("fn_abs_4", "[fn_elem]")
   {
   vec a = -2*linspace<vec>(1,5,6);
   vec b = +2*linspace<vec>(1,5,6);
@@ -178,7 +179,7 @@ TEST_CASE("fn_abs_4")
 
 
 
-TEST_CASE("fn_abs_5")
+TEST_CASE("fn_abs_5", "[fn_elem]")
   {
   mat A = randu<mat>(5,6);
 
@@ -188,7 +189,7 @@ TEST_CASE("fn_abs_5")
 
 
 
-TEST_CASE("fn_abs_sp_mat")
+TEST_CASE("fn_abs_sp_mat", "[fn_elem]")
   {
   SpMat<double> a(3, 3);
   a(0, 2) = 4.3;
@@ -216,7 +217,7 @@ TEST_CASE("fn_abs_sp_mat")
 
 
 
-TEST_CASE("fn_abs_sp_mat_2")
+TEST_CASE("fn_abs_sp_mat_2", "[fn_elem]")
   {
   mat x = randu<mat>(100, 100);
   x -= 0.5;
@@ -234,7 +235,7 @@ TEST_CASE("fn_abs_sp_mat_2")
 
 
 
-TEST_CASE("fn_abs_sp_cx_mat")
+TEST_CASE("fn_abs_sp_cx_mat", "[fn_elem]")
   {
   cx_mat x = randu<cx_mat>(100, 100);
   x -= cx_double(0.5, 0.5);
@@ -247,5 +248,21 @@ TEST_CASE("fn_abs_sp_cx_mat")
   for(size_t i = 0; i < xr.n_elem; ++i)
     {
     REQUIRE( xr[i] == Approx((double) yr[i]) );
+    }
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_abs_randu", "[fn_elem]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x = randu<Mat<eT>>(50, 50) - eT(0.5);
+
+  Mat<eT> y = abs(x);
+
+  for (uword i = 0; i < y.n_elem; ++i)
+    {
+    REQUIRE( y[i] == Approx(std::abs(x[i])) );
     }
   }

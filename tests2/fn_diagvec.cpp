@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_diagvec_1")
+TEST_CASE("fn_diagvec_1", "[diagvec]")
   {
   mat A = 
     "\
@@ -69,4 +70,23 @@ TEST_CASE("fn_diagvec_1")
   
   REQUIRE( accu(abs(A_p1 - b)) == Approx(0.0).margin(0.001) );
   REQUIRE( accu(abs(A_m1 - c)) == Approx(0.0).margin(0.001) );
+  }
+
+
+
+TEMPLATE_TEST_CASE("diagvec_fp_randu", "[diagvec]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x = randu<Mat<eT>>(30, 30);
+
+  Col<eT> y1 = diagvec(x);
+  Row<eT> y2 = diagvec(x).t();
+
+  REQUIRE( y1.n_elem == x.n_rows );
+  REQUIRE( y2.n_elem == x.n_rows );
+  for (uword i = 0; i < x.n_rows; ++i)
+    {
+    REQUIRE( eT(y1[i]) == Approx(eT(x(i, i))) );
+    }
   }

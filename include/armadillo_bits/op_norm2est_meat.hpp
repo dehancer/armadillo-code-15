@@ -120,12 +120,24 @@ op_norm2est::norm2est
   
   if((A.n_rows == 1) || (A.n_cols == 1))  { return op_norm::vec_norm_2( Proxy< Mat<eT> >(A) ); }
   
-  norm2est_randu_filler<eT> randu_filler;
+  // low-precision types cannot be used for norm2est_randu_filler
+  // (std::uniform_real_distribution is undefined for types not float/double/long double)
+  norm2est_randu_filler< typename promote_type<eT, float>::result > randu_filler;
   
   Col<eT> x(A.n_rows, fill::none);
   Col<eT> y(A.n_cols, fill::none);
   
-  randu_filler.fill(y.memptr(), y.n_elem);
+  if (is_fp16<eT>::yes)
+    {
+    // randu_filler can only fill floats, so do that and then convert
+    Col<float> tmp(y.n_elem);
+    randu_filler.fill(tmp.memptr(), tmp.n_elem);
+    arrayops::convert(y.memptr(), tmp.memptr(), tmp.n_elem);
+    }
+  else
+    {
+    randu_filler.fill(y.memptr(), y.n_elem);
+    }
   
   T est_old = 0;
   T est_cur = 0;

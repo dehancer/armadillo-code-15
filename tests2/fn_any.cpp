@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_any_1")
+TEST_CASE("fn_any_1", "[any]")
   {
   vec a(5, fill::zeros);
   vec b(5, fill::zeros);  b(0) = 1.0;
@@ -45,7 +46,7 @@ TEST_CASE("fn_any_1")
 
 
 
-TEST_CASE("fn_any_2")
+TEST_CASE("fn_any_2", "[any]")
   {
   mat A(5, 6, fill::zeros);
   mat B(5, 6, fill::zeros);  B(0,0) = 1.0;
@@ -69,7 +70,7 @@ TEST_CASE("fn_any_2")
 
 
 
-TEST_CASE("fn_any_3")
+TEST_CASE("fn_any_3", "[any]")
   {
   mat A(5, 6, fill::zeros);
   mat B(5, 6, fill::zeros);  B(0,0) = 1.0;
@@ -94,3 +95,14 @@ TEST_CASE("fn_any_3")
   }
 
 
+
+TEMPLATE_TEST_CASE("fn_any_fp", "[any]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x(1, 1);
+  x(0, 0) = eT(1);
+
+  REQUIRE( any(vectorise(x > eT(0))) == true );
+  REQUIRE( any(vectorise(x <= eT(0))) == false );
+  }

@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_accu_1")
+TEST_CASE("fn_accu_1", "[accu]")
   {
   mat A =
     "\
@@ -61,7 +62,7 @@ TEST_CASE("fn_accu_1")
 
 
 
-TEST_CASE("fn_accu_2")
+TEST_CASE("fn_accu_2", "[accu]")
   {
   mat A =
     "\
@@ -88,7 +89,7 @@ TEST_CASE("fn_accu_2")
 
 
 
-TEST_CASE("fn_accu_3")
+TEST_CASE("fn_accu_3", "[accu]")
   {
   vec a =  linspace<vec>(1,5,5);
   vec b =  linspace<vec>(1,5,6);
@@ -101,7 +102,7 @@ TEST_CASE("fn_accu_3")
 
 
 
-TEST_CASE("fn_accu_4")
+TEST_CASE("fn_accu_4", "[accu]")
   {
   mat A(5,6);  A.fill(2.0);
   mat B(5,6);  B.fill(4.0);
@@ -120,7 +121,7 @@ TEST_CASE("fn_accu_4")
 
 
 
-TEST_CASE("fn_accu_spmat")
+TEST_CASE("fn_accu_spmat", "[accu]")
   {
   SpMat<unsigned int> b(4, 4);
   b(0, 1) = 6;
@@ -131,4 +132,21 @@ TEST_CASE("fn_accu_spmat")
 
   REQUIRE( accu(b) == 52 );
   REQUIRE( accu(b.submat(1, 1, 3, 3)) == 41 );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_accu_randu", "[accu]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x = randu<Mat<eT>>(50, 50) - eT(0.5);
+  const eT y = accu(x);
+
+  // manually convert to double to check
+  mat x_ref = conv_to<mat>::from(x);
+  const double y_ref = accu(x_ref);
+
+  // large tolerance because fp16 can be really approximate!
+  REQUIRE( double(y) == Approx(y_ref).epsilon(0.1) );
   }

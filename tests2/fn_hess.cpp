@@ -25,7 +25,7 @@ using namespace std;
 
 
 
-TEST_CASE("fn_hess_non_square")
+TEST_CASE("fn_hess_non_square", "[hess]")
   {
   mat A(5, 6, fill::ones);
   mat U, H;
@@ -35,7 +35,7 @@ TEST_CASE("fn_hess_non_square")
 
 /*****************  tests for real matrix  ****************/
 
-TEST_CASE("fn_hess_empty")
+TEST_CASE("fn_hess_empty", "[hess]")
   {
   mat A(1, 1);
   A.reset();
@@ -53,7 +53,7 @@ TEST_CASE("fn_hess_empty")
 
 
 
-TEST_CASE("fn_hess_1")
+TEST_CASE("fn_hess_1", "[hess]")
   {
   mat A(1, 1);
   A(0, 0) = 0.061198;
@@ -71,7 +71,7 @@ TEST_CASE("fn_hess_1")
 
 
 
-TEST_CASE("fn_hess_2")
+TEST_CASE("fn_hess_2", "[hess]")
   {
   mat A =
     "\
@@ -107,7 +107,7 @@ TEST_CASE("fn_hess_2")
 
 
 
-TEST_CASE("fn_hess_3")
+TEST_CASE("fn_hess_3", "[hess]")
   {
   mat A =
     "\
@@ -176,7 +176,7 @@ TEST_CASE("fn_hess_3")
 
 
 
-TEST_CASE("fn_hess_4")
+TEST_CASE("fn_hess_4", "[hess]")
   {
   mat A =
     "\
@@ -279,7 +279,7 @@ TEST_CASE("fn_hess_4")
 
 /*****************  tests for complex matrix  ****************/
 
-TEST_CASE("fn_hess_cx_empty")
+TEST_CASE("fn_hess_cx_empty", "[hess]")
   {
   cx_mat A(1, 1);
   A.reset();
@@ -297,7 +297,7 @@ TEST_CASE("fn_hess_cx_empty")
 
 
 
-TEST_CASE("fn_hess_cx_1")
+TEST_CASE("fn_hess_cx_1", "[hess]")
   {
   cx_mat A(1, 1);
   A(0, 0) = complex<double>(0.061198, 1.012234);
@@ -322,7 +322,7 @@ TEST_CASE("fn_hess_cx_1")
 
 
 
-TEST_CASE("fn_hess_cx_2")
+TEST_CASE("fn_hess_cx_2", "[hess]")
   {
   mat B =
     "\
@@ -375,7 +375,7 @@ TEST_CASE("fn_hess_cx_2")
 
 
 
-TEST_CASE("fn_hess_cx_3")
+TEST_CASE("fn_hess_cx_3", "[hess]")
   {
   mat B =
     "\
@@ -481,7 +481,7 @@ TEST_CASE("fn_hess_cx_3")
 
 
 
-TEST_CASE("fn_hess_cx_4")
+TEST_CASE("fn_hess_cx_4", "[hess]")
   {
   mat B =
     "\

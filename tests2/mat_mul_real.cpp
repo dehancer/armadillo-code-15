@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("mat_mul_real_1")
+TEST_CASE("mat_mul_real_1", "[mat_mul]")
   {
   mat A = 
     "\
@@ -99,7 +100,7 @@ TEST_CASE("mat_mul_real_1")
 
 
 
-TEST_CASE("mat_mul_real_2")
+TEST_CASE("mat_mul_real_2", "[mat_mul]")
   {
   mat A = 
     "\
@@ -224,7 +225,7 @@ TEST_CASE("mat_mul_real_2")
 
 
 
-TEST_CASE("mat_mul_real_3")
+TEST_CASE("mat_mul_real_3", "[mat_mul]")
   {
   mat A = 
     "\
@@ -363,7 +364,7 @@ TEST_CASE("mat_mul_real_3")
 
 
 
-TEST_CASE("mat_mul_real_4")
+TEST_CASE("mat_mul_real_4", "[mat_mul]")
   {
   mat A = 
     "\
@@ -563,7 +564,7 @@ TEST_CASE("mat_mul_real_4")
 
 
 
-TEST_CASE("mat_mul_real_5")
+TEST_CASE("mat_mul_real_5", "[mat_mul]")
   {
   mat A = 
     "\
@@ -777,7 +778,7 @@ TEST_CASE("mat_mul_real_5")
 
 
 
-TEST_CASE("mat_mul_real_6")
+TEST_CASE("mat_mul_real_6", "[mat_mul]")
   {
   mat A = 
     "\
@@ -927,3 +928,44 @@ TEST_CASE("mat_mul_real_6")
 
 
 
+TEMPLATE_TEST_CASE("mat_mul_fp_compare", "[mat_mul]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(10, 10, fill::randu);
+  Mat<eT> Y(10, 10, fill::randu);
+
+  mat X_ref = conv_to<mat>::from(X);
+  mat Y_ref = conv_to<mat>::from(Y);
+
+  Mat<eT> Z1 = X * Y;
+  Mat<eT> Z2 = X.t() * Y;
+  Mat<eT> Z3 = X * Y.t();
+  Mat<eT> Z4 = X.t() * Y.t();
+
+  mat Z1_ref = X_ref * Y_ref;
+  mat Z2_ref = X_ref.t() * Y_ref;
+  mat Z3_ref = X_ref * Y_ref.t();
+  mat Z4_ref = X_ref.t() * Y_ref.t();
+
+  REQUIRE( Z1.n_rows == Z1_ref.n_rows );
+  REQUIRE( Z1.n_cols == Z1_ref.n_cols );
+  REQUIRE( Z2.n_rows == Z2_ref.n_rows );
+  REQUIRE( Z2.n_cols == Z2_ref.n_cols );
+  REQUIRE( Z3.n_rows == Z3_ref.n_rows );
+  REQUIRE( Z3.n_cols == Z3_ref.n_cols );
+  REQUIRE( Z4.n_rows == Z4_ref.n_rows );
+  REQUIRE( Z4.n_cols == Z4_ref.n_cols );
+
+  mat diff1 = conv_to<mat>::from(Z1) - Z1_ref;
+  mat diff2 = conv_to<mat>::from(Z2) - Z2_ref;
+  mat diff3 = conv_to<mat>::from(Z3) - Z3_ref;
+  mat diff4 = conv_to<mat>::from(Z4) - Z4_ref;
+
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.0001) : eT(0.05);
+
+  REQUIRE( accu(abs(diff1)) == Approx(eT(0)).margin(margin * diff1.n_elem) );
+  REQUIRE( accu(abs(diff2)) == Approx(eT(0)).margin(margin * diff2.n_elem) );
+  REQUIRE( accu(abs(diff3)) == Approx(eT(0)).margin(margin * diff3.n_elem) );
+  REQUIRE( accu(abs(diff4)) == Approx(eT(0)).margin(margin * diff4.n_elem) );
+  }

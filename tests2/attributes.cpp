@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("attributes_1")
+TEST_CASE("attributes_1", "[attributes]")
   {
   mat A(5,6);
   REQUIRE(A.n_rows == 5);

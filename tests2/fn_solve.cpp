@@ -21,7 +21,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_solve_1")
+TEST_CASE("fn_solve_1", "[solve]")
   {
   // square-sized A
   
@@ -63,7 +63,7 @@ TEST_CASE("fn_solve_1")
 
 
 
-TEST_CASE("fn_solve_2")
+TEST_CASE("fn_solve_2", "[solve]")
   {
   // square-sized A; rank-deficient
   
@@ -105,7 +105,7 @@ TEST_CASE("fn_solve_2")
 
 
 
-TEST_CASE("fn_solve_3")
+TEST_CASE("fn_solve_3", "[solve]")
   {
   // non-square-sized A
   

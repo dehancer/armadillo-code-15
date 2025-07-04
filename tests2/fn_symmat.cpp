@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_symmat_1")
+TEST_CASE("fn_symmat_1", "[symmat]")
   {
   mat A = 
     "\
@@ -63,7 +64,7 @@ TEST_CASE("fn_symmat_1")
 
 
 
-TEST_CASE("fn_symmat_2")
+TEST_CASE("fn_symmat_2", "[symmat]")
   {
   mat A = 
     "\
@@ -125,3 +126,88 @@ TEST_CASE("fn_symmat_2")
   }
 
 
+
+TEMPLATE_TEST_CASE("fn_symmat_fp", "[symmat]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(10, 10, fill::randn);
+
+  Mat<eT> XU = symmatu(X);
+  Mat<eT> XL = symmatl(X);
+
+  REQUIRE( XU.n_rows == X.n_rows );
+  REQUIRE( XU.n_cols == X.n_cols );
+  REQUIRE( XL.n_rows == X.n_rows );
+  REQUIRE( XL.n_cols == X.n_cols );
+
+  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
+
+  for (uword c = 0; c < X.n_cols; ++c)
+    {
+    for (uword r = 0; r < X.n_rows; ++r)
+      {
+      if (r > c)
+        {
+        REQUIRE( XU(r, c) == Approx(X(c, r)).epsilon(tol) );
+        }
+      else
+        {
+        REQUIRE( XU(r, c) == Approx(X(r, c)).epsilon(tol) );
+        }
+
+      if (c > r)
+        {
+        REQUIRE( XL(r, c) == Approx(X(c, r)).epsilon(tol) );
+        }
+      else
+        {
+        REQUIRE( XL(r, c) == Approx(X(r, c)).epsilon(tol) );
+        }
+      }
+    }
+  }
+
+
+
+//TEMPLATE_TEST_CASE("fn_symmat_sparse_fp", "[symmat]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpMat<eT> X;
+//  X.sprandn(20, 20, 0.3);
+//
+//  SpMat<eT> XU = symmatu(X);
+//  SpMat<eT> XL = symmatl(X);
+//
+//  REQUIRE( XU.n_rows == X.n_rows );
+//  REQUIRE( XU.n_cols == X.n_cols );
+//  REQUIRE( XL.n_rows == X.n_rows );
+//  REQUIRE( XL.n_cols == X.n_cols );
+//
+//  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
+//
+//  for (uword c = 0; c < X.n_cols; ++c)
+//    {
+//    for (uword r = 0; r < X.n_rows; ++r)
+//      {
+//      if (r > c)
+//        {
+//        REQUIRE( XU(r, c) == Approx(X(c, r)).epsilon(tol) );
+//        }
+//      else
+//        {
+//        REQUIRE( XU(r, c) == Approx(X(r, c)).epsilon(tol) );
+//        }
+//
+//      if (c > r)
+//        {
+//        REQUIRE( XL(r, c) == Approx(X(c, r)).epsilon(tol) );
+//        }
+//      else
+//        {
+//        REQUIRE( XL(r, c) == Approx(X(r, c)).epsilon(tol) );
+//        }
+//      }
+//    }
+//  }

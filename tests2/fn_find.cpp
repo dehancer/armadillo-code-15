@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_find_1")
+TEST_CASE("fn_find_1", "[find]")
   {
   mat A = 
     "\
@@ -60,4 +61,22 @@ TEST_CASE("fn_find_1")
   REQUIRE( accu(abs( conv_to<vec>::from(find(A < -0.4)) - conv_to<vec>::from(indices_lessthan_neg04) )) == Approx(0.0).margin(0.001) );
   
   // REQUIRE_THROWS(  );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_find_fp", "[find]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Col<eT> x(10, fill::randu);
+  x += eT(0.5);
+  x[2] = 0;
+
+  uvec r1 = find(x == 0);
+  uvec r2 = find(x == eT(0));
+  uvec r3 = find(x);
+  REQUIRE( all( r1 == uvec({ 2 }) ) );
+  REQUIRE( all( r2 == uvec({ 2 }) ) );
+  REQUIRE( all( r3 == uvec({ 0, 1, 3, 4, 5, 6, 7, 8, 9 }) ) );
   }

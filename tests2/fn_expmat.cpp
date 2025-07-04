@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_expmat_1")
+TEST_CASE("fn_expmat_1", "[expmat]")
   {
   mat A = 
     "\
@@ -48,6 +48,3 @@ TEST_CASE("fn_expmat_1")
   
   REQUIRE_THROWS( X = expmat(A(span(0,3),span::all)) );
   }
-
-
-

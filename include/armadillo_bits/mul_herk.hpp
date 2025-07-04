@@ -484,7 +484,7 @@ class herk
     {
     herk<do_trans_A, use_alpha, use_beta>::apply_blas_type(C,A,alpha,beta);
     }
-  
+
   };
 
 

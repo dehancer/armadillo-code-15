@@ -18,11 +18,11 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
-
-TEST_CASE("mat_plus_1")
+TEST_CASE("mat_plus_1", "[plus]")
   {
   mat A = 
     "\
@@ -96,7 +96,7 @@ TEST_CASE("mat_plus_1")
 
 
 
-TEST_CASE("mat_plus_2")
+TEST_CASE("mat_plus_2", "[plus]")
   {
   mat A(5,6); A.fill(1.0);
   mat B(5,6); B.fill(2.0);
@@ -115,3 +115,29 @@ TEST_CASE("mat_plus_2")
 
 
 
+TEMPLATE_TEST_CASE("mat_plus_fp_compare", "[plus]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> A(5, 6, fill::randu);
+  Mat<eT> B(5, 6, fill::randu);
+
+  mat A_ref = conv_to<mat>::from(A);
+  mat B_ref = conv_to<mat>::from(B);
+
+  Mat<eT> C = A + B;
+  Mat<eT> D = A + eT(1);
+
+  mat C_ref = A_ref + B_ref;
+  mat D_ref = A_ref + 1.0;
+
+  REQUIRE( C.n_rows == A.n_rows );
+  REQUIRE( C.n_cols == A.n_cols );
+  REQUIRE( D.n_rows == A.n_rows );
+  REQUIRE( D.n_cols == A.n_cols );
+
+  constexpr const eT margin = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
+
+  REQUIRE( all( all( abs(conv_to<mat>::from(C) - C_ref) < margin ) ) );
+  REQUIRE( all( all( abs(conv_to<mat>::from(D) - D_ref) < margin ) ) );
+  }

@@ -98,6 +98,14 @@ typedef Col <cx_double> cx_colvec;
 typedef Row <cx_double> cx_rowvec;
 typedef Cube<cx_double> cx_cube;
 
+#if defined(ARMA_HAVE_FP16)
+typedef Mat <fp16> fp16_mat;
+typedef Col <fp16> fp16_vec;
+typedef Col <fp16> fp16_colvec;
+typedef Row <fp16> fp16_rowvec;
+typedef Cube<fp16> fp16_cube;
+#endif
+
 
 
 typedef SpMat <uword> sp_umat;
@@ -139,6 +147,14 @@ typedef SpMat <cx_double> sp_cx_mat;
 typedef SpCol <cx_double> sp_cx_vec;
 typedef SpCol <cx_double> sp_cx_colvec;
 typedef SpRow <cx_double> sp_cx_rowvec;
+
+//#if defined(ARMA_HAVE_FP16)
+//typedef SpMat <fp16> sp_fp16_mat;
+//typedef SpCol <fp16> sp_fp16_vec;
+//typedef SpCol <fp16> sp_fp16_colvec;
+//typedef SpRow <fp16> sp_fp16_rowvec;
+//#endif
+
 
 
 //! @}

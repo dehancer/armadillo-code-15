@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_eps_1")
+TEST_CASE("fn_eps_1", "[eps]")
   {
   mat A = 
     "\
@@ -46,4 +47,19 @@ TEST_CASE("fn_eps_1")
     ";
   
   REQUIRE( accu(abs(eps(A) - B)) == Approx(0.0).margin(0.001) );
+  }
+
+
+
+// test compilation but not output for other types
+TEMPLATE_TEST_CASE("fn_eps_fp", "[eps]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> A(5, 5, fill::randu);
+
+  Mat<eT> B = eps(A);
+
+  REQUIRE( A.n_rows == B.n_rows );
+  REQUIRE( A.n_cols == B.n_cols );
   }

@@ -19,11 +19,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_find_nonnan_1")
+TEST_CASE("fn_find_nonnan_1", "[find]")
   {
   mat A =
     "\
@@ -66,7 +67,7 @@ TEST_CASE("fn_find_nonnan_1")
 
 
 
-TEST_CASE("fn_find_nonnan_cube")
+TEST_CASE("fn_find_nonnan_cube", "[find]")
   {
   cube A(5, 4, 3, fill::randu);
 
@@ -97,7 +98,7 @@ TEST_CASE("fn_find_nonnan_cube")
 
 
 
-TEST_CASE("fn_find_nonnan_spmat")
+TEST_CASE("fn_find_nonnan_spmat", "[find]")
   {
   // sparse matrices will only return nonzero non-nan indices
   sp_mat A(10, 10);
@@ -117,4 +118,21 @@ TEST_CASE("fn_find_nonnan_spmat")
   REQUIRE( indices[2] == 65 );
   REQUIRE( indices[3] == 76 );
   REQUIRE( indices[4] == 98 );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_find_nonnan_fp", "[find]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(5, 1, fill::zeros);
+
+  X[1] =  Datum<eT>::nan;
+  X[2] =  Datum<eT>::inf;
+  X[3] = -Datum<eT>::inf;
+
+  uvec r = find_nonnan(X);
+
+  REQUIRE( all( r == uvec({ 0, 2, 3, 4 }) ) );
   }

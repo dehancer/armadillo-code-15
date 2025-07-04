@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("init_misc_1")
+TEST_CASE("init_misc_1", "[init]")
   {
   const uword n_rows = 5;
   const uword n_cols = 6;
@@ -91,7 +91,7 @@ TEST_CASE("init_misc_1")
 
 
 
-TEST_CASE("init_misc_2")
+TEST_CASE("init_misc_2", "[init]")
   {
   mat A =
     {
@@ -143,7 +143,7 @@ TEST_CASE("init_misc_2")
 
 
 
-TEST_CASE("init_misc_3")
+TEST_CASE("init_misc_3", "[init]")
   {
   const uword n_rows = 5;
   const uword n_cols = 6;

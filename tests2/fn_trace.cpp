@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_trace_1")
+TEST_CASE("fn_trace_1", "[trace]")
   {
   mat A =
     "\
@@ -46,7 +47,7 @@ TEST_CASE("fn_trace_1")
 
 
 
-TEST_CASE("fn_trace_spmat")
+TEST_CASE("fn_trace_spmat", "[trace]")
   {
   SpMat<double> a(6, 6);
   a(0, 0) = 3.0;
@@ -67,7 +68,7 @@ TEST_CASE("fn_trace_spmat")
 
 
 
-TEST_CASE("fn_trace_spmat_mul")
+TEST_CASE("fn_trace_spmat_mul", "[trace]")
   {
   // Test trace(SpMat * SpMat) and ensure the result is the same as if we
   // pre-multiplied the matrices.
@@ -86,7 +87,7 @@ TEST_CASE("fn_trace_spmat_mul")
 
 
 
-TEST_CASE("fn_trace_spmat_t_mul")
+TEST_CASE("fn_trace_spmat_t_mul", "[trace]")
   {
   // Test trace(SpMat.t() * SpMat) and ensure the result is the same as if we
   // pre-multiplied the matrices.
@@ -102,3 +103,36 @@ TEST_CASE("fn_trace_spmat_t_mul")
 
   REQUIRE( trc == Approx(trab) );
   }
+
+
+
+TEMPLATE_TEST_CASE("fn_trace_fp", "[trace]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(20, 20, fill::randu);
+
+  const eT tr = trace(X);
+  const eT tr_ref = accu(X.diag());
+
+  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
+
+  REQUIRE( tr == Approx(tr_ref).epsilon(tol) );
+  }
+
+
+
+//TEMPLATE_TEST_CASE("fn_trace_sparse_fp", "[trace]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpMat<eT> X;
+//  X.sprandu(50, 50, 0.3);
+//
+//  const eT tr = trace(X);
+//  const eT tr_ref = accu(X.diag());
+//
+//  constexpr const eT tol = is_blas_real<eT>::value ? eT(0.001) : eT(0.02);
+//
+//  REQUIRE( tr == Approx(tr_ref).epsilon(tol) );
+//  }

@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("decomp_eig_sym_1")
+TEST_CASE("decomp_eig_sym_1", "[eig_sym]")
   {
   mat A = 
     "\
@@ -64,7 +64,7 @@ TEST_CASE("decomp_eig_sym_1")
 
 
 
-TEST_CASE("eig_sym_2")
+TEST_CASE("eig_sym_2", "[eig_sym]")
   {
   cx_mat A = 
     { 
@@ -104,7 +104,7 @@ TEST_CASE("eig_sym_2")
 
 
 
-TEST_CASE("eig_sym_3")
+TEST_CASE("eig_sym_3", "[eig_sym]")
   {
   mat A(5,6,fill::randu);
   

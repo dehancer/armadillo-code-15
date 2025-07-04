@@ -49,6 +49,9 @@ namespace fill
 
   template<> struct allow_conversion<std::complex<double>, double> { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<double>, float > { static constexpr bool value = false; };
+  #if defined(ARMA_HAVE_FP16)
+  template<> struct allow_conversion<std::complex<double>, fp16  > { static constexpr bool value = false; };
+  #endif
   template<> struct allow_conversion<std::complex<double>, u64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<double>, s64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<double>, u32   > { static constexpr bool value = false; };
@@ -60,6 +63,9 @@ namespace fill
 
   template<> struct allow_conversion<std::complex<float>, double> { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<float>, float > { static constexpr bool value = false; };
+  #if defined(ARMA_HAVE_FP16)
+  template<> struct allow_conversion<std::complex<float>, fp16  > { static constexpr bool value = false; };
+  #endif
   template<> struct allow_conversion<std::complex<float>, u64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<float>, s64   > { static constexpr bool value = false; };
   template<> struct allow_conversion<std::complex<float>, u32   > { static constexpr bool value = false; };
@@ -74,6 +80,9 @@ namespace fill
   template<typename eT> inline bool isfinite_wrapper(eT                )  { return true;                                               }
   template<>            inline bool isfinite_wrapper(float            x)  { return std::isfinite(x);                                   }
   template<>            inline bool isfinite_wrapper(double           x)  { return std::isfinite(x);                                   }
+  #if defined(ARMA_HAVE_FP16)
+  template<>            inline bool isfinite_wrapper(fp16             x)  { return std::isfinite(x);                                   }
+  #endif
   template<typename  T> inline bool isfinite_wrapper(std::complex<T>& x)  { return std::isfinite(x.real()) && std::isfinite(x.imag()); }
   
   //

@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_cond_1")
+TEST_CASE("fn_cond_1", "[cond]")
   {
   mat A =
     {
@@ -37,7 +37,7 @@ TEST_CASE("fn_cond_1")
 
 
 
-TEST_CASE("fn_cond_2")
+TEST_CASE("fn_cond_2", "[cond]")
   {
   mat A = zeros<mat>(5,6);
   

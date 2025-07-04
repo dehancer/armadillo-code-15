@@ -18,23 +18,30 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_cross_1")
+TEMPLATE_TEST_CASE("fn_cross_1", "[cross]", TEST_FLOAT_TYPES)
   {
-  vec a = { 0.1,  2.3,  4.5 };
-  vec b = { 6.7,  8.9, 10.0 };
-  
-  vec c = {-17.050, 29.150, -14.520 };
-  
-  REQUIRE( accu(abs(cross(a,b) - c)) == Approx(0.0).margin(0.001) );
-  
-  vec x;
-  
-  REQUIRE_THROWS( x = cross(randu<vec>(4), randu<vec>(4)) );
+  typedef TestType eT;
+
+  Col<eT> a = { eT(0.1), eT(2.3), eT( 4.5) };
+  Col<eT> b = { eT(6.7), eT(8.9), eT(10.0) };
+
+  Col<eT> c = { eT(-17.050), eT(29.150), eT(-14.520) };
+
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
+
+  REQUIRE( accu(abs(cross(a,b) - c)) == Approx(eT(0)).margin(margin) );
   }
 
 
 
+TEST_CASE("fn_cross_invalid", "[cross]")
+  {
+  vec x;
+
+  REQUIRE_THROWS( x = cross(randu<vec>(4), randu<vec>(4)) );
+  }

@@ -1,7 +1,7 @@
 
 LIB_FLAGS = -L../ -larmadillo
-#LIB_FLAGS = -lblas -llapack 
-#LIB_FLAGS = -lopenblas -llapack 
+#LIB_FLAGS = -lblas -llapack
+#LIB_FLAGS = -lopenblas -llapack
 
 #CXX_FLAGS = -I../tmp/include/ -std=c++14 -Wshadow -Wall -pedantic -O0
 CXX_FLAGS = -I../tmp/include/ -std=c++14 -Wshadow -Wall -pedantic -Og

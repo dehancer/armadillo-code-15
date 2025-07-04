@@ -217,15 +217,16 @@ op_norm::vec_norm_1(const Proxy<T1>& P, const typename arma_cx_only<typename T1:
 template<typename eT>
 inline
 eT
-op_norm::vec_norm_1_direct_std(const Mat<eT>& X)
+op_norm::vec_norm_1_direct_std(const Mat<eT>& X, const typename arma_blas_real_only<eT>::result* junk)
   {
   arma_debug_sigprint();
+  arma_ignore(junk);
   
   const uword N = X.n_elem;
   const eT*   A = X.memptr();
   
   eT out_val = eT(0);
-  
+
   #if defined(ARMA_USE_ATLAS)
     {
     arma_debug_print("atlas::cblas_asum()");
@@ -249,6 +250,24 @@ op_norm::vec_norm_1_direct_std(const Mat<eT>& X)
     }
   #endif
   
+  return (out_val <= eT(0)) ? eT(0) : out_val;
+  }
+
+
+
+template<typename eT>
+inline
+eT
+op_norm::vec_norm_1_direct_std(const Mat<eT>& X, const typename arma_fp16_only<eT>::result* junk)
+  {
+  arma_debug_sigprint();
+  arma_ignore(junk);
+
+  const uword N = X.n_elem;
+  const eT*   A = X.memptr();
+
+  // fp16 support must be direct non-BLAS
+  eT out_val = op_norm::vec_norm_1_direct_mem(N,A);
   return (out_val <= eT(0)) ? eT(0) : out_val;
   }
 
@@ -518,9 +537,10 @@ op_norm::vec_norm_2(const Proxy<T1>& P, const typename arma_cx_only<typename T1:
 template<typename eT>
 inline
 eT
-op_norm::vec_norm_2_direct_std(const Mat<eT>& X)
+op_norm::vec_norm_2_direct_std(const Mat<eT>& X, const typename arma_blas_real_only<eT>::result* junk)
   {
   arma_debug_sigprint();
+  arma_ignore(junk);
   
   const uword N = X.n_elem;
   const eT*   A = X.memptr();
@@ -558,6 +578,34 @@ op_norm::vec_norm_2_direct_std(const Mat<eT>& X)
     {
     arma_debug_print("detected possible underflow or overflow");
     
+    return op_norm::vec_norm_2_direct_robust(X);
+    }
+  }
+
+
+
+template<typename eT>
+inline
+eT
+op_norm::vec_norm_2_direct_std(const Mat<eT>& X, const typename arma_fp16_only<eT>::result* junk)
+  {
+  arma_debug_sigprint();
+  arma_ignore(junk);
+
+  const uword N = X.n_elem;
+  const eT*   A = X.memptr();
+
+  // fp16 support must be non-BLAS
+  eT out_val = op_norm::vec_norm_2_direct_mem(N,A);
+
+  if( (out_val != eT(0)) && arma_isfinite(out_val) )
+    {
+    return (out_val < eT(0)) ? eT(0) : out_val;
+    }
+  else
+    {
+    arma_debug_print("detected possible underflow or overflow");
+
     return op_norm::vec_norm_2_direct_robust(X);
     }
   }
@@ -707,7 +755,7 @@ op_norm::vec_norm_k(const Proxy<T1>& P, const int k)
     
     for(uword i=0; i<N; ++i)
       {
-      acc += std::pow(std::abs(A[i]), k);
+      acc += arma_pow(std::abs(A[i]), k);
       }
     }
   else
@@ -720,14 +768,14 @@ op_norm::vec_norm_k(const Proxy<T1>& P, const int k)
       for(uword col=0; col < n_cols; ++col)
       for(uword row=0; row < n_rows; ++row)
         {
-        acc += std::pow(std::abs(P.at(row,col)), k);
+        acc += arma_pow(std::abs(P.at(row,col)), k);
         }
       }
     else
       {
       for(uword col=0; col < n_cols; ++col)
         {
-        acc += std::pow(std::abs(P.at(0,col)), k);
+        acc += arma_pow(std::abs(P.at(0,col)), k);
         }
       }
     }
@@ -883,7 +931,7 @@ op_norm::mat_norm_1(const Mat<eT>& X)
 template<typename eT>
 inline
 typename get_pod_type<eT>::result
-op_norm::mat_norm_2(const Mat<eT>& X)
+op_norm::mat_norm_2(const Mat<eT>& X, typename arma_blas_real_or_cx_only<eT>::result* junk)
   {
   arma_debug_sigprint();
   
@@ -898,6 +946,20 @@ op_norm::mat_norm_2(const Mat<eT>& X)
   const T out_val = (S.n_elem > 0) ? S[0] : T(0);
   
   return (out_val <= T(0)) ? T(0) : out_val;
+  }
+
+
+
+template<typename eT>
+inline
+typename get_pod_type<eT>::result
+op_norm::mat_norm_2(const Mat<eT>& X, typename arma_fp16_only<eT>::result* junk)
+  {
+  arma_debug_sigprint();
+
+  arma_stop_logic_error("norm(): matrix 2-norm currently not supported for fp16 type");
+
+  return typename get_pod_type<eT>::result(0);
   }
 
 

@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_find_finite_1")
+TEST_CASE("fn_find_finite_1", "[find]")
   {
   mat A = 
     "\
@@ -43,4 +44,21 @@ TEST_CASE("fn_find_finite_1")
   REQUIRE( accu(B.elem(find_finite(B))) == Approx(-0.250039) );
   
   // REQUIRE_THROWS(  );
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_find_finite_fp", "[find]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(5, 1, fill::zeros);
+
+  X[1] =  Datum<eT>::nan;
+  X[2] =  Datum<eT>::inf;
+  X[3] = -Datum<eT>::inf;
+
+  uvec r = find_finite(X);
+
+  REQUIRE( all( r == uvec({ 0, 4 }) ) );
   }

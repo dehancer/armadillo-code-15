@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_trans_1")
+TEST_CASE("fn_trans_1", "[trans]")
   {
   mat A =
     "\
@@ -166,7 +167,7 @@ TEST_CASE("fn_trans_1")
 
 
 
-TEST_CASE("fn_trans_2")
+TEST_CASE("fn_trans_2", "[trans]")
   {
   mat A =
     "\
@@ -297,7 +298,7 @@ TEST_CASE("fn_trans_2")
 
 
 
-TEST_CASE("fn_trans_3")
+TEST_CASE("fn_trans_3", "[trans]")
   {
   mat A =
     "\
@@ -370,7 +371,7 @@ TEST_CASE("fn_trans_3")
 
 
 
-TEST_CASE("fn_trans_4")
+TEST_CASE("fn_trans_4", "[trans]")
   {
   mat A =
     "\
@@ -491,7 +492,7 @@ TEST_CASE("fn_trans_4")
 
 
 
-TEST_CASE("op_trans_sp_mat")
+TEST_CASE("op_trans_sp_mat", "[trans]")
   {
   SpMat<unsigned int> a(4, 4);
   a(1, 0) = 5;
@@ -578,7 +579,7 @@ TEST_CASE("op_trans_sp_mat")
   }
 
 
-TEST_CASE("op_trans_sp_cxmat")
+TEST_CASE("op_trans_sp_cxmat", "[trans]")
   {
   SpMat<cx_double> a(10, 10);
   for (uword c = 0; c < 7; ++c)
@@ -621,6 +622,88 @@ TEST_CASE("op_trans_sp_cxmat")
 
       REQUIRE( lr == Approx(rr) );
       REQUIRE( li == Approx(-ri) );
+      }
+    }
+  }
+
+
+
+TEMPLATE_TEST_CASE("fn_trans_fp", "[trans]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(10, 10, fill::randu);
+  Mat<eT> Y = trans(X);
+
+  constexpr eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
+
+  REQUIRE( Y.n_rows == X.n_rows );
+  REQUIRE( Y.n_cols == X.n_cols );
+
+  for (uword c = 0; c < Y.n_cols; ++c)
+    {
+    for (uword r = 0; r < Y.n_rows; ++r)
+      {
+      REQUIRE( Y(r, c) == Approx(X(c, r)).epsilon(tol) );
+      }
+    }
+  }
+
+
+
+//TEMPLATE_TEST_CASE("fn_trans_sparse_fp", "[trans]", TEST_FLOAT_TYPES)
+//  {
+//  typedef TestType eT;
+//
+//  SpMat<eT> X;
+//  X.sprandu(25, 25, 0.3);
+//  SpMat<eT> Y = trans(X);
+//
+//  constexpr eT tol = is_blas_real<eT>::value ? eT(0.0001) : eT(0.01);
+//
+//  REQUIRE( Y.n_rows == X.n_rows );
+//  REQUIRE( Y.n_cols == X.n_cols );
+//
+//  for (uword c = 0; c < Y.n_cols; ++c)
+//    {
+//    for (uword r = 0; r < Y.n_rows; ++r)
+//      {
+//      REQUIRE( Y(r, c) == Approx(X(c, r)).epsilon(tol) );
+//      }
+//    }
+//  }
+
+
+
+TEMPLATE_TEST_CASE("fn_trans_cx_fp", "[trans]", TEST_CX_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> X(10, 10, fill::randu);
+  Mat<eT> Y1 = trans(X);
+  Mat<eT> Y2 = htrans(X);
+  Mat<eT> Y3 = strans(X);
+
+  typedef typename get_pod_type<eT>::result gT;
+  constexpr gT tol = is_blas_real<gT>::value ? gT(0.0001) : gT(0.01);
+
+  REQUIRE( Y1.n_rows == X.n_rows );
+  REQUIRE( Y1.n_cols == X.n_cols );
+  REQUIRE( Y2.n_rows == X.n_rows );
+  REQUIRE( Y2.n_cols == X.n_cols );
+  REQUIRE( Y3.n_rows == X.n_rows );
+  REQUIRE( Y3.n_cols == X.n_cols );
+
+  for (uword c = 0; c < Y1.n_cols; ++c)
+    {
+    for (uword r = 0; r < Y1.n_rows; ++r)
+      {
+      REQUIRE( std::real(Y1(r, c)) == Approx( std::real(X(c, r))).epsilon(tol) );
+      REQUIRE( std::imag(Y1(r, c)) == Approx(-std::imag(X(c, r))).epsilon(tol) );
+      REQUIRE( std::real(Y2(r, c)) == Approx( std::real(X(c, r))).epsilon(tol) );
+      REQUIRE( std::imag(Y2(r, c)) == Approx(-std::imag(X(c, r))).epsilon(tol) );
+      REQUIRE( std::real(Y3(r, c)) == Approx( std::real(X(c, r))).epsilon(tol) );
+      REQUIRE( std::imag(Y3(r, c)) == Approx( std::imag(X(c, r))).epsilon(tol) );
       }
     }
   }

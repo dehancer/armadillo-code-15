@@ -18,11 +18,12 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_all_1")
+TEST_CASE("fn_all_1", "[all]")
   {
   vec a(5, fill::zeros);
   vec b(5, fill::zeros);  b(0) = 1.0;
@@ -45,7 +46,7 @@ TEST_CASE("fn_all_1")
 
 
 
-TEST_CASE("fn_all_2")
+TEST_CASE("fn_all_2", "[all]")
   {
   mat A(5, 6, fill::zeros);
   mat B(5, 6, fill::zeros);  B(0,0) = 1.0;
@@ -69,7 +70,7 @@ TEST_CASE("fn_all_2")
 
 
 
-TEST_CASE("fn_all_3")
+TEST_CASE("fn_all_3", "[all]")
   {
   mat A(5, 6, fill::zeros);
   mat B(5, 6, fill::zeros);  B(0,0) = 1.0;
@@ -94,3 +95,13 @@ TEST_CASE("fn_all_3")
   }
 
 
+
+TEMPLATE_TEST_CASE("fn_all_fp", "[all]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Mat<eT> x = randu<Mat<eT>>(50, 50) - eT(0.5);
+  mat x_ref = conv_to<mat>::from(x);
+
+  REQUIRE( all( vectorise( all( x > eT(0) ) ) == vectorise( all( x_ref > 0.0 ) ) ) );
+  }

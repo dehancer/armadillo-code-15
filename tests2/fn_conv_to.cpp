@@ -22,7 +22,7 @@
 using namespace arma;
 
 
-TEST_CASE("fn_conv_to_1")
+TEST_CASE("fn_conv_to_1", "[conv_to]")
   {
   typedef std::vector<double> stdvec;
 
@@ -39,7 +39,7 @@ TEST_CASE("fn_conv_to_1")
 
 
 
-TEST_CASE("fn_conv_to2")
+TEST_CASE("fn_conv_to2", "[conv_to]")
   {
   mat A(5,6); A.fill(0.1);
   
@@ -57,7 +57,7 @@ TEST_CASE("fn_conv_to2")
   }
   
 
-TEST_CASE("fn_conv_to3")
+TEST_CASE("fn_conv_to3", "[conv_to]")
   {
   mat A(5,6); A.fill(1.0);
   
@@ -69,7 +69,7 @@ TEST_CASE("fn_conv_to3")
   }
 
 
-TEST_CASE("fn_conv_to4")
+TEST_CASE("fn_conv_to4", "[conv_to]")
   {
   mat A =   linspace<rowvec>(1,5,6);
   mat B = 2*linspace<colvec>(1,5,6);
@@ -83,7 +83,7 @@ TEST_CASE("fn_conv_to4")
   }
 
 
-TEST_CASE("fn_conv_to_spmat_mat_different_eT")
+TEST_CASE("fn_conv_to_spmat_mat_different_eT", "[conv_to]")
   {
   sp_fmat A;
   A.sprandu(10, 10, 0.3);
@@ -117,7 +117,7 @@ TEST_CASE("fn_conv_to_spmat_mat_different_eT")
   }
 
 
-TEST_CASE("fn_conv_to_complex_sparse_to_real")
+TEST_CASE("fn_conv_to_complex_sparse_to_real", "[conv_to]")
   {
   sp_cx_mat A;
   A.sprandu(10, 10, 0.3);
@@ -139,7 +139,7 @@ TEST_CASE("fn_conv_to_complex_sparse_to_real")
   }
 
 
-TEST_CASE("fn_conv_to_complex_real_to_sparse")
+TEST_CASE("fn_conv_to_complex_real_to_sparse", "[conv_to]")
   {
   cx_mat A;
   A.randu(10, 10);
@@ -161,7 +161,7 @@ TEST_CASE("fn_conv_to_complex_real_to_sparse")
   }
 
 
-TEST_CASE("fn_conv_to_complex_sparse_to_different_eT_real")
+TEST_CASE("fn_conv_to_complex_sparse_to_different_eT_real", "[conv_to]")
   {
   sp_cx_fmat A;
   A.sprandu(10, 10, 0.3);
@@ -183,7 +183,7 @@ TEST_CASE("fn_conv_to_complex_sparse_to_different_eT_real")
   }
 
 
-TEST_CASE("fn_conv_to_complex_real_to_different_eT_sparse")
+TEST_CASE("fn_conv_to_complex_real_to_different_eT_sparse", "[conv_to]")
   {
   cx_mat A;
   A.randu(10, 10);
@@ -202,3 +202,28 @@ TEST_CASE("fn_conv_to_complex_real_to_different_eT_sparse")
       }
     }
   }
+
+
+
+#if defined(ARMA_HAVE_FP16)
+TEST_CASE("fn_conv_to_fp16", "[conv_to]")
+  {
+  fp16_mat x1 = randu<fp16_mat>(50, 50);
+  mat x2 = conv_to<mat>::from(x1);
+
+  REQUIRE( x1.n_rows == x2.n_rows );
+  REQUIRE( x1.n_cols == x2.n_cols );
+  for (uword i = 0; i < x1.n_elem; ++i)
+    {
+    REQUIRE( double(x1[i]) == Approx(x2[i]) );
+    }
+
+  x2.randu();
+  x1 = conv_to<fp16_mat>::from(x2);
+
+  for (uword i = 0; i < x1.n_elem; ++i)
+    {
+    REQUIRE( x1[i] == Approx(fp16(x2[i])) );
+    }
+  }
+#endif

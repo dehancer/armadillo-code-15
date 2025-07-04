@@ -18,17 +18,18 @@
 
 #include <armadillo>
 #include "catch.hpp"
+#include "utils.hpp"
 
 using namespace arma;
 
 
-TEST_CASE("fn_cumprod_1")
+TEST_CASE("fn_cumprod_1", "[cumprod]")
   {
   colvec a = linspace<colvec>(1,5,6);
   rowvec b = linspace<rowvec>(1,5,6);
   
   colvec c = { 1.0000, 1.8000, 4.6800, 15.9120, 66.8304, 334.1520 };
-  
+
   REQUIRE( accu(abs(cumprod(a) - c    )) == Approx(0.0).margin(0.001) );
   REQUIRE( accu(abs(cumprod(b) - c.t())) == Approx(0.0).margin(0.001) );
   
@@ -37,7 +38,7 @@ TEST_CASE("fn_cumprod_1")
 
 
 
-TEST_CASE("fn_cumprod_2")
+TEST_CASE("fn_cumprod_2", "[cumprod]")
   {
   mat A =
     {
@@ -68,3 +69,17 @@ TEST_CASE("fn_cumprod_2")
 
 
 
+TEMPLATE_TEST_CASE("fn_cumprod_small_fp", "[cumprod]", TEST_FLOAT_TYPES)
+  {
+  typedef TestType eT;
+
+  Col<eT> a = linspace<Col<eT>>(1,4,5);
+  Row<eT> b = linspace<Row<eT>>(1,4,5);
+  
+  Col<eT> c = { eT(1.0000), eT(1.7500), eT(4.3750), eT(14.2188), eT(56.8750) };
+
+  constexpr eT margin = is_blas_real<eT>::value ? eT(0.001) : eT(0.1);
+
+  REQUIRE( accu(abs(cumprod(a) - c    )) == Approx(eT(0)).margin(margin) );
+  REQUIRE( accu(abs(cumprod(b) - c.t())) == Approx(eT(0)).margin(margin) );
+  }

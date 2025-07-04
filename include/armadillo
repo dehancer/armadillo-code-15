@@ -62,6 +62,10 @@
 //   #include <system_error>
 // #endif
 
+#if defined(ARMA_HAVE_CXX23)
+  #include <stdfloat>
+#endif
+
 #if ( defined(__unix__) || defined(__unix) || defined(_POSIX_C_SOURCE) || (defined(__APPLE__) && defined(__MACH__)) ) && !defined(_WIN32)
   #include <unistd.h>
 #endif

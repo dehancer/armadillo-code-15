@@ -199,6 +199,21 @@ arma_isnan(const std::complex<T>& x)
 
 
 //
+// wrappers for arma_pow()---see FP16 specialization below
+
+
+
+template<typename eT, typename pow_eT>
+inline
+eT
+arma_pow(eT base, pow_eT pow)
+  {
+  return std::pow(base, pow);
+  }
+
+
+
+//
 // implementation of arma_sign()
 
 
@@ -414,6 +429,89 @@ struct arma_arg< std::complex<double> >
     return std::arg(x);
     }
   };
+
+
+
+//
+// wrappers for low-precision fp16
+
+#if defined(ARMA_HAVE_FP16)
+
+template<>
+inline
+bool
+arma_isfinite(fp16 x)
+  {
+  // Technically not required until C++23 but basically every compiler supports it.
+  // (this is true for almost every fp16 overload below)
+  return std::isfinite(x);
+  }
+
+
+
+template<>
+inline
+bool
+arma_isinf(fp16 x)
+  {
+  return std::isinf(x);
+  }
+
+
+
+template<>
+inline
+bool
+arma_isnan(fp16 x)
+  {
+  return std::isnan(x);
+  }
+
+
+
+template<typename pow_eT>
+inline
+fp16
+arma_pow(fp16 base, pow_eT pow)
+  {
+  return std::pow(base, fp16(pow));
+  }
+
+
+
+template<>
+inline
+fp16
+arma_hypot(const fp16 x, const fp16 y)
+  {
+  return std::hypot(x, y);
+  }
+
+
+
+template<>
+inline
+fp16
+arma_sinc(const fp16 x)
+  {
+  return arma_sinc_generic(x);
+  }
+
+
+
+template<>
+struct arma_arg<fp16>
+  {
+  static
+  inline
+  fp16
+  eval(const fp16 x)
+    {
+    return std::arg(x);
+    }
+  };
+
+#endif
 
 
 
