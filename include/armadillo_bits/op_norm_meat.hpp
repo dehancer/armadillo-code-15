@@ -755,7 +755,7 @@ op_norm::vec_norm_k(const Proxy<T1>& P, const int k)
     
     for(uword i=0; i<N; ++i)
       {
-      acc += std::pow(std::abs(A[i]), T(k));
+      acc += arma_pow(std::abs(A[i]), k);
       }
     }
   else
@@ -768,14 +768,14 @@ op_norm::vec_norm_k(const Proxy<T1>& P, const int k)
       for(uword col=0; col < n_cols; ++col)
       for(uword row=0; row < n_rows; ++row)
         {
-        acc += std::pow(std::abs(P.at(row,col)), T(k));
+        acc += arma_pow(std::abs(P.at(row,col)), k);
         }
       }
     else
       {
       for(uword col=0; col < n_cols; ++col)
         {
-        acc += std::pow(std::abs(P.at(0,col)), T(k));
+        acc += arma_pow(std::abs(P.at(0,col)), k);
         }
       }
     }

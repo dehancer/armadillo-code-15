@@ -199,6 +199,33 @@ arma_isnan(const std::complex<T>& x)
 
 
 //
+// wrappers for arma_pow()
+
+
+
+template<typename eT, typename pow_eT>
+inline
+eT
+arma_pow(eT base, pow_eT pow)
+  {
+  return std::pow(base, pow);
+  }
+
+
+
+#if defined(ARMA_HAVE_FP16)
+template<typename pow_eT>
+inline
+fp16
+arma_pow(fp16 base, pow_eT pow)
+  {
+  return std::pow(base, fp16(pow));
+  }
+#endif
+
+
+
+//
 // implementation of arma_sign()
 
 
