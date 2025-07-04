@@ -211,7 +211,7 @@
 
 
 #if defined(ARMA_DEFAULT_OSTREAM)
-  #pragma message ("WARNING: support for ARMA_DEFAULT_OSTREAM is deprecated and will be removed;")
+  #pragma message ("WARNING: option ARMA_DEFAULT_OSTREAM is deprecated and will be removed;")
   #pragma message ("WARNING: use ARMA_COUT_STREAM and ARMA_CERR_STREAM instead")
 #endif
 
@@ -290,7 +290,7 @@
 
 // for compatibility with earlier versions of Armadillo
 #if defined(ARMA_DONT_USE_CXX11_MUTEX)
-  #pragma message ("WARNING: support for ARMA_DONT_USE_CXX11_MUTEX is deprecated and will be removed;")
+  #pragma message ("WARNING: option ARMA_DONT_USE_CXX11_MUTEX is deprecated and will be removed;")
   #pragma message ("WARNING: use ARMA_DONT_USE_STD_MUTEX instead")
   #undef ARMA_USE_STD_MUTEX
 #endif
@@ -378,14 +378,9 @@
   #undef ARMA_CRIPPLED_LAPACK
 #endif
 
-// WARNING: option ARMA_IGNORE_DEPRECATED_MARKER will be removed
-// WARNING: option ARMA_CRIPPLED_LAPACK          will be removed
-
-#if defined(ARMA_CRIPPLED_LAPACK)
-  #if (!defined(ARMA_IGNORE_DEPRECATED_MARKER))
-    #pragma message ("option ARMA_CRIPPLED_LAPACK is deprecated and will be removed")
-  #endif
-#endif
+// WARNING: option ARMA_CRIPPLED_LAPACK          is deprecated and will be removed
+// WARNING: option ARMA_IGNORE_DEPRECATED_MARKER is deprecated and will be removed
+// WARNING: option ARMA_IGNORE_DEPRECATED_MARKER is not supported when compiling with gcc 18+ or clang 26+
 
 
 // if Armadillo was installed on this system via CMake and ARMA_USE_WRAPPER is not defined,
