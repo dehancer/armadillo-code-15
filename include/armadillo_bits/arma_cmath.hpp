@@ -199,7 +199,7 @@ arma_isnan(const std::complex<T>& x)
 
 
 //
-// wrappers for arma_pow()
+// wrappers for arma_pow()---see FP16 specialization below
 
 
 
@@ -210,18 +210,6 @@ arma_pow(eT base, pow_eT pow)
   {
   return std::pow(base, pow);
   }
-
-
-
-#if defined(ARMA_HAVE_FP16)
-template<typename pow_eT>
-inline
-fp16
-arma_pow(fp16 base, pow_eT pow)
-  {
-  return std::pow(base, fp16(pow));
-  }
-#endif
 
 
 
@@ -477,6 +465,16 @@ bool
 arma_isnan(fp16 x)
   {
   return std::isnan(x);
+  }
+
+
+
+template<typename pow_eT>
+inline
+fp16
+arma_pow(fp16 base, pow_eT pow)
+  {
+  return std::pow(base, fp16(pow));
   }
 
 

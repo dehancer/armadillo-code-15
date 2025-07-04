@@ -148,12 +148,12 @@ typedef SpCol <cx_double> sp_cx_vec;
 typedef SpCol <cx_double> sp_cx_colvec;
 typedef SpRow <cx_double> sp_cx_rowvec;
 
-#if defined(ARMA_HAVE_FP16)
-typedef SpMat <fp16> sp_fp16_mat;
-typedef SpCol <fp16> sp_fp16_vec;
-typedef SpCol <fp16> sp_fp16_colvec;
-typedef SpRow <fp16> sp_fp16_rowvec;
-#endif
+//#if defined(ARMA_HAVE_FP16)
+//typedef SpMat <fp16> sp_fp16_mat;
+//typedef SpCol <fp16> sp_fp16_vec;
+//typedef SpCol <fp16> sp_fp16_colvec;
+//typedef SpRow <fp16> sp_fp16_rowvec;
+//#endif
 
 
 
