@@ -31,7 +31,7 @@ TEST_CASE("bounds_1")
   
   REQUIRE_NOTHROW( A(n_rows-1,n_cols-1) = 0 );
   
-  // out of bounds access will throw unless ARMA_NO_DEBUG is defined
+  // out of bounds access will throw
   REQUIRE_THROWS( A(n_rows,n_cols) = 0 );
   }
 

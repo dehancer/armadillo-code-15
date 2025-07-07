@@ -110,7 +110,7 @@ TEST_CASE("mat_plus_2")
   
   mat X(6,5);
   mat Y;
-  REQUIRE_THROWS( Y = A+X );  // adding non-conformant matrices will throw unless ARMA_NO_DEBUG is defined
+  REQUIRE_THROWS( Y = A+X );  // adding non-conformant matrices will throw
   }
 
 

@@ -113,7 +113,7 @@ TEST_CASE("fn_accu_4")
   REQUIRE( accu(A % B)                                           == Approx(double((2*4)*(A.n_rows*A.n_cols))) );
   REQUIRE( accu(A(span::all,span::all) % B(span::all,span::all)) == Approx(double((2*4)*(A.n_rows*A.n_cols))) );
 
-  // A and C matrices are non-conformat, so accu() will throw unless ARMA_NO_DEBUG is defined
+  // A and C matrices are non-conformant
   REQUIRE_THROWS( accu(A % C) );
   REQUIRE_THROWS( accu(A(span::all,span::all) % C(span::all,span::all)) );
   }
