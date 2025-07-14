@@ -166,6 +166,11 @@
   //// of inv() and inv_sympd() within compound expressions
 #endif
 
+#if !defined(ARMA_OPTIMISE_POWEXPR)
+  #define ARMA_OPTIMISE_POWEXPR
+  //// Comment out the above line to disable optimised handling of pow()
+#endif
+
 #if !defined(ARMA_CHECK_CONFORMANCE)
   #define ARMA_CHECK_CONFORMANCE
   //// Comment out the above line to disable conformance checks for bounds and size.
