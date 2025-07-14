@@ -383,9 +383,14 @@
   #undef ARMA_CRIPPLED_LAPACK
 #endif
 
-
-// WARNING: option ARMA_CRIPPLED_LAPACK          is deprecated and will be removed
 // WARNING: option ARMA_IGNORE_DEPRECATED_MARKER is deprecated and will be removed
+// WARNING: option ARMA_CRIPPLED_LAPACK          is deprecated and will be removed
+
+#if defined(ARMA_CRIPPLED_LAPACK)
+  #if (!defined(ARMA_IGNORE_DEPRECATED_MARKER))
+    #pragma message ("WARNING: option ARMA_CRIPPLED_LAPACK is deprecated and will be removed")
+  #endif
+#endif
 
 
 // if Armadillo was installed on this system via CMake and ARMA_USE_WRAPPER is not defined,
