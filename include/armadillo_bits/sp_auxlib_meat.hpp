@@ -2027,6 +2027,7 @@ sp_auxlib::run_aupd_plain
     arma_ignore(n_eigvals);
     arma_ignore(which);
     arma_ignore(X);
+    arma_ignore(Xst);
     arma_ignore(sym);
     arma_ignore(n);
     arma_ignore(tol);
