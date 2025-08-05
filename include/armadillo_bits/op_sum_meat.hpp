@@ -46,12 +46,12 @@ op_sum::apply(Mat<typename T1::elem_type>& out, const Op< eOp<T1,eop_square>, op
   
   typedef typename inner_expr_type::proxy_type::stored_type inner_expr_P_stored_type;
   
-  const uword dim = in.aux_uword_a;
-  
-  arma_conform_check( (dim > 1), "sum(): parameter 'dim' must be 0 or 1" );
-  
   if(is_Mat<inner_expr_P_stored_type>::value)
     {
+    const uword dim = in.aux_uword_a;
+    
+    arma_conform_check( (dim > 1), "sum(): parameter 'dim' must be 0 or 1" );
+    
     const quasi_unwrap<inner_expr_P_stored_type> U(in.m.P.Q);
     
     if(U.is_alias(out))
