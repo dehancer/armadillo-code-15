@@ -394,7 +394,7 @@
 
 
 #if !defined(ARMA_DONT_USE_OPENMP)
-  #if (defined(_OPENMP) && (_OPENMP >= 201107))
+  #if (defined(_OPENMP) && (_OPENMP >= 201307))
     #undef  ARMA_USE_OPENMP
     #define ARMA_USE_OPENMP
   #endif
