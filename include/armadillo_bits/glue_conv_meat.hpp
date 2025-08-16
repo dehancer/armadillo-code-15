@@ -229,6 +229,24 @@ glue_conv::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_conv>& 
       out.zeros( arma::size(A) );
       }
     }
+  else
+  if(mode == 2)  // valid convolution
+    {
+    Mat<eT> tmp;
+    
+    glue_conv2::apply(tmp, A, B, A_is_col);
+    
+    const SizeMat out_size = arma::size(A) - arma::size(B) + 1;
+    
+    if( (tmp.is_empty() == false) && (A.is_empty() == false) && (B.is_empty() == false) )
+      {
+      out = (A_is_col) ? tmp(B.n_elem - 1, 0, out_size) : tmp(0, B.n_elem - 1, out_size);
+      }
+    else
+      {
+      out.zeros( out_size );
+      }
+    }
   }
 
 
@@ -376,6 +394,24 @@ glue_conv2::apply(Mat<typename T1::elem_type>& out, const Glue<T1,T2,glue_conv2>
     else
       {
       out.zeros( arma::size(A) );
+      }
+    }
+  else
+  if(mode == 2)  // valid convolution
+    {
+    Mat<eT> tmp;
+    
+    glue_conv2::apply(tmp, A, B);
+    
+    const SizeMat out_size = arma::size(A) - arma::size(B) + 1;
+
+    if( (tmp.is_empty() == false) && (A.is_empty() == false) && (B.is_empty() == false) )
+      {
+      out = tmp(B.n_rows - 1, B.n_cols - 1, out_size);
+      }
+    else
+      {
+      out.zeros( out_size );
       }
     }
   }

@@ -15056,6 +15056,7 @@ The <i>shape</i> argument is optional; it is one of:
 <tbody>
 <tr><td style="text-align: right;"><code>"full"</code></td><td>&nbsp;=&nbsp;</td><td>return the full convolution (<b>default setting</b>), with the size equal to <i>A.n_elem&thinsp;+&thinsp;B.n_elem&thinsp;-&thinsp;1</i></td></tr>
 <tr><td style="text-align: right;"><code>"same"</code></td><td>&nbsp;=&nbsp;</td><td>return the central part of the convolution, with the same size as vector <i>A</i></td></tr>
+<tr><td style="text-align: right;"><code>"valid"</code></td><td>&nbsp;=&nbsp;</td><td>return the part of the convolution done without zero padding, with the size equal to <i>A.n_elem&thinsp;-&thinsp;B.n_elem&thinsp;+&thinsp;1</i></td></tr>
 </tbody>
 </table>
 </ul>
@@ -15113,6 +15114,7 @@ The <i>shape</i> argument is optional; it is one of:
 <tbody>
 <tr><td style="text-align: right;"><code>"full"</code></td><td>&nbsp;=&nbsp;</td><td>return the full convolution (<b>default setting</b>), with the size equal to <i>size(A)&thinsp;+&thinsp;size(B)&thinsp;-&thinsp;1</i></td></tr>
 <tr><td style="text-align: right;"><code>"same"</code></td><td>&nbsp;=&nbsp;</td><td>return the central part of the convolution, with the same size as matrix <i>A</i></td></tr>
+<tr><td style="text-align: right;"><code>"valid"</code></td><td>&nbsp;=&nbsp;</td><td>return the part of the convolution done without zero padding, with the size equal to <i>size(A)&thinsp;-&thinsp;size(B)&thinsp;+&thinsp;1</i></td></tr>
 </tbody>
 </table>
 </ul>
