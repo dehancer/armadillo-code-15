@@ -79,93 +79,150 @@ struct gemm_emul_large
     {
     arma_debug_sigprint();
 
-    const uword A_n_rows = A.n_rows;
-    const uword A_n_cols = A.n_cols;
-    
-    const uword B_n_rows = B.n_rows;
-    const uword B_n_cols = B.n_cols;
-    
-    if( (do_trans_A == false) && (do_trans_B == false) )
+    // When we do A * B.t(), it is actually faster to transpose B entirely and perform A * B.
+    // The algorithm necessary to do A * B.t() fast without transpose is a bit tedious.
+    if (do_trans_A == false && do_trans_B == true)
       {
-      arma_aligned podarray<eT> tmp(A_n_cols);
-      
-      eT* A_rowdata = tmp.memptr();
-      
-      for(uword row_A=0; row_A < A_n_rows; ++row_A)
-        {
-        tmp.copy_row(A, row_A);
-        
-        for(uword col_B=0; col_B < B_n_cols; ++col_B)
-          {
-          const eT acc = op_dot::direct_dot(B_n_rows, A_rowdata, B.colptr(col_B));
-          
-               if( (use_alpha == false) && (use_beta == false) )  { C.at(row_A,col_B) =       acc;                          }
-          else if( (use_alpha == true ) && (use_beta == false) )  { C.at(row_A,col_B) = alpha*acc;                          }
-          else if( (use_alpha == false) && (use_beta == true ) )  { C.at(row_A,col_B) =       acc + beta*C.at(row_A,col_B); }
-          else if( (use_alpha == true ) && (use_beta == true ) )  { C.at(row_A,col_B) = alpha*acc + beta*C.at(row_A,col_B); }
-          }
-        }
+      Mat<eT> Bt;
+      op_strans::apply_mat_noalias(Bt, B);
+      gemm_emul_large<false, false, use_alpha, use_beta>::apply(C, A, Bt, alpha, beta);
+      return;
       }
-    else
-    if( (do_trans_A == true) && (do_trans_B == false) )
+
+    const uword A_n_rows = (do_trans_A) ? A.n_cols : A.n_rows;
+    const uword A_n_cols = (do_trans_A) ? A.n_rows : A.n_cols;
+
+    const uword B_n_cols = (do_trans_B) ? B.n_rows : B.n_cols;
+
+    // Block size should be such that 3 matrices fit in L1 cache.
+    // Typical L1 caches are from 2kb to 64kb... let's just pick 16kb to work on a wide range of systems.
+    // Thus, each block really can't be more than 16/3 ~= 5kb;
+    // so we will chunk into the following sizes:
+    //
+    //    A: m x n
+    //    B: n x k
+    //    C: m x k
+    //
+    // Ideally, we pick the same size for everything, but A/B/C may be too small.
+    constexpr static const uword ideal_dim = std::sqrt(16384 / (3 * sizeof(eT)));
+
+    const uword m = std::min(A_n_rows, ideal_dim);
+    // If we didn't use all of our allotted space, then the size we will use is (2 * m x ideal_dim2 + ideal_dim2 x ideal_dim2).
+    // (The derivation below comes from the quadratic formula...)
+    const uword ideal_dim2 = (m == ideal_dim) ? ideal_dim : std::sqrt(std::pow(m, 2) + 16384 / sizeof(eT)) - m;
+    const uword n = std::min(A_n_cols, ideal_dim2);
+    // Now the size we will use is (2 * m * n + n * ideal_dim3).
+    // 16384/sizeof(eT) = 2 * m * n + n * ideal_dim3
+    // n * ideal_dim3 = (16384/sizeof(eT)) - 2 * m * n
+    // ideal_dim3 = ((16384/sizeof(eT)) - 2 * m * n) / n
+    //            = (16384/(sizeof(eT) * n)) - 2 * m
+    const uword ideal_dim3 = (n == ideal_dim2) ? ideal_dim2 : (16384 / (sizeof(eT) * n)) - 2 * m;
+    const uword k = std::min(B_n_cols, ideal_dim3);
+
+    // Increase all sizes to the next power of 2.
+    uword m_pow2 = 1;
+    while (2 * m_pow2 <= m)
+      m_pow2 *= 2;
+
+    uword n_pow2 = 1;
+    while (2 * n_pow2 <= n)
+      n_pow2 *= 2;
+
+    uword k_pow2 = 1;
+    while (2 * k_pow2 <= k)
+      k_pow2 *= 2;
+
+    if (m_pow2 < A_n_rows && m_pow2 < 16)
+      m_pow2 = A_n_rows;
+    if (n_pow2 < A_n_cols && n_pow2 < 16)
+      n_pow2 = A_n_cols;
+    if (k_pow2 < B_n_cols && k_pow2 < 16)
+      k_pow2 = B_n_cols;
+
+    // Compute size of work arrays that are needed.
+    uword work_size = (do_trans_A == true && do_trans_B == false) ? 0 : n_pow2;
+    arma_aligned podarray<eT> work(work_size);
+
+    #if defined(ARMA_USE_OPENMP)
+    #pragma omp parallel for schedule(static) firstprivate(work)
+    #endif
+    for (uword mm = 0; mm < A_n_rows; mm += m_pow2)
       {
-      for(uword col_A=0; col_A < A_n_cols; ++col_A)
+      const uword ms = std::min(m_pow2, A_n_rows - mm);
+      for (uword nn = 0; nn < A_n_cols; nn += n_pow2)
         {
-        // col_A is interpreted as row_A when storing the results in matrix C
-        
-        const eT* A_coldata = A.colptr(col_A);
-        
-        for(uword col_B=0; col_B < B_n_cols; ++col_B)
+        const uword ns = std::min(n_pow2, A_n_cols - nn);
+        for (uword kk = 0; kk < B_n_cols; kk += k_pow2)
           {
-          const eT acc = op_dot::direct_dot(B_n_rows, A_coldata, B.colptr(col_B));
-          
-               if( (use_alpha == false) && (use_beta == false) )  { C.at(col_A,col_B) =       acc;                          }
-          else if( (use_alpha == true ) && (use_beta == false) )  { C.at(col_A,col_B) = alpha*acc;                          }
-          else if( (use_alpha == false) && (use_beta == true ) )  { C.at(col_A,col_B) =       acc + beta*C.at(col_A,col_B); }
-          else if( (use_alpha == true ) && (use_beta == true ) )  { C.at(col_A,col_B) = alpha*acc + beta*C.at(col_A,col_B); }
-          }
-        }
-      }
-    else
-    if( (do_trans_A == false) && (do_trans_B == true) )
-      {
-      Mat<eT> BB;
-      op_strans::apply_mat_noalias(BB, B);
-      
-      gemm_emul_large<false, false, use_alpha, use_beta>::apply(C, A, BB, alpha, beta);
-      }
-    else
-    if( (do_trans_A == true) && (do_trans_B == true) )
-      {
-      // mat B_tmp = trans(B);
-      // dgemm_arma<true, false,  use_alpha, use_beta>::apply(C, A, B_tmp, alpha, beta);
-      
-      
-      // By using the trans(A)*trans(B) = trans(B*A) equivalency,
-      // transpose operations are not needed
-      
-      arma_aligned podarray<eT> tmp(B.n_cols);
-      eT* B_rowdata = tmp.memptr();
-      
-      for(uword row_B=0; row_B < B_n_rows; ++row_B)
-        {
-        tmp.copy_row(B, row_B);
-        
-        for(uword col_A=0; col_A < A_n_cols; ++col_A)
-          {
-          const eT acc = op_dot::direct_dot(A_n_rows, B_rowdata, A.colptr(col_A));
-          
-               if( (use_alpha == false) && (use_beta == false) )  { C.at(col_A,row_B) =       acc;                          }
-          else if( (use_alpha == true ) && (use_beta == false) )  { C.at(col_A,row_B) = alpha*acc;                          }
-          else if( (use_alpha == false) && (use_beta == true ) )  { C.at(col_A,row_B) =       acc + beta*C.at(col_A,row_B); }
-          else if( (use_alpha == true ) && (use_beta == true ) )  { C.at(col_A,row_B) = alpha*acc + beta*C.at(col_A,row_B); }
+          const uword ks = std::min(k_pow2, B_n_cols - kk);
+
+          // now inside the chunk, do all of the work
+          // we must iterate in the opposite order if transposing B
+          if (do_trans_B == false)
+            {
+            for (uword r = 0; r < ms; ++r)
+              {
+              // copy data to the working memory if needed so it is contiguous
+              if (do_trans_A == false)
+                {
+                work.copy_row_subvec(A, mm + r, nn, ns);
+                }
+
+              for (uword c = 0; c < ks; ++c)
+                {
+                const eT acc = (do_trans_A == false) ? op_dot::direct_dot(ns, work.memptr(), B.colptr(kk + c) + nn) :
+                             /* do_trans_A == true */  op_dot::direct_dot(ns, A.colptr(mm + r) + nn, B.colptr(kk + c) + nn);
+
+                if (nn == 0)
+                  {
+                       if (use_alpha == false && use_beta == false) { C(mm + r, kk + c) =         acc;                            }
+                  else if (use_alpha == true  && use_beta == false) { C(mm + r, kk + c) = alpha * acc;                            }
+                  else if (use_alpha == false && use_beta == true ) { C(mm + r, kk + c) =         acc + beta * C(mm + r, kk + c); }
+                  else if (use_alpha == true  && use_beta == true ) { C(mm + r, kk + c) = alpha * acc + beta * C(mm + r, kk + c); }
+                  }
+                else
+                  {
+                       if (use_alpha == false && use_beta == false) { C(mm + r, kk + c) +=         acc;                            }
+                  else if (use_alpha == true  && use_beta == false) { C(mm + r, kk + c) += alpha * acc;                            }
+                  else if (use_alpha == false && use_beta == true ) { C(mm + r, kk + c) +=         acc + beta * C(mm + r, kk + c); }
+                  else if (use_alpha == true  && use_beta == true ) { C(mm + r, kk + c) += alpha * acc + beta * C(mm + r, kk + c); }
+                  }
+                }
+              }
+            }
+          else /* do_trans_B == true */
+            {
+            for (uword c = 0; c < ks; ++c)
+              {
+              work.copy_row_subvec(B, kk + c, nn, ns);
+
+              for (uword r = 0; r < ms; ++r)
+                {
+                const eT acc = op_dot::direct_dot(ns, A.colptr(mm + r) + nn, work.memptr());
+
+                if (nn == 0)
+                  {
+                       if (use_alpha == false && use_beta == false) { C(mm + r, kk + c) =         acc;                            }
+                  else if (use_alpha == true  && use_beta == false) { C(mm + r, kk + c) = alpha * acc;                            }
+                  else if (use_alpha == false && use_beta == true ) { C(mm + r, kk + c) =         acc + beta * C(mm + r, kk + c); }
+                  else if (use_alpha == true  && use_beta == true ) { C(mm + r, kk + c) = alpha * acc + beta * C(mm + r, kk + c); }
+                  }
+                else
+                  {
+                       if (use_alpha == false && use_beta == false) { C(mm + r, kk + c) +=         acc;                            }
+                  else if (use_alpha == true  && use_beta == false) { C(mm + r, kk + c) += alpha * acc;                            }
+                  else if (use_alpha == false && use_beta == true ) { C(mm + r, kk + c) +=         acc + beta * C(mm + r, kk + c); }
+                  else if (use_alpha == true  && use_beta == true ) { C(mm + r, kk + c) += alpha * acc + beta * C(mm + r, kk + c); }
+                  }
+                }
+              }
+            }
           }
         }
       }
     }
-  
   };
-  
+
 
 
 template<const bool do_trans_A=false, const bool do_trans_B=false, const bool use_alpha=false, const bool use_beta=false>

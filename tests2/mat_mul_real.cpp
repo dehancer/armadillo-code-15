@@ -969,3 +969,132 @@ TEMPLATE_TEST_CASE("mat_mul_fp_compare", "[mat_mul]", TEST_FLOAT_TYPES)
   REQUIRE( accu(abs(diff3)) == Approx(eT(0)).margin(margin * diff3.n_elem) );
   REQUIRE( accu(abs(diff4)) == Approx(eT(0)).margin(margin * diff4.n_elem) );
   }
+
+
+
+#if defined(ARMA_USE_BLAS)
+TEMPLATE_TEST_CASE("mat_mul_int_compare", "[mat_mul]", u32, s32, u64, s64)
+  {
+  typedef TestType eT;
+
+  for (uword trial = 0; trial < 50; ++trial)
+    {
+    uword m = randi<uword>(distr_param(100, 1000));
+    uword n = randi<uword>(distr_param(100, 1000));
+    uword k = randi<uword>(distr_param(100, 1000));
+
+    Mat<eT> A  = randi<Mat<eT>>(m, n, distr_param(0, 100));
+    Mat<eT> At = randi<Mat<eT>>(n, m, distr_param(0, 100));
+    Mat<eT> B  = randi<Mat<eT>>(n, k, distr_param(0, 100));
+    Mat<eT> Bt = randi<Mat<eT>>(k, n, distr_param(0, 100));
+
+    // compare against BLAS implementation
+    mat Ad  = conv_to<mat>::from(A);
+    mat Atd = conv_to<mat>::from(At);
+    mat Bd  = conv_to<mat>::from(B);
+    mat Btd = conv_to<mat>::from(Bt);
+
+    Mat<eT> C = A * B;
+    mat Cd = Ad * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C = A * Bt.t();
+    Cd = Ad * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C = At.t() * B;
+    Cd = Atd.t() * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C = At.t() * Bt.t();
+    Cd = Atd.t() * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    // now test variants with alpha
+
+    C = 2 * A * B;
+    Cd = 2 * Ad * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C = 2 * A * Bt.t();
+    Cd = 2 * Ad * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C = 2 * At.t() * B;
+    Cd = 2 * Atd.t() * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C = 2 * At.t() * Bt.t();
+    Cd = 2 * Atd.t() * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    // variants with beta
+
+    C.ones(A.n_rows, B.n_cols);
+    C = 2 * C + A * B;
+    Cd.ones(Ad.n_rows, Bd.n_cols);
+    Cd = 2 * Cd + Ad * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C.ones(A.n_rows, Bt.n_rows);
+    C = 2 * C + A * Bt.t();
+    Cd.ones(Ad.n_rows, Btd.n_rows);
+    Cd = 2 * Cd + Ad * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C.ones(At.n_cols, B.n_cols);
+    C = 2 * C + At.t() * B;
+    Cd.ones(Atd.n_cols, Bd.n_cols);
+    Cd = 2 * Cd + Atd.t() * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C.ones(At.n_cols, Bt.n_rows);
+    C = 2 * C + At.t() * Bt.t();
+    Cd.ones(Atd.n_cols, Btd.n_rows);
+    Cd = 2 * Cd + Atd.t() * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    // variants with both alpha and beta
+
+    C.ones(A.n_rows, B.n_cols);
+    C = 2 * C + 3 * A * B;
+    Cd.ones(Ad.n_rows, Bd.n_cols);
+    Cd = 2 * Cd + 3 * Ad * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C.ones(A.n_rows, Bt.n_rows);
+    C = 2 * C + 3 * A * Bt.t();
+    Cd.ones(Ad.n_rows, Btd.n_rows);
+    Cd = 2 * Cd + 3 * Ad * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C.ones(At.n_cols, B.n_cols);
+    C = 2 * C + 3 * At.t() * B;
+    Cd.ones(Atd.n_cols, Bd.n_cols);
+    Cd = 2 * Cd + 3 * Atd.t() * Bd;
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+
+    C.ones(At.n_cols, Bt.n_rows);
+    C = 2 * C + 3 * At.t() * Bt.t();
+    Cd.ones(Atd.n_cols, Btd.n_rows);
+    Cd = 2 * Cd + 3 * Atd.t() * Btd.t();
+
+    REQUIRE( approx_equal( conv_to<mat>::from(C), Cd, "both", 1e-5, 1e-5 ) );
+    }
+  }
+#endif

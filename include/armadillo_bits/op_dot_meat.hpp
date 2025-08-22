@@ -62,6 +62,46 @@ op_dot::direct_dot_generic(const uword n_elem, const eT* const A, const eT* cons
 
 
 
+template<typename eT>
+inline
+typename arma_not_cx<eT>::result
+op_dot::direct_dot_generic(const uword n_elem, const eT* const A, const eT* const B, const uword A_stride, const uword B_stride)
+  {
+  arma_debug_sigprint();
+  
+  #if defined(__FAST_MATH__)
+    {
+    eT val = eT(0);
+    
+    for(uword i=0; i < n_elem; ++i)  { val += (A[i * A_stride] * B[i * B_stride]); }
+    
+    return val;
+    }
+  #else
+    {
+    eT val1 = eT(0);
+    eT val2 = eT(0);
+    
+    uword i, j;
+    
+    for(i=0, j=1; j < n_elem; i+=2, j+=2)
+      {
+      val1 += (A[i * A_stride] * B[i * B_stride]);
+      val2 += (A[j * A_stride] * B[j * B_stride]);
+      }
+    
+    if(i < n_elem)
+      {
+      val1 += (A[i * A_stride] * B[i * B_stride]);
+      }
+    
+    return (val1 + val2);
+    }
+  #endif
+  }
+
+
+
 //! generic version for non-complex values with forced optimisation under GCC
 template<typename eT>
 #if defined(ARMA_REAL_GCC) && !defined(ARMA_DONT_FORCE_OPTIMISE_DOT)

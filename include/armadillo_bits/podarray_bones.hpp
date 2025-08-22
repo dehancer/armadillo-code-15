@@ -77,6 +77,7 @@ class podarray
   arma_inline const eT* memptr() const;
   
   inline void copy_row(const Mat<eT>& A, const uword row);
+  inline void copy_row_subvec(const Mat<eT>& A, const uword row, const uword start_col, const uword num_cols);
   
   
   protected:
