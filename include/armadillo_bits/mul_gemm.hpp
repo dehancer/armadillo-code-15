@@ -89,11 +89,13 @@ struct gemm_emul_large
       {
       arma_aligned podarray<eT> tmp(A_n_cols);
       
-      eT* A_rowdata = tmp.memptr();
-      
+      #if defined(ARMA_USE_OPENMP)
+      #pragma omp parallel for firstprivate(tmp)
+      #endif
       for(uword row_A=0; row_A < A_n_rows; ++row_A)
         {
         tmp.copy_row(A, row_A);
+        eT* A_rowdata = tmp.memptr();
         
         for(uword col_B=0; col_B < B_n_cols; ++col_B)
           {
@@ -109,6 +111,9 @@ struct gemm_emul_large
     else
     if( (do_trans_A == true) && (do_trans_B == false) )
       {
+      #if defined(ARMA_USE_OPENMP)
+      #pragma omp parallel for
+      #endif
       for(uword col_A=0; col_A < A_n_cols; ++col_A)
         {
         // col_A is interpreted as row_A when storing the results in matrix C
@@ -145,11 +150,14 @@ struct gemm_emul_large
       // transpose operations are not needed
       
       arma_aligned podarray<eT> tmp(B.n_cols);
-      eT* B_rowdata = tmp.memptr();
       
+      #if defined(ARMA_USE_OPENMP)
+      #pragma omp parallel for firstprivate(tmp)
+      #endif
       for(uword row_B=0; row_B < B_n_rows; ++row_B)
         {
         tmp.copy_row(B, row_B);
+        eT* B_rowdata = tmp.memptr();
         
         for(uword col_A=0; col_A < A_n_cols; ++col_A)
           {
