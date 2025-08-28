@@ -279,30 +279,6 @@ podarray<eT>::copy_row(const Mat<eT>& A, const uword row)
 template<typename eT>
 inline
 void
-podarray<eT>::copy_row_subvec(const Mat<eT>& A, const uword row, const uword start_col, const uword num_cols)
-  {
-  arma_debug_sigprint();
-  
-  const uword n_rows = A.n_rows;
-  
-  init_warm(num_cols);
-  
-  const eT*   A_mem = &(A.at(row, start_col));
-        eT* out_mem = memptr();
-  
-  for(uword i=0; i < num_cols; ++i)
-    {
-    out_mem[i] = (*A_mem);
-    
-    A_mem += n_rows;
-    }
-  }
-
-
-
-template<typename eT>
-inline
-void
 podarray<eT>::init_cold(const uword new_n_elem)
   {
   arma_debug_sigprint();
