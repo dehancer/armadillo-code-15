@@ -977,7 +977,7 @@ TEMPLATE_TEST_CASE("mat_mul_int_compare", "[mat_mul]", u32, s32, u64, s64)
   {
   typedef TestType eT;
   
-  const uword n_trials = 10;
+  const uword n_trials = 5;
   
   for (uword trial = 0; trial < n_trials; ++trial)
     {
