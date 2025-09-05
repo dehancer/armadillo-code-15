@@ -365,6 +365,8 @@ op_vectorise_cube_col::apply_subview(Mat<eT>& out, const subview_cube<eT>& sv)
   
   out.set_size(sv.n_elem, 1);
   
+  if(sv.n_elem == 0)  { return; }
+  
   eT* out_mem = out.memptr();
   
   if( (sv_nr == 1) && (sv_nc == 1) && (sv.aux_slice1 == 0) )
