@@ -8118,7 +8118,7 @@ Generate a scalar, vector, matrix or cube with the elements set to random values
       <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;"><i>x<sup>&thinsp;a-1</sup> exp(&thinsp;-x&thinsp;/&thinsp;b&thinsp;)</i></td>
     </tr>
     <tr>
-      <td style="vertical-align: top;"><i>p<font size=+1>(</font>x&thinsp;|&thinsp;a,b<font size=+1>)</font></i></td><td style="vertical-align: top;">&nbsp;<font size=+1>=</font>&nbsp;</td><td style="vertical-align: top;"><font size=+1><b><hr></b></font></td>
+      <td style="vertical-align: top;"><i>p<font size=+1>(</font>&thinsp;x&thinsp;|&thinsp;a,b&thinsp;<font size=+1>)</font></i></td><td style="vertical-align: top;">&nbsp;<font size=+1>=</font>&nbsp;</td><td style="vertical-align: top;"><font size=+1><b><hr></b></font></td>
     </tr>
     <tr>
       <td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top;">&nbsp;</td><td style="vertical-align: top; text-align: center;"><i>b<sup>&thinsp;a</sup> &Gamma;(a)</i></td>
@@ -8176,6 +8176,7 @@ fmat B2 = randg&lt;fmat&gt;(10, 10, distr_param(2,1));
 <li><a href="#imbue">.imbue()</a></li>
 <li><a href="#size">size()</a></li>
 <li><a href="#rng_seed">RNG seed setting</a></li>
+<li><a href="https://mathworld.wolfram.com/GammaDistribution.html">gamma distribution in MathWorld</a></li>
 <li><a href="https://en.wikipedia.org/wiki/Gamma_distribution">gamma distribution in Wikipedia</a></li>
 </ul>
 </li>
@@ -11876,9 +11877,6 @@ See also:
 <a name="sort_index"></a>
 <b>sort_index( X )</b>
 <br><b>sort_index( X, sort_direction )</b>
-<br>
-<br><b>stable_sort_index( X )</b>
-<br><b>stable_sort_index( X, sort_direction )</b>
 <ul>
 <li>Return a vector which describes the sorted order of the elements of <i>X</i>
 (ie. it contains the indices of the elements of <i>X</i>)
@@ -11893,8 +11891,6 @@ See also:
 </li>
 <br>
 <li>The <i>sort_direction</i> argument is optional; <i>sort_direction</i> is either <code>"ascend"</code> or <code>"descend"</code>; by default <code>"ascend"</code> is used</li>
-<br>
-<li>The <i>stable_sort_index()</i> variant preserves the relative order of elements with equivalent values</li>
 <br>
 <li>For matrices and vectors with complex numbers, sorting is via absolute values</li>
 <br>
@@ -21448,7 +21444,7 @@ see the <a href="https://arma.sourceforge.net/faq.html#license">Questions page</
 <li>added handling of <a href="#diag">diagonal views</a> by sparse matrices
 <li>expanded <a href="#repmat">repmat()</a> to handle sparse matrices
 <li>expanded <a href="#join">join_rows()</a> and <a href="#join">join_cols()</a> to handle sparse matrices
-<li><a href="#sort_index">sort_index()</a> and <a href="#sort_index">stable_sort_index()</a> have been placed in the delayed operations framework for increased efficiency
+<li><a href="#sort_index">sort_index()</a> has been placed in the delayed operations framework for increased efficiency
 <li>use of <a href="#uword">64 bit integers</a> is automatically enabled when using a C++11 compiler</li>
 </ul>
 </li>
@@ -21660,7 +21656,7 @@ eg. <i>mat&nbsp;X(4,&nbsp;5,&nbsp;fill::zeros)</i></li>
 <li>faster handling of compound expressions with submatrices and subcubes</li>
 <li>faster <a href="#trace">trace()</a></li>
 <li>added support for loading matrices as text files with <i>NaN</i> and <i>Inf</i> elements</li>
-<li>added <a href="#sort_index">stable_sort_index()</a>, which preserves the relative order of elements with equivalent values</li>
+<!-- <li>added <a href="#sort_index">stable_sort_index()</a>, which preserves the relative order of elements with equivalent values</li> -->
 <li>added handling of <a href="#SpMat">sparse matrices</a> by <a href="#stats_fns">mean()</a>, <a href="#stats_fns">var()</a>, <a href="#norm">norm()</a>, <a href="#abs">abs()</a>, <a href="#misc_fns">square()</a>, <a href="#misc_fns">sqrt()</a></li>
 <li>added saving and loading of sparse matrices in <i>arma_binary</i> format</li>
 </ul>
